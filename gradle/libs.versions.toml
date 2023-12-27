@@ -1,0 +1,53 @@
+[versions]
+
+# Android SDK versions
+activityCompose = "1.8.2"
+espressoCore = "3.5.1"
+junit-junit = "4.13.2"
+sdkCompile = "34"
+sdkTarget = "34"
+sdkMin = "24"
+
+# libs
+androidxCore = "1.10.0"
+appcompat = "1.6.1"
+hilt-lib = "2.47"
+lifecycle = "2.6.2"
+androidGradlePlugin = "8.1.0"
+kotlin = "1.8.10"
+composeBom = "2023.10.01"
+junit = "4.13.2"
+junit-ext = "1.1.5"
+espresso = "3.5.1"
+composeRef = "1.4.3"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
+androidx-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-espresso-core-3_5_1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-lifecyle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-lib" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material = { group = "androidx.compose.material3", name = "material3" }
+androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeRef" }
+junit-4_13_2 = { module = "junit:junit", version.ref = "junit-junit" }
+test-junit = { group = "junit", name = "junit", version = "junit" }
+test-junit-ext = { group = "androidx.test.ext", name = "junit", version = "junit-ext" }
+test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version = "espresso" }
+test-ui = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[bundles]
+material = ["androidx-material", "androidx-material-icons"]
+androidTestImplementation = ["test-junit-ext", "test-espresso", "test-ui"]
+debugTestImplementation = ["ui-tooling", "ui-test-manifest"]
