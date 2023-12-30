@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "272306549964",
+    "project_id": "membox-ebf9e",
+    "storage_bucket": "membox-ebf9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272306549964:android:33404a9904a5bcccbdfe69",
+        "android_client_info": {
+          "package_name": "com.mertozan.membox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBggjSyd96fIfl73VS_XpESB8tv3TU0nyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,10 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    // The google-services Gradle plugin needs to be applied on a project with com.android.application
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -38,9 +42,10 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -51,18 +56,28 @@ android {
 
 dependencies {
 
+    implementation(project(":feature:login"))
+    implementation(project(":core:presentation"))
+    implementation(project(":core:localization"))
+    implementation(project(":core:data"))
+
     // Core
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecyle)
+    implementation(libs.bundles.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling)
+    implementation(libs.material)
     implementation(libs.bundles.material)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 
     // Test
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.bundles.androidTestImplementation)
     debugImplementation(libs.bundles.debugTestImplementation)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 }
