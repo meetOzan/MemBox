@@ -2301,3 +2301,5 @@ Q.idea/sonarlint/securityhotspotstore/9/f/9f36c238ac50d12563642388acb57e99bab1c2
 Q.idea/sonarlint/securityhotspotstore/9/6/96705fe6380e79260d0035a318ceace09aec5373,e/b/eb883bb628e7ff7f3d89180a61816ff1dcd91d0c
 
 Q.idea/sonarlint/securityhotspotstore/9/2/92cada56f0fed538dfd5c9a80d1bd1c72e527543,e/7/e77670f7f5545db9abfcd0a28db602372f0b9da1
+>
+.gitattributes,2/4/24139dae656713ba861751fb2c2ac38839349a7a
