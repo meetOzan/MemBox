@@ -131,7 +131,7 @@
     <ImageView
         android:id="@+id/iv_login_top_bg"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_marginTop="-150dp"
         android:src="@drawable/bg_circle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +156,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginBottom="12dp"
         android:visibility="invisible"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/black"
@@ -164,7 +164,7 @@
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider">
+        app:layout_constraintBottom_toTopOf="@id/surnameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
@@ -182,7 +182,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:visibility="invisible"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/black"
@@ -190,7 +190,7 @@
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
+        app:layout_constraintBottom_toTopOf="@id/emailInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextSurname"
@@ -208,14 +208,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/black"
         app:boxStrokeWidth="1dp"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surnameInputLayout">
+        app:layout_constraintBottom_toTopOf="@id/passwordInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmail"
@@ -233,14 +233,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeColor="@color/black"
         app:boxStrokeWidth="1dp"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInputLayout">
+        app:layout_constraintBottom_toTopOf="@id/tv_dont_have_account">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPassword"
@@ -257,7 +257,7 @@
         android:id="@+id/tv_dont_have_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lemonada"
         android:text="@string/you_don_t_have_an_account"
         android:textColor="@color/white_smoke"
@@ -265,7 +265,7 @@
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
         app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
     <TextView
         android:id="@+id/tv_have_account"
@@ -279,26 +279,27 @@
         android:textColor="@color/white_smoke"
         android:textSize="14sp"
         app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/button_login"
         app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/passwordInputLayout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/white_smoke"
         android:fontFamily="@font/lemonada"
         android:paddingVertical="5dp"
         android:text="@string/login"
         android:textColor="@color/black"
         app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@id/button_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_dont_have_account" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_dont_have_account" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_register"
@@ -315,7 +316,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_dont_have_account"
         app:strokeColor="@color/black"
         app:strokeWidth="0.5dp" />
 
