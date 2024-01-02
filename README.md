@@ -4,3 +4,5 @@
 - Version Catalog ✅
 - Jetpack Compose ✅
 - Motion Layout ✅
+- Firebase Auth. ✅
+- Firebase Firestore ✅
