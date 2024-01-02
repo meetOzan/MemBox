@@ -1,0 +1,61 @@
+package com.mertozan.membox
+
+import com.mertozan.membox.core.ResponseState
+import com.mertozan.membox.network.FirebaseSource
+import com.mertozan.membox.network.dto.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+
+class MemRepositoryImpl @Inject constructor(
+    private val firebaseSource: FirebaseSource,
+) : MemRepository {
+
+    override fun signInUserWithEmailAndPassword(
+        user: User,
+        onNavigate: () -> Unit,
+    ) : Flow<ResponseState<Unit>> {
+        return flow{
+            emit(ResponseState.Loading)
+            firebaseSource.signInWithEmailAndPassword(user, onNavigate)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+
+    }
+
+    override fun signUpWithEmailAndPassword(
+        user: User,
+        onNavigate: () -> Unit,
+    ) : Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.signUpUserWithEmailAndPassword(user, onNavigate)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun signOut() : Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.signOut()
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun isUserSignedIn(): Flow<ResponseState<Boolean>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.isUserSignedIn()
+            emit(ResponseState.Success(firebaseSource.isUserSignedIn()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+}

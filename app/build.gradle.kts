@@ -5,6 +5,9 @@ plugins {
     // The google-services Gradle plugin needs to be applied on a project with com.android.application
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -45,7 +48,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = libs.versions.composeVer.get()
     }
     packaging {
         resources {
@@ -60,6 +63,7 @@ dependencies {
     implementation(project(":core:presentation"))
     implementation(project(":core:localization"))
     implementation(project(":core:data"))
+    implementation(project(":navigation"))
 
     // Core
     implementation(libs.androidx.core)
@@ -80,4 +84,13 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+
+    // Hilt
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
+    kapt(libs.hilt.compiler)
+
+    // Navigation
+    implementation(libs.androidx.hilt.navigation.compose)
 }
