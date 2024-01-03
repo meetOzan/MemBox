@@ -317,8 +317,6 @@ r
 Bcore/data/src/main/java/com/mertozan/membox/di/RepositoryModule.kt,3/8/38d62e28774cf24dfc1052ffe91c507e5ca7fca7
 h
 8app/src/main/java/com/mertozan/membox/HiltApplication.kt,e/c/ec23105427652c66dfe002226a9ce6a66424dd0f
-
-Ocore/presentation/src/main/java/com/mertozan/membox/presentation/theme/Theme.kt,c/9/c963f0bae068a7fde2717b37d8cea33bccb54839
 u
 Ecore/domain/src/main/java/com/mertozan/membox/domain/SignInUseCase.kt,a/c/ac3aa4c6b8b63f599ed2ee98d567ae7ab472a8ba
 u
@@ -551,10 +549,6 @@ w
 G.idea/sonarlint/issuestore/2/9/29b8be2dc5289918ec30fe99fcc72fa2d08c55d3,f/e/fe6c5da220a52cba4e1f654864eafdaaf06fb81f
 
 Q.idea/sonarlint/securityhotspotstore/a/8/a8669a3f4d8e97e4e86c0e9c31e0289a5e7ccdb2,1/b/1b54c8cbe92d2d47efccdef53e6f9b18b6f55040
-
-Ocore/presentation/src/main/java/com/mertozan/membox/presentation/theme/Color.kt,7/4/740427b3e42bc7facf0620f7d329f81db1b86c53
-~
-Ncore/presentation/src/main/java/com/mertozan/membox/presentation/theme/Type.kt,f/1/f1cf7b0848a9948c0a546ed3d5f2f5884a42ce80
 ^
 ..idea/modules/navigation/MemBox.navigation.iml,e/e/eec3c5f91aebdd2669fb3a4d6ec5498d51f058c8
 c
@@ -943,8 +937,6 @@ Q.idea/sonarlint/securityhotspotstore/8/e/8ec89949a4536257748f7f81152c9261e39486
 Q.idea/sonarlint/securityhotspotstore/8/5/8501204f5056e1b929ecc228b7a33d68fe324458,2/1/2195f8ee83f65fd08cb3f58cf1bf91c59db25b2c
 
 Q.idea/sonarlint/securityhotspotstore/8/2/82b09d87e97b0ea4791b331e7c637e7d509358f8,8/a/8a8727b868c8bb85368391f40d6f2f8d4d7425a6
-m
-=core/model/src/main/java/com/mertozan/membox/model/MyClass.kt,0/6/06c4b727af7d1310b9ede3663446999e97aa22cd
 
 Q.idea/sonarlint/securityhotspotstore/8/4/84fde1829eeb88bd479ec769d8e1c20284b18d3d,a/5/a5ab7be56af335b3875ee7f1d57c8498e8224c80
 
@@ -1009,8 +1001,6 @@ G.idea/sonarlint/issuestore/7/8/7820beb41c1dd36eec54794a9a37c3758b7c8917,e/6/e6
 Q.idea/sonarlint/securityhotspotstore/7/8/7820beb41c1dd36eec54794a9a37c3758b7c8917,d/c/dca82d2114b280bb673ee698d08ef68c2e9574c7
 
 Q.idea/sonarlint/securityhotspotstore/3/c/3c2add9012c58b1e4d102e658c539ece6c2fa578,a/8/a8293cbd45ab1224208fc83927a2cb23e2cf663c
-
-Q.idea/sonarlint/securityhotspotstore/0/6/06c4b727af7d1310b9ede3663446999e97aa22cd,b/1/b1012844f6c7dc2958ca37d5a827e250685f10c0
 w
 G.idea/sonarlint/issuestore/f/8/f8befd4ae2f4900b9adcdebc209a3064cebe8093,4/d/4d51b66792d409651b5f0584d271e00a26cdad54
 
@@ -1245,8 +1235,6 @@ w
 G.idea/sonarlint/issuestore/1/f/1fc2365362cbeadb3ad840f6fbe13e7904d7d679,a/4/a4bc47eb55ae5f38957b7a7d26eb5e9bdafaea20
 
 Q.idea/sonarlint/securityhotspotstore/c/e/ce7799643a95553c6bee1d403d6cb738907a7f2c,2/7/279a79a9d9151a9959cd88cbae53cc58d712a5b2
-w
-G.idea/sonarlint/issuestore/0/6/06c4b727af7d1310b9ede3663446999e97aa22cd,9/c/9ce571d188cab69b4cf5b6ce06b3f2734f7a5251
 
 Q.idea/sonarlint/securityhotspotstore/b/e/be4ed1f33315870dca5ee60b60dc2006fe8113d0,7/4/7462a7ab5f1ac547782fedfb96e1748a29e76b42
 
@@ -2303,3 +2291,17 @@ Q.idea/sonarlint/securityhotspotstore/9/6/96705fe6380e79260d0035a318ceace09aec53
 Q.idea/sonarlint/securityhotspotstore/9/2/92cada56f0fed538dfd5c9a80d1bd1c72e527543,e/7/e77670f7f5545db9abfcd0a28db602372f0b9da1
 >
 .gitattributes,2/4/24139dae656713ba861751fb2c2ac38839349a7a
+m
+=feature/home/src/main/java/com/mertozan/home/HomeViewModel.kt,a/b/abb008effee37fc54cbc5624ef96aa022e3dcf42
+l
+<core/model/src/main/java/com/mertozan/membox/model/Memory.kt,e/a/ea559f6dd5a0e8b2a8e137cd81377f3e09511676
+‚
+Rcore/presentation/src/main/java/com/mertozan/membox/presentation/theme/ui/Color.kt,d/d/dd98104033b5fed5156046613f91a89097c597b5
+j
+:feature/home/src/main/java/com/mertozan/home/MemoryItem.kt,9/b/9ba027a1b0bf2d2093290aa6d280f1f535b4358b
+‰
+Ycore/presentation/src/main/java/com/mertozan/membox/presentation/components/CustomText.kt,d/9/d92483af5d6fcfb7e37dff2836ef5d12814710e1
+‚
+Rcore/presentation/src/main/java/com/mertozan/membox/presentation/theme/ui/Theme.kt,c/9/c9479092b5d03a332e43419ffd33541cb22e72e1
+
+Qcore/presentation/src/main/java/com/mertozan/membox/presentation/theme/ui/Type.kt,5/d/5d49d786a1dd1cc947a7ed3e134f79142cc9dc20

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
@@ -65,6 +66,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose.viewmodel)
 
     // Hilt
     implementation(libs.dagger.hilt.android)

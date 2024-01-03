@@ -48,7 +48,7 @@ fun NavGraphBuilder.loginScreen(
 }
 
 fun NavGraphBuilder.homeScreen() {
-    composable(route = HomeScreen.route) {
+    composable(route = HomeScreen.route/* arguments = HomeScreen.args*/) {
         HomeScreen()
     }
 }

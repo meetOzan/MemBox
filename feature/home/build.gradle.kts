@@ -5,10 +5,11 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
-    namespace = "com.mertozan.home"
+    namespace = "com.mertozan.membox.home"
     compileSdk = libs.versions.sdkCompile.get().toInt()
 
     defaultConfig {
@@ -49,6 +50,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:network"))
     implementation(project(":core:common"))
+    implementation(project(":core:model"))
 
     // Core
     implementation(libs.androidx.core)
@@ -73,6 +75,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose.viewmodel)
 
     // Hilt
     implementation(libs.dagger.hilt.android)

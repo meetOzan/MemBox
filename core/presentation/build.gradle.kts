@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:localization"))
+
     // Core
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecyle)

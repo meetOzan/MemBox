@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.mertozan.membox.navigation.MemNavGraph
-import com.mertozan.membox.presentation.theme.MemBoxTheme
+import com.mertozan.membox.presentation.theme.ui.MemBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

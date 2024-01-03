@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+
     // Core
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecyle)
