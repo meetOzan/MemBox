@@ -6,3 +6,4 @@
 - Motion Layout ✅
 - Firebase Auth. ✅
 - Firebase Firestore ✅
+- Custom Components ✅
