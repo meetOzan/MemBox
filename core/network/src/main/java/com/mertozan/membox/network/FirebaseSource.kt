@@ -1,5 +1,6 @@
 package com.mertozan.membox.network
 
+import com.mertozan.membox.model.Memory
 import com.mertozan.membox.network.dto.User
 
 interface FirebaseSource{
@@ -11,5 +12,11 @@ interface FirebaseSource{
     fun signOut()
 
     fun isUserSignedIn() : Boolean
+
+    fun addMemory(memory: Memory, onNavigate: () -> Unit)
+
+    fun getAllMemories() : List<Memory>
+
+    fun getMemoryByDate(date: String) : List<Memory>
 
 }

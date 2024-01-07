@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
     kotlin("kapt")
 }
 
@@ -37,6 +36,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":core:model"))
 
     // Core
     implementation(libs.androidx.core)

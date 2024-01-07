@@ -115,7 +115,7 @@ class LoginViewModel @Inject constructor(
                         _characterScreenUiState.value = _characterScreenUiState.value.copy(
                             isLoading = false,
                             isSigned = true,
-                            isScreenEnable = true
+                            isScreenEnable = responseState.data
                         )
                     }
                 }
@@ -128,7 +128,7 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val isSigned: Boolean = false,
-    val isScreenEnable: Boolean = true,
+    val isScreenEnable: Boolean = false,
     val errorMessage: String = "",
 ) {
     companion object {

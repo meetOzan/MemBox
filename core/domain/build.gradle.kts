@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
     kotlin("kapt")
 }
 
@@ -39,7 +38,8 @@ dependencies {
 
     implementation(project(":core:data"))
     implementation(project(":core:network"))
-    implementation(project(mapOf("path" to ":core:common")))
+    implementation(project(":core:model"))
+    implementation(project(":core:common"))
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecyle)

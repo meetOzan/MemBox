@@ -46,6 +46,9 @@ dependencies {
 
     implementation(project(":feature:login"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:addmemory"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:profile"))
 
     // Core
     implementation(libs.androidx.core)

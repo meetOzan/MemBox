@@ -8,7 +8,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.mertozan.home.HomeAction
 import com.mertozan.home.HomeScreen
+import com.mertozan.home.HomeUiState
+import com.mertozan.home.HomeViewModel
+import com.mertozan.membox.addmemory.AddMemoryScreen
+import com.mertozan.membox.addmemory.AddMemoryViewModel
 import com.mertozan.membox.login.LoginAction
 import com.mertozan.membox.login.LoginScreen
 import com.mertozan.membox.login.LoginViewModel
@@ -23,7 +28,12 @@ fun MemNavGraph(
         loginScreen(
             onHomeNavigate = { navController.navigate(HomeScreen.route) }
         )
-        homeScreen()
+        homeScreen(
+            onAddMemoryNavigate = { navController.navigate(AddMemoryScreen.route) }
+        )
+        addMemoryScreen(
+            onHomeNavigate = { navController.navigate(HomeScreen.route) }
+        )
     }
 }
 
@@ -47,9 +57,31 @@ fun NavGraphBuilder.loginScreen(
     }
 }
 
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(
+    onAddMemoryNavigate: () -> Unit,
+) {
     composable(route = HomeScreen.route/* arguments = HomeScreen.args*/) {
-        HomeScreen()
+
+        val homeViewModel = hiltViewModel<HomeViewModel>()
+        val homeUiState = homeViewModel.homeUiState.collectAsState(initial = HomeUiState.initial()).value
+
+        LaunchedEffect(true) {
+            homeViewModel.onAction(HomeAction.GetAllMemories)
+        }
+
+        HomeScreen(homeUiState.memoryList, homeUiState, onAddMemoryNavigate)
+    }
+}
+
+fun NavGraphBuilder.addMemoryScreen(
+    onHomeNavigate: () -> Unit,
+) {
+    composable(route = AddMemoryScreen.route) {
+
+        val addMemoryViewModel = hiltViewModel<AddMemoryViewModel>()
+        val uiState = addMemoryViewModel.addMemoryState.collectAsState().value
+
+        AddMemoryScreen(onHomeNavigate, addMemoryViewModel::onAction, uiState = uiState)
     }
 }
 

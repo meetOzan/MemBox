@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
     kotlin("kapt")
 }
 
@@ -38,6 +37,7 @@ android {
 dependencies {
 
     implementation(project(":core:presentation"))
+    implementation(project(":core:model"))
     implementation(project(mapOf("path" to ":core:network")))
     implementation(project(mapOf("path" to ":core:common")))
 
@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.bundles.material)
+    implementation(project(mapOf("path" to ":core:model")))
 
     // Test
     testImplementation(libs.test.junit)

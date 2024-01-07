@@ -1,6 +1,7 @@
 package com.mertozan.membox
 
 import com.mertozan.membox.core.ResponseState
+import com.mertozan.membox.model.Memory
 import com.mertozan.membox.network.FirebaseSource
 import com.mertozan.membox.network.dto.User
 import kotlinx.coroutines.flow.Flow
@@ -15,8 +16,8 @@ class MemRepositoryImpl @Inject constructor(
     override fun signInUserWithEmailAndPassword(
         user: User,
         onNavigate: () -> Unit,
-    ) : Flow<ResponseState<Unit>> {
-        return flow{
+    ): Flow<ResponseState<Unit>> {
+        return flow {
             emit(ResponseState.Loading)
             firebaseSource.signInWithEmailAndPassword(user, onNavigate)
             emit(ResponseState.Success(Unit))
@@ -29,7 +30,7 @@ class MemRepositoryImpl @Inject constructor(
     override fun signUpWithEmailAndPassword(
         user: User,
         onNavigate: () -> Unit,
-    ) : Flow<ResponseState<Unit>> {
+    ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
             firebaseSource.signUpUserWithEmailAndPassword(user, onNavigate)
@@ -39,7 +40,7 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun signOut() : Flow<ResponseState<Unit>> {
+    override fun signOut(): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
             firebaseSource.signOut()
@@ -54,6 +55,36 @@ class MemRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             firebaseSource.isUserSignedIn()
             emit(ResponseState.Success(firebaseSource.isUserSignedIn()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun addMemory(memory: Memory, onNavigate: () -> Unit): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.addMemory(memory, onNavigate)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getAllMemories(): Flow<ResponseState<List<Memory>>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.getAllMemories()
+            emit(ResponseState.Success(firebaseSource.getAllMemories()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getMemoryByDate(date: String): Flow<ResponseState<List<Memory>>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.getMemoryByDate(date)
+            emit(ResponseState.Success(firebaseSource.getMemoryByDate(date)))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }

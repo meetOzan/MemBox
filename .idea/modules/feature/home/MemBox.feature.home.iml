@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="ModuleClassLoaderOverlays">
-    <paths>
-      <option value="/var/folders/_l/v_nskwh91dj5nyh8tmf0fmpr0000gn/T/overlay5771208016801377300" />
-      <option value="/var/folders/_l/v_nskwh91dj5nyh8tmf0fmpr0000gn/T/overlay6485874427842002819" />
-    </paths>
-  </component>
   <component name="SonarLintModuleSettings">
     <option name="uniqueId" value="93202e19-ccf1-43d7-9074-f464104cb56b" />
   </component>

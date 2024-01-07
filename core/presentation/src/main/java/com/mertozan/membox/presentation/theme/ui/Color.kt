@@ -18,6 +18,8 @@ val Pink = Color(0xFFFD9DB9)
 val LightBlack = Color(0xFF181818)
 
 val DarkWhite80 = Color(0xFFDAD7D7)
-val DarkWhite70 = Color(0xFFA7A7A7)
-val DarkWhite60 = Color(0xFFF3F3F3)
+val DarkWhite70 = Color(0xFFEBEAEA)
+val DarkWhite60 = Color(0xFFF0F0F0)
+
+val DarkYellow = Color(0xFFE6B422)
 
