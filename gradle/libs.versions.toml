@@ -1,0 +1,101 @@
+[versions]
+
+# Android SDK versions
+sdkCompile = "34"
+sdkTarget = "33"
+sdkMin = "24"
+
+# libs
+androidxCore = "1.12.0"
+appcompat = "1.6.1"
+activityCompose = "1.8.2"
+espressoCore = "3.5.1"
+junit-junit = "4.13.2"
+firebaseAuth = "22.3.0"
+hilt-lib = "2.48"
+hilt-compiler = "1.1.0"
+hiltNavigationCompose = "1.1.0"
+ksp = "1.9.0-1.0.11"
+lifecycle = "2.6.2"
+androidGradlePlugin = "8.1.4"
+googleServices = "4.4.0"
+firebaseBom = "32.7.0"
+firebaseStorage = "20.3.0"
+kotlin = "1.9.10"
+composeVer = "1.5.3"
+composeBom = "2023.10.01"
+composeViewBinding = "2.2.0-alpha13"
+firebaseCrashlyticsGradle = "2.9.9"
+junit = "4.13.2"
+junit-ext = "1.1.5"
+espresso = "3.5.1"
+fragment = "1.6.2"
+composeRef = "1.5.4"
+material = "1.11.0"
+constraintLayout = "2.1.4"
+firebaseAnalytics = "21.5.0"
+firebaseCrashlytics = "18.6.0"
+firebaseFirestore = "24.10.0"
+org-jetbrains-kotlin-jvm = "1.9.10"
+androidxNavigation = "2.7.4"
+navigationViewModel = "2.6.2"
+coil-ktx = "2.5.0"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
+androidx-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-espresso-core-3_5_1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-lifecyle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-lib" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material = { group = "androidx.compose.material3", name = "material3" }
+androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeRef" }
+junit-4_13_2 = { module = "junit:junit", version.ref = "junit-junit" }
+test-junit = { group = "junit", name = "junit", version.ref = "junit" }
+test-junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding", version.ref = "composeRef" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "composeViewBinding" }
+androidx-fragment =  { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
+build_gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+dagger_hilt_android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-lib" }
+dagger_hilt_compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-lib" }
+hilt_worker = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-compiler" }
+hilt_compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-compiler" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-navigation-compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "navigationViewModel" }
+coil-ktx = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-ktx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-lib" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+
+
+[bundles]
+material = ["androidx-material-icons", "androidx-material","material"]
+compose = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "compose-viewbinding", "androidx-activity-compose"]
+androidTestImplementation = ["test-junit-ext", "test-espresso"]
+debugTestImplementation = ["ui-tooling", "ui-test-manifest"]

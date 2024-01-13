@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MemBox</string>
+    <string name="membox">MemBox</string>
+    <string name="you_don_t_have_an_account">You don\'t have an account?</string>
+    <string name="you_have_an_account">Do you have an account?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="star">star</string>
+    <string name="login_bg">login_bg</string>
+    <string name="your_memories">Your Memories</string>
+    <string name="add_memory">Add Memory</string>
+    <string name="profile">profile</string>
+    <string name="placeholder">placeholder</string>
+    <string name="coil_image">coil_image</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome %1$s</string>
+    <string name="statics_of_memories">Statics of Memories</string>
+    <string name="total_memory">Total Memory</string>
+    <string name="memory_streak">Memory Streak</string>
+    <string name="delete_all_memories">Delete all memories</string>
+    <string name="summary_of_your_memories">Summary of your memories</string>
+</resources>

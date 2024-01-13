@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/login_screen_scene">
+
+    <ImageView
+        android:id="@+id/iv_login_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/bg_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/login_bg" />
+
+    <ImageView
+        android:id="@+id/iv_login_sky_bg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_login_sky"
+        app:layout_constraintBottom_toTopOf="@id/iv_login_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/login_bg" />
+
+
+    <ImageView
+        android:id="@+id/iv_login_star1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="36dp"
+        android:rotation="-45"
+        android:src="@drawable/ic_star"
+        android:tint="@color/yellow"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_login_star2"
+        tools:ignore="UseAppTint"
+        android:contentDescription="@string/star" />
+
+    <ImageView
+        android:id="@+id/iv_login_star2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="6dp"
+        android:rotation="45"
+        android:src="@drawable/ic_star"
+        android:tint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@id/iv_login_star1"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseAppTint"
+        android:contentDescription="@string/star" />
+
+    <ImageView
+        android:id="@+id/iv_login_star3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="20dp"
+        android:rotation="45"
+        android:src="@drawable/ic_star"
+        android:tint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@id/iv_login_star4"
+        app:layout_constraintStart_toEndOf="@id/iv_login_star1"
+        tools:ignore="UseAppTint"
+        android:contentDescription="@string/star" />
+
+    <ImageView
+        android:id="@+id/iv_login_star4"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="16dp"
+        android:rotation="45"
+        android:src="@drawable/ic_star"
+        android:tint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@id/iv_login_star3"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_login_star2"
+        app:layout_constraintEnd_toStartOf="@id/iv_login_star2"
+        tools:ignore="UseAppTint"
+        android:contentDescription="@string/star"/>
+
+    <ImageView
+        android:id="@+id/iv_login_cloud1"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_cloud"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_login_cloud2"
+        tools:ignore="UseAppTint"
+        android:contentDescription="@string/cloud" />
+
+    <ImageView
+        android:id="@+id/iv_login_cloud2"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/ic_cloud"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_top_bg"
+        android:contentDescription="@string/cloud"  />
+
+    <ImageView
+        android:id="@+id/iv_login_cloud3"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_cloud"
+        app:layout_constraintEnd_toStartOf="@id/iv_login_cloud2"
+        app:layout_constraintStart_toEndOf="@id/iv_login_cloud1"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login_cloud2"
+        android:contentDescription="@string/cloud"  />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="150dp"
+        app:dividerColor="@color/tan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_login_top_bg"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <ImageView
+        android:id="@+id/iv_login_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="-150dp"
+        android:src="@drawable/bg_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/login_bg" />
+
+    <TextView
+        android:id="@+id/tv_login_appname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/permanent_marker"
+        android:text="@string/membox"
+        android:textColor="@color/black"
+        android:textSize="64sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_login_top_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="invisible"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/surnameInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lemonada"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/surnameInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="invisible"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/emailInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lemonada"
+            android:hint="@string/surname"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/passwordInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lemonada"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginBottom="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_dont_have_account">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lemonada"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_dont_have_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lemonada"
+        android:text="@string/you_don_t_have_an_account"
+        android:textColor="@color/white_smoke"
+        android:textSize="14sp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
+
+    <TextView
+        android:id="@+id/tv_have_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/lemonada"
+        android:visibility="invisible"
+        android:focusable="false"
+        android:text="@string/you_have_an_account"
+        android:textColor="@color/white_smoke"
+        android:textSize="14sp"
+        app:hintTextColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/button_login"
+        app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/passwordInputLayout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_login"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/white_smoke"
+        android:fontFamily="@font/lemonada"
+        android:paddingVertical="5dp"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@id/button_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dont_have_account" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_register"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:backgroundTint="@color/white_smoke"
+        android:fontFamily="@font/lemonada"
+        android:text="@string/register"
+        android:visibility="invisible"
+        android:focusable="false"
+        android:textColor="@color/black"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="0.5dp" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
