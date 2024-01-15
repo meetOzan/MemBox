@@ -1,6 +1,6 @@
 package com.mertozan.membox.domain
 
-import com.mertozan.membox.MemRepository
+import com.mertozan.membox.repository.MemRepository
 import com.mertozan.membox.model.Memory
 import javax.inject.Inject
 

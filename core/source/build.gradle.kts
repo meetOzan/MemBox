@@ -1,10 +1,10 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -71,4 +71,9 @@ dependencies {
 
     // Firebase Storage
     implementation(libs.firebase.storage)
+
+    // Room
+    kapt(libs.room.kapt)
+    implementation(libs.androidx.room)
+    annotationProcessor(libs.annotation.room.compiler)
 }

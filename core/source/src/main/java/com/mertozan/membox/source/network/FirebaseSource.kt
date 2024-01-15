@@ -1,9 +1,9 @@
-package com.mertozan.membox.source.local
+package com.mertozan.membox.source.network
 
 import android.content.Context
 import android.net.Uri
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.dto.User
+import com.mertozan.membox.source.network.dto.User
 
 interface FirebaseSource {
 

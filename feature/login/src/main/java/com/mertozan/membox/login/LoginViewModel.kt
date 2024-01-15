@@ -6,7 +6,7 @@ import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.domain.IsUserSigned
 import com.mertozan.membox.domain.SignInUseCase
 import com.mertozan.membox.domain.SignUpUseCase
-import com.mertozan.membox.source.dto.User
+import com.mertozan.membox.source.network.dto.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,6 +1,6 @@
 package com.mertozan.membox.domain
 
-import com.mertozan.membox.MemRepository
+import com.mertozan.membox.repository.MemRepository
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.model.Memory
 import kotlinx.coroutines.flow.Flow

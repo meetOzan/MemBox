@@ -58,4 +58,9 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
     kapt(libs.hilt.compiler)
 
+    // Room
+    kapt(libs.room.kapt)
+    implementation(libs.androidx.room)
+    annotationProcessor(libs.annotation.room.compiler)
+
 }

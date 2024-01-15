@@ -1,4 +1,4 @@
-package com.mertozan.membox.source.local
+package com.mertozan.membox.source.network
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,7 +10,7 @@ import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.mertozan.membox.core.mapper.uriToBitmap
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.dto.User
+import com.mertozan.membox.source.network.dto.User
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 

@@ -2,7 +2,7 @@ package com.mertozan.membox.domain
 
 import android.content.Context
 import android.net.Uri
-import com.mertozan.membox.MemRepository
+import com.mertozan.membox.repository.MemRepository
 import com.mertozan.membox.core.ResponseState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

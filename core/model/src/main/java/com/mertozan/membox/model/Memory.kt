@@ -1,6 +1,7 @@
 package com.mertozan.membox.model
 
 data class Memory(
+    val id: Int = 0,
     val title: String = "",
     val content: String = "",
     val date: String = "",
