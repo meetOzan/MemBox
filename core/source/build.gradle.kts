@@ -2,12 +2,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.mertozan.membox.domain"
+    namespace = "com.mertozan.membox.source"
     compileSdk = libs.versions.sdkCompile.get().toInt()
 
     defaultConfig {
@@ -34,24 +35,40 @@ android {
     }
 }
 
+
 dependencies {
 
-    implementation(project(":core:data"))
-    implementation(project(":core:source"))
     implementation(project(":core:model"))
     implementation(project(":core:common"))
+    implementation(project(":core:localization"))
 
     // Core
     implementation(libs.androidx.core)
-    implementation(libs.androidx.lifecyle)
+    implementation(libs.androidx.compat)
     implementation(libs.material)
 
     // Test
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.bundles.androidTestImplementation)
 
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
     // Hilt
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
     kapt(libs.hilt.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+
+    // Firebase Auth
+    implementation(libs.firebase.auth)
+
+    // Firebase Firestore
+    implementation(libs.firebase.firestore)
+
+    // Firebase Storage
+    implementation(libs.firebase.storage)
 }

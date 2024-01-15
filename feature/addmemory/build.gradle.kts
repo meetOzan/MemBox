@@ -48,7 +48,7 @@ dependencies {
     implementation(project(":core:presentation"))
     implementation(project(":core:localization"))
     implementation(project(":core:domain"))
-    implementation(project(":core:network"))
+    implementation(project(":core:source"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
 

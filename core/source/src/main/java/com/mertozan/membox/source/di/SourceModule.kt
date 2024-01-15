@@ -1,7 +1,5 @@
-package com.mertozan.membox.network.di
+package com.mertozan.membox.source.di
 
-import com.mertozan.membox.network.firebase.FirebaseSource
-import com.mertozan.membox.network.firebase.FirebaseSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +12,6 @@ abstract class SourceModule {
 
     @Binds
     @Singleton
-    abstract fun bindFirebaseSource(firebaseSourceImpl: FirebaseSourceImpl): FirebaseSource
+    abstract fun bindFirebaseSource(firebaseSourceImpl: com.mertozan.membox.source.local.FirebaseSourceImpl): com.mertozan.membox.source.local.FirebaseSource
 
 }

@@ -1,4 +1,4 @@
-package com.mertozan.membox.network.di
+package com.mertozan.membox.source.di
 
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore

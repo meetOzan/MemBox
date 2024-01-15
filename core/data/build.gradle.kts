@@ -38,9 +38,8 @@ dependencies {
 
     implementation(project(":core:presentation"))
     implementation(project(":core:model"))
-    implementation(project(mapOf("path" to ":core:network")))
-    implementation(project(mapOf("path" to ":core:common")))
-
+    implementation(project(":core:source"))
+    implementation(project(":core:common"))
 
     // Core
     implementation(libs.androidx.core)

@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.Uri
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.network.dto.User
-import com.mertozan.membox.network.firebase.FirebaseSource
+import com.mertozan.membox.source.dto.User
+import com.mertozan.membox.source.local.FirebaseSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -26,7 +26,6 @@ class MemRepositoryImpl @Inject constructor(
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
-
     }
 
     override fun signUpWithEmailAndPassword(

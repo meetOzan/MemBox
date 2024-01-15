@@ -1,4 +1,4 @@
-package com.mertozan.membox.network.dto
+package com.mertozan.membox.source.dto
 
 data class User(
     val name: String = "",
