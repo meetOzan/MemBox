@@ -67,8 +67,8 @@ data class HomeUiState(
     val isError: Boolean = false,
     val memoryList: List<Memory> = emptyList(),
     val errorMessage: String = "",
-){
-    companion object{
+) {
+    companion object {
         fun initial() = HomeUiState(isLoading = true)
     }
 }

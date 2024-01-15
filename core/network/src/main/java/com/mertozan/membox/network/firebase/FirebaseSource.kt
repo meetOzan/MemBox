@@ -1,4 +1,4 @@
-package com.mertozan.membox.network.firestore
+package com.mertozan.membox.network.firebase
 
 import android.content.Context
 import android.net.Uri
@@ -32,7 +32,10 @@ interface FirebaseSource {
         imagesUrl: List<String>,
         imageName: String,
         onSuccess: () -> Unit,
-        onFailure: (String) -> Unit
+        onFailure: (String) -> Unit,
     )
 
+    fun getMoodsFromMemories(): Map<String, Float>
+
+    fun deleteAllMemories()
 }

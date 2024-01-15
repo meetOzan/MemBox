@@ -19,6 +19,7 @@ import com.mertozan.membox.addmemory.AddMemoryViewModel
 import com.mertozan.membox.login.LoginAction
 import com.mertozan.membox.login.LoginScreen
 import com.mertozan.membox.login.LoginViewModel
+import com.mertozan.membox.profile.ProfileAction
 import com.mertozan.membox.profile.ProfileScreen
 import com.mertozan.membox.profile.ProfileViewModel
 
@@ -101,7 +102,11 @@ fun NavGraphBuilder.profileScreen() {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
         val profileUiState = profileViewModel.profileUiState.collectAsState().value
 
-        ProfileScreen(profileUiState)
+        LaunchedEffect(Unit){
+            profileViewModel.onAction(ProfileAction.GetMoods)
+        }
+
+        ProfileScreen(profileUiState, profileViewModel::onAction)
     }
 }
 

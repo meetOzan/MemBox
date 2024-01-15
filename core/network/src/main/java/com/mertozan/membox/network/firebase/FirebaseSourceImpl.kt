@@ -1,4 +1,4 @@
-package com.mertozan.membox.network.firestore
+package com.mertozan.membox.network.firebase
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -78,7 +78,8 @@ class FirebaseSourceImpl @Inject constructor(
             "content" to memory.content,
             "date" to memory.date,
             "image" to memory.image,
-            "mood" to memory.mood
+            "mood" to memory.mood,
+            "moodName" to memory.moodName
         )
         firestore.collection("users").document(currentUser?.uid.toString())
             .collection("memories").document(memory.title)
@@ -123,7 +124,8 @@ class FirebaseSourceImpl @Inject constructor(
                             content = document.data["content"].toString(),
                             date = document.data["date"].toString(),
                             image = document.data["image"] as List<String>,
-                            mood = document.data["mood"].toString().toInt()
+                            mood = document.data["mood"].toString().toInt(),
+                            moodName = document.data["moodName"].toString()
                         )
                         memories.add(memory)
                     }
@@ -186,4 +188,48 @@ class FirebaseSourceImpl @Inject constructor(
             }
     }
 
+    override fun getMoodsFromMemories(): Map<String, Float> {
+        val currentUser = auth.currentUser
+        val moodMap = mutableMapOf<String, Float>(
+            "Love" to 0.1f,
+            "Happy" to 0.1f,
+            "Sad" to 0.1f,
+            "Angry" to 0.1f,
+            "AngryCry" to 0.1f,
+        )
+        firestore.collection("users").document(currentUser?.uid.toString())
+            .collection("memories").addSnapshotListener { querySnapshot, firestoreException ->
+                firestoreException?.let {
+                    throw RuntimeException(it.message)
+                }
+                querySnapshot?.let {
+                    for (document in it) {
+                        val memory = document.toObject<Memory>()
+                        memory.moodName.let { mood ->
+                            if (moodMap.containsKey(mood)) {
+                                moodMap[mood] = moodMap[mood]!! + 1f
+                            } else {
+                                moodMap[mood] = 0.1f
+                            }
+                            Log.e("FirebaseSourceImpl", "getMoodsFromMemories: $moodMap")
+                        }
+                    }
+                }
+            }
+        return moodMap
+    }
+
+    override fun deleteAllMemories() {
+        val currentUser = auth.currentUser
+        firestore.collection("users").document(currentUser?.uid.toString())
+            .collection("memories").get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (document in it.result!!) {
+                        document.reference.delete()
+                    }
+                } else {
+                    throw RuntimeException(it.exception?.message.orEmpty())
+                }
+            }
+    }
 }

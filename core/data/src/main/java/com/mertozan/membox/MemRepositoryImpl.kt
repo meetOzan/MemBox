@@ -5,7 +5,7 @@ import android.net.Uri
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.model.Memory
 import com.mertozan.membox.network.dto.User
-import com.mertozan.membox.network.firestore.FirebaseSource
+import com.mertozan.membox.network.firebase.FirebaseSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -116,6 +116,26 @@ class MemRepositoryImpl @Inject constructor(
         return flow {
             emit(ResponseState.Loading)
             firebaseSource.uploadImageToFirestore(imagesUrl, imageName, onSuccess, onFailure)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getMoodsFromMemories(): Flow<ResponseState<Map<String, Float>>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.getMoodsFromMemories()
+            emit(ResponseState.Success(firebaseSource.getMoodsFromMemories()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun deleteAllMemories(): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.deleteAllMemories()
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))

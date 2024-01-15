@@ -40,4 +40,8 @@ interface MemRepository {
         onFailure: (String) -> Unit = { _ -> },
     ): Flow<ResponseState<Unit>>
 
+    fun getMoodsFromMemories(): Flow<ResponseState<Map<String, Float>>>
+
+    fun deleteAllMemories() : Flow<ResponseState<Unit>>
+
 }

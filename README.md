@@ -6,5 +6,6 @@
 - Motion Layout ✅
 - Firebase Auth. ✅
 - Firebase Firestore ✅
-# MemBox
-# MemBox
+- Firebase Storage ✅
+- Custom Components ✅
+- Image picker from Gallery ✅

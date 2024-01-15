@@ -6,4 +6,5 @@ data class Memory(
     val date: String = "",
     val image: List<String> = emptyList(),
     val mood: Int = 0,
+    val moodName: String = "",
 )

@@ -25,25 +25,24 @@ import com.mertozan.membox.presentation.R.drawable as presDraw
 
 @Composable
 fun MoodGraphic(
-    happy: Float = 0.1f,
-    sad: Float = 0.1f,
-    angry: Float = 0.1f,
-    love: Float = 0.1f,
-    angryCry: Float = 0.1f,
+    happy: Float,
+    sad: Float,
+    angry: Float,
+    love: Float,
+    angryCry: Float,
 ) {
     Row(
         modifier = Modifier
-            .clip(CircleShape)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(CircleShape),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Box(
             modifier = Modifier
-                .background(HappyColor)
                 .weight(happy)
-                .fillMaxWidth()
-                .clip(CircleShape),
+                .background(HappyColor)
+                .fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = presDraw.smile),
@@ -57,8 +56,7 @@ fun MoodGraphic(
             modifier = Modifier
                 .background(LoveColor)
                 .weight(love)
-                .fillMaxWidth()
-                .clip(CircleShape),
+                .fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = presDraw.heart_eyes),
@@ -72,8 +70,7 @@ fun MoodGraphic(
             modifier = Modifier
                 .background(SadColor)
                 .weight(sad)
-                .fillMaxWidth()
-                .clip(CircleShape),
+                .fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = presDraw.cry),
@@ -87,8 +84,7 @@ fun MoodGraphic(
             modifier = Modifier
                 .background(AngryColor)
                 .weight(angry)
-                .fillMaxWidth()
-                .clip(CircleShape),
+                .fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = presDraw.angry),
@@ -102,8 +98,7 @@ fun MoodGraphic(
             modifier = Modifier
                 .background(AngryCryColor)
                 .weight(angryCry)
-                .fillMaxWidth()
-                .clip(CircleShape),
+                .fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = presDraw.angry_cry),
@@ -119,5 +114,11 @@ fun MoodGraphic(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun MoodGraphicsPreview() {
-    MoodGraphic()
+    MoodGraphic(
+        happy = 0.2f,
+        sad = 0.2f,
+        angry = 0.2f,
+        love = 0.2f,
+        angryCry = 0.2f,
+    )
 }

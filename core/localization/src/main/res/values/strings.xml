@@ -25,4 +25,19 @@
     <string name="memory_streak">Memory Streak</string>
     <string name="delete_all_memories">Delete all memories</string>
     <string name="summary_of_your_memories">Summary of your memories</string>
+    <string name="save_to_memories">Save to Memories</string>
+    <string name="add_photos_for_this_memory">Add Photos for this memory</string>
+    <string name="long_long_time_ago">Long, long time ago…</string>
+    <string name="today_s_title">Today\'s title</string>
+    <string name="happy">Happy</string>
+    <string name="sad">Sad</string>
+    <string name="angry">Angry</string>
+    <string name="angry_cry">Angry Cry</string>
+    <string name="love">Love</string>
+    <string name="settings">Settings</string>
+    <string name="_0">0</string>
+    <string name="are_you_wanted_to_delete_all_this_memories">Are you wanted to delete all this memories?</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

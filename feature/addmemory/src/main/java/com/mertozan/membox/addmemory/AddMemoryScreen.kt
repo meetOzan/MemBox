@@ -205,7 +205,7 @@ fun AddMemoryScreen(
                                 color = DarkWhite80
                             )
                             .clip(ShapeDefaults.Medium),
-                        placeHolderText = "Today's title",
+                        placeHolderText = stringResource(locR.string.today_s_title),
                     )
                     Row(
                         modifier = Modifier
@@ -237,7 +237,7 @@ fun AddMemoryScreen(
                                     )
                                 )
                             },
-                            placeHolderText = "Long, long time ago...",
+                            placeHolderText = stringResource(locR.string.long_long_time_ago),
                             maxLines = 4,
                             modifier = Modifier
                                 .weight(1f)
@@ -295,7 +295,7 @@ fun AddMemoryScreen(
                     }
                 }
                 CustomText(
-                    text = "Add Photos for this memory",
+                    text = stringResource(locR.string.add_photos_for_this_memory),
                     fontSize = 20,
                     color = Pink,
                     fontWeight = FontWeight.Bold,
@@ -329,7 +329,7 @@ fun AddMemoryScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             CustomText(
-                text = "Save to Memories",
+                text = stringResource(locR.string.save_to_memories),
                 fontSize = 18,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
@@ -347,6 +347,7 @@ fun AddMemoryScreen(
                                 content = uiState.description,
                                 date = getCurrentDate(),
                                 mood = uiState.mood,
+                                moodName = uiState.emojiName
                             ),
                             onNavigate = onNavigate
                         )
