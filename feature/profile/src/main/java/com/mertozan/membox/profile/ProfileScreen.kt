@@ -183,7 +183,7 @@ fun ProfileScreen(
                                     love = profileUiState.moodValueMap[stringResource(id = localR.string.love)]
                                         ?: 0.1f,
                                     angryCry = profileUiState.moodValueMap[stringResource(id = localR.string.angry_cry)]
-                                        ?: 0.1f,
+                                        ?: 0.1f
                                 )
                                 LazyColumn(
                                     modifier = Modifier
@@ -222,7 +222,6 @@ fun ProfileScreen(
         }
     }
 
-    // TODO Add Animation
     if (profileUiState.isDialogOpen) {
         CustomAlertDialog(
             title = stringResource(localR.string.are_you_sure),
@@ -234,7 +233,8 @@ fun ProfileScreen(
                 onAction(ProfileAction.ChangeDialogState)
             },
             onPositiveAction = {
-                onAction(ProfileAction.DeleteAllMemories)
+                onAction(ProfileAction.DeleteAllMemoriesNetwork)
+                onAction(ProfileAction.DeleteAllMemoriesFromLocal)
                 onAction(ProfileAction.ChangeDialogState)
             },
             onNegativeAction = {

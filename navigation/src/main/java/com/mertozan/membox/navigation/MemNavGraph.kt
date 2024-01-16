@@ -76,7 +76,7 @@ fun NavGraphBuilder.homeScreen(
             homeViewModel.homeUiState.collectAsState(initial = HomeUiState.initial()).value
 
         LaunchedEffect(true) {
-            homeViewModel.onAction(HomeAction.GetAllMemories)
+            homeViewModel.onAction(HomeAction.GetLocalMemories)
         }
 
         HomeScreen(homeUiState.memoryList, homeUiState, onAddMemoryNavigate, onProfileNavigate)
@@ -104,6 +104,7 @@ fun NavGraphBuilder.profileScreen() {
 
         LaunchedEffect(Unit){
             profileViewModel.onAction(ProfileAction.GetMoods)
+            profileViewModel.onAction(ProfileAction.GetLocalMemories)
         }
 
         ProfileScreen(profileUiState, profileViewModel::onAction)

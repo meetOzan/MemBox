@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.domain.DeleteAllMemoriesUseCase
+import com.mertozan.membox.domain.DeleteLocalMemoriesUseCase
 import com.mertozan.membox.domain.GetAllMemoriesUseCase
-import com.mertozan.membox.domain.GetMoodsUseCase
+import com.mertozan.membox.domain.GetLocalMemoriesUseCase
+import com.mertozan.membox.domain.GetLocalMoodsUseCase
 import com.mertozan.membox.model.Memory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getAllMemoriesUseCase: GetAllMemoriesUseCase,
-    private val getMoodsUseCase: GetMoodsUseCase,
+    private val deleteLocalMemoriesUseCase: DeleteLocalMemoriesUseCase,
     private val deleteAllMemoriesUseCase: DeleteAllMemoriesUseCase,
+    private val getLocalMemoriesUseCase: GetLocalMemoriesUseCase,
+    private val getLocalMoodsUseCase: GetLocalMoodsUseCase,
 ) : ViewModel() {
 
     private val _profileUiState = MutableStateFlow(ProfileUiState.initial())
@@ -27,8 +31,10 @@ class ProfileViewModel @Inject constructor(
         when (action) {
             is ProfileAction.GetAllMemories -> getAllMemories()
             is ProfileAction.GetMoods -> getMoods()
-            is ProfileAction.DeleteAllMemories -> deleteAllMemories()
-            ProfileAction.ChangeDialogState -> changeDialogState()
+            is ProfileAction.DeleteAllMemoriesNetwork -> deleteAllMemories()
+            is ProfileAction.DeleteAllMemoriesFromLocal -> deleteAllMemoriesFromLocal()
+            is ProfileAction.ChangeDialogState -> changeDialogState()
+            is ProfileAction.GetLocalMemories -> getLocalMemories()
         }
     }
 
@@ -76,7 +82,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getMoods() {
         viewModelScope.launch {
-            getMoodsUseCase().collect { responseState ->
+            getLocalMoodsUseCase().collect { responseState ->
                 when (responseState) {
                     is ResponseState.Error -> {
                         _profileUiState.value = _profileUiState.value.copy(
@@ -136,6 +142,75 @@ class ProfileViewModel @Inject constructor(
                             isLoading = false,
                             isError = false,
                             isSuccess = true,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteAllMemoriesFromLocal() {
+        viewModelScope.launch {
+            deleteLocalMemoriesUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isSuccess = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_profileUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = true,
+                            isSuccess = false,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            isSuccess = true,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getLocalMemories() {
+        viewModelScope.launch {
+            getLocalMemoriesUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isSuccess = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_profileUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = true,
+                            isSuccess = false,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            isSuccess = true,
+                            memoryList = responseState.data
                         )
                     }
                 }

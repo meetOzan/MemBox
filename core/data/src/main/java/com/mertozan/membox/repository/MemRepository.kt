@@ -34,18 +34,21 @@ interface MemRepository {
 
     fun deleteAllMemories(): Flow<ResponseState<Unit>>
 
-    // Locale
-    fun deleteMemoryFromLocale(memory: Memory): Flow<ResponseState<Unit>>
-
-    fun updateMemory(memory: Memory): Flow<ResponseState<Unit>>
-
+    // Local
     fun getMemoryCount(): Flow<ResponseState<Int>>
 
     fun getAllLocalMemories(): Flow<ResponseState<List<Memory>>>
 
+    fun getLocalMoods(): Flow<ResponseState<Map<String, Float>>>
+
+    fun deleteMemoryFromLocal(memory: Memory): Flow<ResponseState<Unit>>
+
+    fun deleteAllMemoriesFromLocal(): Flow<ResponseState<Unit>>
+
+    fun updateMemory(memory: Memory): Flow<ResponseState<Unit>>
+
     fun addMemoryToLocal(memory: Memory): Flow<ResponseState<Unit>>
 
     // Transfer
-    fun transferMemoriesToLocale(): Flow<ResponseState<Unit>>
-
+    fun transferMemoriesToLocal(): Flow<ResponseState<Unit>>
 }

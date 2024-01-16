@@ -10,6 +10,8 @@ interface LocalSource {
 
     fun getMemoryCount(): Int
 
+    fun getLocalMoods() : Map<String, Float>
+
     fun addMemoryToLocal(memoryEntity: MemoryEntity)
 
     fun addAllMemoriesToLocal(memoryEntityList: List<MemoryEntity>)
@@ -28,7 +30,8 @@ interface LocalSource {
     fun updateUser(userEntity: UserEntity)
 
     // Transfer
-    fun transferMemoriesToLocale(memoryEntityList: List<MemoryEntity>)
+    fun transferMemoriesToLocal(memoryEntityList: List<MemoryEntity>)
 
     fun transferUserToLocal(userEntity: UserEntity)
+    fun deleteAllMemories()
 }

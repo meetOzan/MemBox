@@ -19,11 +19,17 @@ interface MemoryDao {
     @Delete
     fun deleteMemoryFromLocal(memory: MemoryEntity)
 
+    @Query("DELETE FROM memory_entity")
+    fun deleteAllMemories()
+
     @Query("SELECT * FROM memory_entity")
     fun getAllMemories(): List<MemoryEntity>
 
     @Query("SELECT COUNT(*) FROM memory_entity")
     fun getMemoryCount(): Int
+
+    @Query("SELECT memory_mood_name FROM memory_entity")
+    fun  getMoodName() : List<String>
 
     @Update
     fun updateMemory(memory: MemoryEntity)

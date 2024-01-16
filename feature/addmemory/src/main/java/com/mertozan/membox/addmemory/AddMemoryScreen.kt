@@ -352,6 +352,18 @@ fun AddMemoryScreen(
                             onNavigate = onNavigate
                         )
                     )
+                    onAction(
+                        AddMemoryAction.AddMemoryToLocal(
+                            memory = Memory(
+                                title = uiState.title,
+                                image = uiState.imagesUrl,
+                                content = uiState.description,
+                                date = getCurrentDate(),
+                                mood = uiState.mood,
+                                moodName = uiState.emojiName
+                            )
+                        )
+                    )
                 },
                 modifier = Modifier
                     .clip(CircleShape)

@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.bundles.material)
-    implementation(project(mapOf("path" to ":core:model")))
 
     // Test
     testImplementation(libs.test.junit)

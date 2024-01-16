@@ -31,7 +31,7 @@ val moodList = listOf(
     ),
     Mood(
         emojiDrawable = presDraw.angry_cry,
-        emojiName = "AngryCry",
+        emojiName = "Angry Cry",
         emojiColor = AngryCryColor.hashCode()
     )
 )

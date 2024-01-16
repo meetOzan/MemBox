@@ -9,7 +9,7 @@ data class MemoryEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("memory_id")
-    val memoryId: Int,
+    val memoryId: Int = 0,
 
     @ColumnInfo("memory_title")
     val memoryTitle: String,

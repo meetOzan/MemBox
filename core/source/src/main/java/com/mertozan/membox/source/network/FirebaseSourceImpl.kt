@@ -12,6 +12,7 @@ import com.mertozan.membox.core.mapper.uriToBitmap
 import com.mertozan.membox.model.Memory
 import com.mertozan.membox.source.network.dto.User
 import java.io.ByteArrayOutputStream
+import java.util.UUID
 import javax.inject.Inject
 
 class FirebaseSourceImpl @Inject constructor(
@@ -73,7 +74,7 @@ class FirebaseSourceImpl @Inject constructor(
     override fun addMemory(memory: Memory, onNavigate: () -> Unit) {
         val currentUser = auth.currentUser
         val memoryMap = hashMapOf(
-            "id" to currentUser?.uid.toString(),
+            "id" to UUID.randomUUID().toString(),
             "title" to memory.title,
             "content" to memory.content,
             "date" to memory.date,
@@ -120,6 +121,7 @@ class FirebaseSourceImpl @Inject constructor(
                 if (it.isSuccessful) {
                     for (document in it.result!!) {
                         val memory = Memory(
+                            id = document.data["id"].toString(),
                             title = document.data["title"].toString(),
                             content = document.data["content"].toString(),
                             date = document.data["date"].toString(),
@@ -142,7 +144,7 @@ class FirebaseSourceImpl @Inject constructor(
         onSuccess: (String, String) -> Unit,
         onFailure: (String) -> Unit,
     ) {
-        val uuid = java.util.UUID.randomUUID()
+        val uuid = UUID.randomUUID()
         val imageName = "$uuid.jpg"
 
         val contentResolver = context.contentResolver

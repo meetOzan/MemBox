@@ -7,6 +7,7 @@ import com.mertozan.membox.model.Memory
 
 sealed class AddMemoryAction {
     data class AddMemory(val memory: Memory, val onNavigate: () -> Unit) : AddMemoryAction()
+    data class AddMemoryToLocal(val memory: Memory) : AddMemoryAction()
     data class UploadImageStorage(
         val uri: Uri,
         val context: Context,
@@ -25,4 +26,5 @@ sealed class AddMemoryAction {
         val onSuccess: () -> Unit,
         val onFailure: (String) -> Unit,
     ) : AddMemoryAction()
+    data object TransferToLocal : AddMemoryAction()
 }

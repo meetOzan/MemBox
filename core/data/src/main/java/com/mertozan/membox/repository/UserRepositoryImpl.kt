@@ -92,7 +92,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteUserFromLocale(userEntity: User) {
+    override suspend fun deleteUserFromLocal(userEntity: User) {
         localSource.deleteUserFromLocal(userEntity.mapModel {
             UserEntity(
                 userId = it.id,

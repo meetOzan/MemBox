@@ -99,20 +99,29 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun deleteMemoryFromLocale(memory: Memory): Flow<ResponseState<Unit>> {
+    override fun deleteMemoryFromLocal(memory: Memory): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
             localSource.deleteMemoryFromLocal(memory.mapModel {
                 MemoryEntity(
-                    it.id,
-                    it.title,
-                    it.content,
-                    it.date,
-                    it.image,
-                    it.mood,
-                    it.moodName
+                    memoryTitle = it.title,
+                    memoryContent = it.content,
+                    memoryDate = it.date,
+                    memoryImage = it.image,
+                    memoryMoodImage = it.mood,
+                    memoryMoodName = it.moodName
                 )
             })
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun deleteAllMemoriesFromLocal(): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            localSource.deleteAllMemories()
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -124,13 +133,12 @@ class MemRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             localSource.updateMemory(memory.mapModel {
                 MemoryEntity(
-                    it.id,
-                    it.title,
-                    it.content,
-                    it.date,
-                    it.image,
-                    it.mood,
-                    it.moodName
+                    memoryTitle = it.title,
+                    memoryContent = it.content,
+                    memoryDate = it.date,
+                    memoryImage = it.image,
+                    memoryMoodImage = it.mood,
+                    memoryMoodName = it.moodName
                 )
             })
             emit(ResponseState.Success(Unit))
@@ -155,13 +163,14 @@ class MemRepositoryImpl @Inject constructor(
             localSource.getAllMemories()
             emit(ResponseState.Success(localSource.getAllMemories().mapList { memoryEntity ->
                 Memory(
-                    memoryEntity.memoryId,
+                    memoryEntity.memoryId.toString(),
                     memoryEntity.memoryTitle,
                     memoryEntity.memoryContent,
                     memoryEntity.memoryDate,
                     memoryEntity.memoryImage,
                     memoryEntity.memoryMoodImage,
                     memoryEntity.memoryMoodName
+
                 )
             }))
         }.catch {
@@ -169,20 +178,33 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun addMemoryToLocal(memory: Memory): Flow<ResponseState<Unit>> {
+    override fun getLocalMoods(): Flow<ResponseState<Map<String, Float>>> {
         return flow {
             emit(ResponseState.Loading)
-            localSource.addMemoryToLocal(memory.mapModel {
-                MemoryEntity(
-                    it.id,
-                    it.title,
-                    it.content,
-                    it.date,
-                    it.image,
-                    it.mood,
-                    it.moodName
-                )
-            })
+            localSource.getLocalMoods()
+            emit(ResponseState.Success(localSource.getLocalMoods()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun addMemoryToLocal(
+        memory: Memory
+    ): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            localSource.addMemoryToLocal(
+                memory.mapModel {
+                    MemoryEntity(
+                        memoryTitle = it.title,
+                        memoryContent = it.content,
+                        memoryDate = it.date,
+                        memoryImage = it.image,
+                        memoryMoodImage = it.mood,
+                        memoryMoodName = it.moodName
+                    )
+                }
+            )
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -190,21 +212,19 @@ class MemRepositoryImpl @Inject constructor(
     }
 
     // Transfer
-    override fun transferMemoriesToLocale(): Flow<ResponseState<Unit>> {
+    override fun transferMemoriesToLocal(): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
             firebaseSource.getAllMemories()
             localSource.addAllMemoriesToLocal(firebaseSource.getAllMemories().mapList {
                 MemoryEntity(
-                    it.id,
-                    it.title,
-                    it.content,
-                    it.date,
-                    it.image,
-                    it.mood,
-                    it.moodName
+                    memoryTitle = it.title,
+                    memoryContent = it.content,
+                    memoryDate = it.date,
+                    memoryImage = it.image,
+                    memoryMoodImage = it.mood,
+                    memoryMoodName = it.moodName
                 )
-
             })
             emit(ResponseState.Success(Unit))
         }.catch {
