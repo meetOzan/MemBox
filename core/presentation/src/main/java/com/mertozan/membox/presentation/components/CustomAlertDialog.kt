@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +30,7 @@ import com.mertozan.membox.presentation.R
 import com.mertozan.membox.presentation.theme.ui.DarkBlue
 import com.mertozan.membox.presentation.theme.ui.DarkPink
 import com.mertozan.membox.presentation.theme.ui.DarkWhite60
+import com.mertozan.membox.presentation.theme.ui.TransparentBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,6 +70,13 @@ fun CustomAlertDialog(
                         .clip(CircleShape)
                         .fillMaxWidth(0.5f)
                         .fillMaxHeight(0.2f)
+                        .drawWithContent {
+                            drawCircle(
+                                color = TransparentBlue.copy(alpha = 0.2f),
+                                radius = size.minDimension / 2f
+                            )
+                            drawContent()
+                        }
                 )
                 CustomText(
                     text = title,

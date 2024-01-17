@@ -1,14 +1,15 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
-    namespace = "com.mertozan.membox.navigation"
+    namespace = "com.mertozan.membox"
     compileSdk = libs.versions.sdkCompile.get().toInt()
 
     defaultConfig {
@@ -26,13 +27,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     buildFeatures{
         compose = true
         viewBinding = true
@@ -40,16 +34,20 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeVer.get()
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
 
-    implementation(project(":feature:login"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:addmemory"))
-    implementation(project(":feature:detail"))
-    implementation(project(":feature:profile"))
-    implementation(project(":feature:splash"))
+    implementation(project(":core:presentation"))
+    implementation(project(":core:localization"))
+    implementation(project(":core:domain"))
 
     // Core
     implementation(libs.androidx.core)
@@ -62,11 +60,16 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.viewbinding)
     implementation(libs.androidx.fragment)
+    implementation(project(mapOf("path" to ":core:common")))
 
     // Test
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.bundles.androidTestImplementation)
     debugImplementation(libs.bundles.debugTestImplementation)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
@@ -75,4 +78,11 @@ dependencies {
     // Hilt
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
+    kapt(libs.hilt.compiler)
+
+    // Coil
+    implementation(libs.coil.ktx)
+
+    // Lottie
+    implementation(libs.com.airbnb.android.lottie)
 }

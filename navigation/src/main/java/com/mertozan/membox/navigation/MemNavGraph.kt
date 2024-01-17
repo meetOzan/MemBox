@@ -14,6 +14,9 @@ import com.mertozan.home.HomeAction
 import com.mertozan.home.HomeScreen
 import com.mertozan.home.HomeUiState
 import com.mertozan.home.HomeViewModel
+import com.mertozan.membox.SplashAction
+import com.mertozan.membox.SplashScreen
+import com.mertozan.membox.SplashViewModel
 import com.mertozan.membox.addmemory.AddMemoryScreen
 import com.mertozan.membox.addmemory.AddMemoryViewModel
 import com.mertozan.membox.login.LoginAction
@@ -29,8 +32,24 @@ fun MemNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
-        navController = navController, startDestination = LoginScreen.route
+        navController = navController, startDestination = SplashScreen.route
     ) {
+        splashScreen(
+            onLoginNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    popUpTo(SplashScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            onHomeNavigate = {
+                navController.navigate(HomeScreen.route) {
+                    popUpTo(SplashScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
         loginScreen(
             onHomeNavigate = { navController.navigate(HomeScreen.route) }
         )
@@ -42,6 +61,23 @@ fun MemNavGraph(
             onHomeNavigate = { navController.navigate(HomeScreen.route) }
         )
         profileScreen()
+    }
+}
+
+fun NavGraphBuilder.splashScreen(
+    onLoginNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit,
+) {
+    composable(route = SplashScreen.route) {
+
+        val loginViewModel = hiltViewModel<SplashViewModel>()
+        val splashUiState = loginViewModel.splashUiState.collectAsState().value
+
+        LaunchedEffect(Unit) {
+            loginViewModel.onAction(SplashAction.NavigateToApp)
+        }
+
+        SplashScreen(onLoginNavigate, onHomeNavigate, splashUiState)
     }
 }
 
@@ -102,7 +138,7 @@ fun NavGraphBuilder.profileScreen() {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
         val profileUiState = profileViewModel.profileUiState.collectAsState().value
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             profileViewModel.onAction(ProfileAction.GetMoods)
             profileViewModel.onAction(ProfileAction.GetLocalMemories)
         }

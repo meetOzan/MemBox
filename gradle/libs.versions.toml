@@ -23,6 +23,7 @@ firebaseBom = "32.7.0"
 firebaseStorage = "20.3.0"
 kotlin = "1.9.10"
 composeVer = "1.5.3"
+lottieVersion = "4.2.0"
 composeBom = "2023.10.01"
 composeViewBinding = "2.2.0-alpha13"
 firebaseCrashlyticsGradle = "2.9.9"
@@ -84,6 +85,7 @@ coil-ktx = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-kt
 androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room-version" }
 annotation-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
 room-kapt = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
+com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
