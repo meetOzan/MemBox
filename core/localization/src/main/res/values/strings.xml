@@ -40,6 +40,11 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name = "lottie_splash">https://lottie.host/994dc7f0-d459-4789-9adb-71645d5514f1/ME7CWOEK01.json"</string>
+    <string name="lottie_splash">https://lottie.host/994dc7f0-d459-4789-9adb-71645d5514f1/ME7CWOEK01.json"</string>
     <string name="remember_what_you_live">Remember what you live</string>
+    <string name="mood_image">mood_image</string>
+    <string name="details_of">"Details of "</string>
+    <string name="memory_title">Memory Title</string>
+    <string name="read_more">Read more</string>
+    <string name="images_of_your_memory">Images of your memory</string>
 </resources>

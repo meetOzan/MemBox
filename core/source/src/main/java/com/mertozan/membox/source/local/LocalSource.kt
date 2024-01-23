@@ -12,6 +12,8 @@ interface LocalSource {
 
     fun getLocalMoods() : Map<String, Float>
 
+    fun getMemoryByTitle(title: String): MemoryEntity
+
     fun addMemoryToLocal(memoryEntity: MemoryEntity)
 
     fun addAllMemoriesToLocal(memoryEntityList: List<MemoryEntity>)

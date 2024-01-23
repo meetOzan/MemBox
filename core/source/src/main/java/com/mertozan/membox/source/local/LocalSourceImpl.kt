@@ -38,47 +38,51 @@ class LocalSourceImpl @Inject constructor(
         return moodMap
     }
 
-        override fun addMemoryToLocal(memoryEntity: MemoryEntity) {
-            memoryDao.addMemoryToLocal(memoryEntity)
-        }
-
-        override fun addAllMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
-            memoryDao.addAllMemoriesToLocal(memoryEntityList)
-        }
-
-        override fun deleteMemoryFromLocal(memoryEntity: MemoryEntity) {
-            memoryDao.deleteMemoryFromLocal(memoryEntity)
-        }
-
-        override fun deleteAllMemories() {
-            memoryDao.deleteAllMemories()
-        }
-
-        override fun updateMemory(memoryEntity: MemoryEntity) {
-            memoryDao.updateMemory(memoryEntity)
-        }
-
-        override fun addUserToLocal(userEntity: UserEntity) {
-            userDao.addUserToLocal(userEntity)
-        }
-
-        override fun deleteUserFromLocal(userEntity: UserEntity) {
-            userDao.deleteUserFromLocal(userEntity)
-        }
-
-        override fun getUser(): UserEntity = userDao.getSingleUser()
-
-
-        override fun updateUser(userEntity: UserEntity) {
-            userDao.updateUser(userEntity)
-        }
-
-        override fun transferMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
-            memoryDao.addAllMemoriesToLocal(memoryEntityList)
-        }
-
-        override fun transferUserToLocal(userEntity: UserEntity) {
-            userDao.addUserToLocal(userEntity)
-        }
-
+    override fun getMemoryByTitle(title: String): MemoryEntity {
+        return memoryDao.getMemoryByTitle(title)
     }
+
+    override fun addMemoryToLocal(memoryEntity: MemoryEntity) {
+        memoryDao.addMemoryToLocal(memoryEntity)
+    }
+
+    override fun addAllMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
+        memoryDao.addAllMemoriesToLocal(memoryEntityList)
+    }
+
+    override fun deleteMemoryFromLocal(memoryEntity: MemoryEntity) {
+        memoryDao.deleteMemoryFromLocal(memoryEntity)
+    }
+
+    override fun deleteAllMemories() {
+        memoryDao.deleteAllMemories()
+    }
+
+    override fun updateMemory(memoryEntity: MemoryEntity) {
+        memoryDao.updateMemory(memoryEntity)
+    }
+
+    override fun addUserToLocal(userEntity: UserEntity) {
+        userDao.addUserToLocal(userEntity)
+    }
+
+    override fun deleteUserFromLocal(userEntity: UserEntity) {
+        userDao.deleteUserFromLocal(userEntity)
+    }
+
+    override fun getUser(): UserEntity = userDao.getSingleUser()
+
+
+    override fun updateUser(userEntity: UserEntity) {
+        userDao.updateUser(userEntity)
+    }
+
+    override fun transferMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
+        memoryDao.addAllMemoriesToLocal(memoryEntityList)
+    }
+
+    override fun transferUserToLocal(userEntity: UserEntity) {
+        userDao.addUserToLocal(userEntity)
+    }
+
+}

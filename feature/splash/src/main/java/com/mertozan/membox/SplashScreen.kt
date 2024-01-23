@@ -50,7 +50,7 @@ fun SplashScreen(
         spec = LottieCompositionSpec.Url(stringResource(id = localString.lottie_splash))
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(splashUiState.isLoading) {
         scale.animateTo(
             targetValue = 0.3f,
             animationSpec = tween(

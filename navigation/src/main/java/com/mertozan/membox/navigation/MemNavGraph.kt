@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,6 +20,9 @@ import com.mertozan.membox.SplashScreen
 import com.mertozan.membox.SplashViewModel
 import com.mertozan.membox.addmemory.AddMemoryScreen
 import com.mertozan.membox.addmemory.AddMemoryViewModel
+import com.mertozan.membox.detail.DetailAction
+import com.mertozan.membox.detail.DetailScreen
+import com.mertozan.membox.detail.DetailViewModel
 import com.mertozan.membox.login.LoginAction
 import com.mertozan.membox.login.LoginScreen
 import com.mertozan.membox.login.LoginViewModel
@@ -55,12 +59,18 @@ fun MemNavGraph(
         )
         homeScreen(
             onAddMemoryNavigate = { navController.navigate(AddMemoryScreen.route) },
-            onProfileNavigate = { navController.navigate(ProfileScreen.route) }
+            onProfileNavigate = { navController.navigate(ProfileScreen.route) },
+            onDetailNavigate = { name ->
+                navController.navigate(
+                    MemoryDetailScreen.navigateWithArgs(name)
+                )
+            }
         )
         addMemoryScreen(
             onHomeNavigate = { navController.navigate(HomeScreen.route) }
         )
         profileScreen()
+        detailScreen()
     }
 }
 
@@ -104,8 +114,10 @@ fun NavGraphBuilder.loginScreen(
 fun NavGraphBuilder.homeScreen(
     onAddMemoryNavigate: () -> Unit,
     onProfileNavigate: () -> Unit,
-) {
-    composable(route = HomeScreen.route/* arguments = HomeScreen.args*/) {
+    onDetailNavigate: (String) -> Unit
+
+    ) {
+    composable(route = HomeScreen.route) {
 
         val homeViewModel = hiltViewModel<HomeViewModel>()
         val homeUiState =
@@ -115,7 +127,13 @@ fun NavGraphBuilder.homeScreen(
             homeViewModel.onAction(HomeAction.GetLocalMemories)
         }
 
-        HomeScreen(homeUiState.memoryList, homeUiState, onAddMemoryNavigate, onProfileNavigate)
+        HomeScreen(
+            homeUiState.memoryList,
+            homeUiState,
+            onDetailNavigate ,
+            onAddMemoryNavigate,
+            onProfileNavigate,
+        )
     }
 }
 
@@ -144,6 +162,23 @@ fun NavGraphBuilder.profileScreen() {
         }
 
         ProfileScreen(profileUiState, profileViewModel::onAction)
+    }
+}
+
+fun NavGraphBuilder.detailScreen() {
+    composable(
+        route = MemoryDetailScreen.routeWithArgs,
+        arguments = MemoryDetailScreen.args
+    ) {
+
+        val detailViewModel = hiltViewModel<DetailViewModel>()
+        val detailUiState = detailViewModel.detailUiState.collectAsState().value
+
+        LaunchedEffect(Unit) {
+            detailViewModel.onAction(DetailAction.GetMemoryByName)
+        }
+
+        DetailScreen(detailUiState)
     }
 }
 

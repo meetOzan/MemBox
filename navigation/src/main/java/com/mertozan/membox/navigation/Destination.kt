@@ -1,5 +1,9 @@
 package com.mertozan.membox.navigation
 
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.mertozan.membox.core.consts.Constants.ARGS_NAME
+
 interface Destination {
     val route: String
 }
@@ -22,10 +26,16 @@ object AddMemoryScreen : Destination {
 
 object MemoryDetailScreen : Destination {
     override val route = "memory_detail_screen"
+    fun navigateWithArgs(
+        name: String,
+    ): String = "$route/$name"
+
+    val routeWithArgs = "$route/{$ARGS_NAME}"
+    val args = listOf(
+        navArgument(ARGS_NAME) { type = NavType.StringType },
+    )
 }
 
 object ProfileScreen : Destination {
     override val route = "profile_screen"
 }
-
-const val ARGS_NAME = "name"

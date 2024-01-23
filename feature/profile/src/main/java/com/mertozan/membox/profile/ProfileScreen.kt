@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.IconButton
@@ -108,10 +110,11 @@ fun ProfileScreen(
                             )
                             .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceAround
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             CustomText(
@@ -154,67 +157,80 @@ fun ProfileScreen(
                                 )
                             }
                         }
-                        Surface(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clip(shape = ShapeDefaults.Medium)
-                                .background(Color.White)
-                                .fillMaxWidth(),
-                            shadowElevation = 24.dp
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Bottom,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
+                            CustomText(
+                                stringResource(id = localR.string.summary_of_your_memories),
+                                fontSize = 22,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                            Card(
                                 modifier = Modifier
-                                    .background(Color.White)
+                                    .padding(horizontal = 8.dp, vertical = 4.dp)
                                     .fillMaxWidth(),
+                                shape = ShapeDefaults.Medium,
+                                elevation = CardDefaults.cardElevation(
+                                    defaultElevation = 5.dp,
+                                    pressedElevation = 8.dp,
+                                    disabledElevation = 0.dp
+                                ),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White
+                                )
                             ) {
-                                CustomText(
-                                    stringResource(id = localR.string.summary_of_your_memories),
-                                    fontSize = 20,
-                                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                                )
-                                MoodGraphic(
-                                    happy = profileUiState.moodValueMap[stringResource(id = localR.string.happy)]
-                                        ?: 0.1f,
-                                    sad = profileUiState.moodValueMap[stringResource(id = localR.string.sad)]
-                                        ?: 0.1f,
-                                    angry = profileUiState.moodValueMap[stringResource(id = localR.string.angry)]
-                                        ?: 0.1f,
-                                    love = profileUiState.moodValueMap[stringResource(id = localR.string.love)]
-                                        ?: 0.1f,
-                                    angryCry = profileUiState.moodValueMap[stringResource(id = localR.string.angry_cry)]
-                                        ?: 0.1f
-                                )
-                                LazyColumn(
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
-                                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                                        .clip(shape = ShapeDefaults.Medium)
+                                        .padding(vertical = 8.dp)
+                                        .background(Color.White)
                                         .fillMaxWidth(),
-                                    verticalArrangement = Arrangement.Center
                                 ) {
-                                    items(moodList.size, key = { it }) { index ->
-                                        StaticsRow(
-                                            staticsName = moodList[index].emojiName,
-                                            staticsValue =
-                                            if (profileUiState.moodValueMap[moodList[index].emojiName] == 0.1f) {
-                                                stringResource(localR.string._0)
-                                            } else {
-                                                "${profileUiState.moodValueMap[moodList[index].emojiName]?.toInt()}"
-                                            },
-                                            nameColor = Color(moodList[index].emojiColor),
-                                            modifier = Modifier
-                                                .animateItemPlacement(
-                                                    animationSpec = tween(
-                                                        durationMillis = 500,
-                                                        delayMillis = 100 * index
+                                    MoodGraphic(
+                                        happy = profileUiState.moodValueMap[stringResource(id = localR.string.happy)]
+                                            ?: 0.1f,
+                                        sad = profileUiState.moodValueMap[stringResource(id = localR.string.sad)]
+                                            ?: 0.1f,
+                                        angry = profileUiState.moodValueMap[stringResource(id = localR.string.angry)]
+                                            ?: 0.1f,
+                                        love = profileUiState.moodValueMap[stringResource(id = localR.string.love)]
+                                            ?: 0.1f,
+                                        angryCry = profileUiState.moodValueMap[stringResource(id = localR.string.angry_cry)]
+                                            ?: 0.1f,
+                                    )
+                                    LazyColumn(
+                                        modifier = Modifier
+                                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                                            .clip(shape = ShapeDefaults.Medium)
+                                            .fillMaxWidth(),
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        items(moodList.size, key = { it }) { index ->
+                                            StaticsRow(
+                                                staticsName = moodList[index].emojiName,
+                                                staticsValue =
+                                                if (profileUiState.moodValueMap[moodList[index].emojiName] == 0.1f) {
+                                                    stringResource(localR.string._0)
+                                                } else {
+                                                    "${profileUiState.moodValueMap[moodList[index].emojiName]?.toInt()}"
+                                                },
+                                                nameColor = Color(moodList[index].emojiColor),
+                                                modifier = Modifier
+                                                    .animateItemPlacement(
+                                                        animationSpec = tween(
+                                                            durationMillis = 500,
+                                                            delayMillis = 100 * index
+                                                        )
                                                     )
-                                                )
-                                                .padding(horizontal = 24.dp, vertical = 8.dp)
-                                        )
+                                                    .padding(horizontal = 24.dp, vertical = 8.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }
-
                         }
                     }
                 }

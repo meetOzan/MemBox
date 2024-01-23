@@ -46,6 +46,7 @@ import com.mertozan.membox.localization.R as locR
 fun HomeScreen(
     memoryList: List<Memory>,
     uiState: HomeUiState,
+    onDetailNavigate: (String) -> Unit = { _ -> },
     onAddMemoryNavigate: () -> Unit,
     onProfileNavigate: () -> Unit,
 ) {
@@ -169,6 +170,11 @@ fun HomeScreen(
                                                     title = memoryList[memory].title,
                                                     description = memoryList[memory].content,
                                                     emoji = memoryList[memory].mood,
+                                                    onDetailClick = {
+                                                        onDetailNavigate(
+                                                            memoryList[memory].title
+                                                        )
+                                                    },
                                                 )
                                             }
                                         },
@@ -213,7 +219,8 @@ fun HomeScreenPreview() {
             )
         ),
         uiState = HomeUiState.initial(),
+        onDetailNavigate = {},
         onAddMemoryNavigate = {},
-        onProfileNavigate = {}
+        onProfileNavigate = {},
     )
 }

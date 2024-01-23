@@ -39,11 +39,25 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getAllMemoriesList(): List<Memory> {
+        return firebaseSource.getAllMemories()
+    }
+
     override fun getMemoryByDate(date: String): Flow<ResponseState<List<Memory>>> {
         return flow {
             emit(ResponseState.Loading)
             firebaseSource.getMemoryByDate(date)
             emit(ResponseState.Success(firebaseSource.getMemoryByDate(date)))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getMemoryByTitle(id: String): Flow<ResponseState<Memory>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.getMemoryByTitle(id)
+            emit(ResponseState.Success(firebaseSource.getMemoryByTitle(id)))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
@@ -188,8 +202,31 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getMemoryByTitleFromLocal(title: String): Flow<ResponseState<Memory>> {
+        return flow {
+            emit(ResponseState.Loading)
+            localSource.getMemoryByTitle(title)
+            emit(
+                ResponseState.Success(
+                    localSource.getMemoryByTitle(title).mapModel { memoryEntity ->
+                        Memory(
+                            memoryEntity.memoryId.toString(),
+                            memoryEntity.memoryTitle,
+                            memoryEntity.memoryContent,
+                            memoryEntity.memoryDate,
+                            memoryEntity.memoryImage,
+                            memoryEntity.memoryMoodImage,
+                            memoryEntity.memoryMoodName
+                        )
+                    })
+            )
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
     override fun addMemoryToLocal(
-        memory: Memory
+        memory: Memory,
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)

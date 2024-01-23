@@ -19,6 +19,8 @@ interface FirebaseSource {
 
     fun getAllMemories(): List<Memory>
 
+    fun getMemoryByTitle(title: String): Memory
+
     fun getMemoryByDate(date: String): List<Memory>
 
     fun uploadImageToStorage(

@@ -1,10 +1,12 @@
 package com.mertozan.membox.presentation.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import com.mertozan.membox.presentation.theme.poppinsFamily
@@ -37,6 +39,7 @@ fun CustomTextField(
             unfocusedIndicatorColor = Color.Transparent,
             focusedContainerColor = focusedContainerColor,
             unfocusedContainerColor = unfocusedContainerColor,
-        )
+        ),
+        shape = MaterialTheme.shapes.medium,
     )
 }

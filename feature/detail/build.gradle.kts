@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.viewbinding)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.compat)
 
     // Test
     testImplementation(libs.test.junit)
@@ -81,4 +82,8 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
     kapt(libs.hilt.compiler)
+
+    // Coil
+    implementation(libs.coil.ktx)
+
 }

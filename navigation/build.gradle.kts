@@ -44,6 +44,7 @@ android {
 
 dependencies {
 
+    implementation(project(":core:common"))
     implementation(project(":feature:login"))
     implementation(project(":feature:home"))
     implementation(project(":feature:addmemory"))

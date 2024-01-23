@@ -13,7 +13,11 @@ interface MemRepository {
 
     fun getAllMemories(): Flow<ResponseState<List<Memory>>>
 
+    fun getAllMemoriesList() : List<Memory>
+
     fun getMemoryByDate(date: String): Flow<ResponseState<List<Memory>>>
+
+    fun getMemoryByTitle(id: String): Flow<ResponseState<Memory>>
 
     // Image
     fun uploadImageStorage(
@@ -40,6 +44,8 @@ interface MemRepository {
     fun getAllLocalMemories(): Flow<ResponseState<List<Memory>>>
 
     fun getLocalMoods(): Flow<ResponseState<Map<String, Float>>>
+
+    fun getMemoryByTitleFromLocal(title: String): Flow<ResponseState<Memory>>
 
     fun deleteMemoryFromLocal(memory: Memory): Flow<ResponseState<Unit>>
 

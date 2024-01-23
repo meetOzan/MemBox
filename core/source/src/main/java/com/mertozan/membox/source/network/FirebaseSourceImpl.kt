@@ -97,8 +97,10 @@ class FirebaseSourceImpl @Inject constructor(
     override fun getAllMemories(): List<Memory> {
         val currentUser = auth.currentUser
         val memories = mutableListOf<Memory>()
-        firestore.collection("users").document(currentUser?.uid.toString())
-            .collection("memories").addSnapshotListener { querySnapshot, firestoreException ->
+        firestore.collection("users")
+            .document(currentUser?.uid.toString())
+            .collection("memories")
+            .addSnapshotListener { querySnapshot, firestoreException ->
                 firestoreException?.let {
                     throw RuntimeException(it.message)
                 }
@@ -111,6 +113,24 @@ class FirebaseSourceImpl @Inject constructor(
                 }
             }
         return memories
+    }
+
+    override fun getMemoryByTitle(title: String): Memory {
+        val currentUser = auth.currentUser
+        var memory = Memory()
+        firestore.collection("users").document(currentUser?.uid.toString())
+            .collection("memories")
+            .document(title)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val document = it.result
+                    memory = document.toObject<Memory>()!!
+                } else {
+                    throw RuntimeException("Memory could not be fetched.")
+                }
+            }
+        return memory
     }
 
     override fun getMemoryByDate(date: String): List<Memory> {
