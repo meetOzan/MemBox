@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.domain.AddMemoryUseCase
 import com.mertozan.membox.domain.AddToLocalUseCase
-import com.mertozan.membox.domain.TransferToLocalUseCase
 import com.mertozan.membox.domain.UploadImageFirestoreUseCase
 import com.mertozan.membox.domain.UploadImageStorageUseCase
 import com.mertozan.membox.model.Memory
@@ -23,8 +22,7 @@ class AddMemoryViewModel @Inject constructor(
     private val addMemoryUseCase: AddMemoryUseCase,
     private val uploadImageStorageUseCase: UploadImageStorageUseCase,
     private val uploadImageFirestoreUseCase: UploadImageFirestoreUseCase,
-    private val addMemoryToLocalUseCase: AddToLocalUseCase,
-    private val transferToLocalUseCase: TransferToLocalUseCase
+    private val addMemoryToLocalUseCase: AddToLocalUseCase
 ) : ViewModel() {
 
     private val _addMemoryState = MutableStateFlow(AddMemoryState.initial())
@@ -40,6 +38,7 @@ class AddMemoryViewModel @Inject constructor(
                 onSuccess = action.onSuccess,
                 onFailure = action.onFailure,
             )
+
             is AddMemoryAction.ChangeDescription -> changeDescription(action.newDescription)
             is AddMemoryAction.ChangeTitle -> changeTitle(action.newTitle)
             is AddMemoryAction.ChangeMood -> changeMood(
@@ -47,6 +46,7 @@ class AddMemoryViewModel @Inject constructor(
                 action.newEmojiName,
                 action.newEmojiColor
             )
+
             is AddMemoryAction.ChangeDate -> changeDate(action.newDate)
             is AddMemoryAction.UploadImageStorage -> uploadImage(
                 uri = action.uri,
@@ -54,37 +54,8 @@ class AddMemoryViewModel @Inject constructor(
                 onSuccess = action.onSuccess,
                 onFailure = action.onFailure,
             )
+
             is AddMemoryAction.SetImageUri -> setImageUri(action.uri, action.url)
-            is AddMemoryAction.TransferToLocal -> transferToLocal()
-        }
-    }
-
-    private fun transferToLocal() {
-        viewModelScope.launch {
-            transferToLocalUseCase().collect { responseState ->
-                when (responseState) {
-                    is ResponseState.Error -> {
-                        _addMemoryState.value = _addMemoryState.value.copy(
-                            isLoading = false,
-                            isError = true,
-                            errorMessage = responseState.message
-                        )
-                        throw RuntimeException(_addMemoryState.value.errorMessage)
-                    }
-
-                    ResponseState.Loading -> {
-                        _addMemoryState.value = _addMemoryState.value.copy(
-                            isLoading = true
-                        )
-                    }
-
-                    is ResponseState.Success -> {
-                        _addMemoryState.value = _addMemoryState.value.copy(
-                            isLoading = false,
-                        )
-                    }
-                }
-            }
         }
     }
 
@@ -194,7 +165,7 @@ class AddMemoryViewModel @Inject constructor(
         }
     }
 
-    private fun addMemoryToLocal(memory: Memory){
+    private fun addMemoryToLocal(memory: Memory) {
         viewModelScope.launch {
             addMemoryToLocalUseCase(memory).collect { responseState ->
                 when (responseState) {

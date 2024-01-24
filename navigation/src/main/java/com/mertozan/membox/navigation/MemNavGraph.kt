@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -97,10 +96,14 @@ fun NavGraphBuilder.loginScreen(
     composable(route = LoginScreen.route) {
 
         val loginViewModel = hiltViewModel<LoginViewModel>()
-        val loginUiState = loginViewModel.characterScreenUiState.collectAsState().value
+        val loginUiState = loginViewModel.loginScreenUiState.collectAsState().value
 
         LaunchedEffect(key1 = true) {
             loginViewModel.onAction(LoginAction.IsUserSignedIn)
+        }
+
+        LaunchedEffect(loginUiState.currentUser != "") {
+            loginViewModel.onAction(LoginAction.TransferMemoriesToLocal)
         }
 
         LoginScreen(
@@ -115,8 +118,7 @@ fun NavGraphBuilder.homeScreen(
     onAddMemoryNavigate: () -> Unit,
     onProfileNavigate: () -> Unit,
     onDetailNavigate: (String) -> Unit
-
-    ) {
+) {
     composable(route = HomeScreen.route) {
 
         val homeViewModel = hiltViewModel<HomeViewModel>()
@@ -124,13 +126,18 @@ fun NavGraphBuilder.homeScreen(
             homeViewModel.homeUiState.collectAsState(initial = HomeUiState.initial()).value
 
         LaunchedEffect(true) {
-            homeViewModel.onAction(HomeAction.GetLocalMemories)
+            homeViewModel.onAction(HomeAction.GetAllMemories)
+        }
+
+        LaunchedEffect(homeUiState.networkMemoryList.isNotEmpty()) {
+            homeViewModel.onAction(HomeAction.DeleteLocalMemories)
+            homeViewModel.onAction(HomeAction.TransferMemoriesToLocal(homeUiState.networkMemoryList))
         }
 
         HomeScreen(
-            homeUiState.memoryList,
+            homeUiState.networkMemoryList,
             homeUiState,
-            onDetailNavigate ,
+            onDetailNavigate,
             onAddMemoryNavigate,
             onProfileNavigate,
         )

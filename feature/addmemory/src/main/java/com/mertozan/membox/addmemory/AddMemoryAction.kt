@@ -26,5 +26,4 @@ sealed class AddMemoryAction {
         val onSuccess: () -> Unit,
         val onFailure: (String) -> Unit,
     ) : AddMemoryAction()
-    data object TransferToLocal : AddMemoryAction()
 }

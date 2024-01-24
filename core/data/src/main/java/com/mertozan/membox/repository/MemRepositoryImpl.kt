@@ -161,14 +161,8 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMemoryCount(): Flow<ResponseState<Int>> {
-        return flow {
-            emit(ResponseState.Loading)
-            localSource.getMemoryCount()
-            emit(ResponseState.Success(localSource.getMemoryCount()))
-        }.catch {
-            emit(ResponseState.Error(it.message.orEmpty()))
-        }
+    override fun getMemoryCount(): Int {
+        return localSource.getMemoryCount()
     }
 
     override fun getAllLocalMemories(): Flow<ResponseState<List<Memory>>> {
@@ -248,24 +242,21 @@ class MemRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun addAllMemoriesToLocal(memoryList: List<Memory>) {
+        localSource.addAllMemoriesToLocal(memoryList.mapList { memory ->
+            MemoryEntity(
+                memoryTitle = memory.title,
+                memoryContent = memory.content,
+                memoryDate = memory.date,
+                memoryImage = memory.image,
+                memoryMoodImage = memory.mood,
+                memoryMoodName = memory.moodName
+            )
+        })
+    }
+
     // Transfer
-    override fun transferMemoriesToLocal(): Flow<ResponseState<Unit>> {
-        return flow {
-            emit(ResponseState.Loading)
-            firebaseSource.getAllMemories()
-            localSource.addAllMemoriesToLocal(firebaseSource.getAllMemories().mapList {
-                MemoryEntity(
-                    memoryTitle = it.title,
-                    memoryContent = it.content,
-                    memoryDate = it.date,
-                    memoryImage = it.image,
-                    memoryMoodImage = it.mood,
-                    memoryMoodName = it.moodName
-                )
-            })
-            emit(ResponseState.Success(Unit))
-        }.catch {
-            emit(ResponseState.Error(it.message.orEmpty()))
-        }
+    override fun transferMemoriesToLocal(memoryList: List<Memory>) {
+        addAllMemoriesToLocal(memoryList)
     }
 }

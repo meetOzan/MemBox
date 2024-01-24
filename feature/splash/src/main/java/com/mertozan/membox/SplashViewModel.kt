@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val isUserSignedUseCase: IsUserSigned
+    private val isUserSignedUseCase: IsUserSigned,
 ) : ViewModel() {
 
     private val _splashUiState = MutableStateFlow(SplashUiState.initial())
@@ -59,7 +59,7 @@ data class SplashUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val isSigned: Boolean = false,
-    val errorMessage: String = "",
+    val errorMessage: String = ""
 ) {
     companion object {
         fun initial() = SplashUiState()

@@ -83,14 +83,19 @@ class FirebaseSourceImpl @Inject constructor(
             "moodName" to memory.moodName
         )
         firestore.collection("users").document(currentUser?.uid.toString())
-            .collection("memories").document(memory.title)
-            .set(memoryMap).addOnCompleteListener {
+            .collection("memories")
+            .document(memory.title)
+            .set(memoryMap)
+            .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onNavigate()
                     Log.d("Firebase Firestore", "Memory added.")
                 } else {
                     throw RuntimeException("Memory could not be added.")
                 }
+            }
+            .addOnFailureListener {
+                throw RuntimeException(it.message)
             }
     }
 

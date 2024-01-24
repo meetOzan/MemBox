@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.viewbinding)
     implementation(libs.androidx.fragment)
+    implementation(project(":core:model"))
 
     // Test
     testImplementation(libs.test.junit)

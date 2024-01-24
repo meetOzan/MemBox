@@ -13,7 +13,7 @@ interface MemRepository {
 
     fun getAllMemories(): Flow<ResponseState<List<Memory>>>
 
-    fun getAllMemoriesList() : List<Memory>
+    fun getAllMemoriesList(): List<Memory>
 
     fun getMemoryByDate(date: String): Flow<ResponseState<List<Memory>>>
 
@@ -39,7 +39,7 @@ interface MemRepository {
     fun deleteAllMemories(): Flow<ResponseState<Unit>>
 
     // Local
-    fun getMemoryCount(): Flow<ResponseState<Int>>
+    fun getMemoryCount(): Int
 
     fun getAllLocalMemories(): Flow<ResponseState<List<Memory>>>
 
@@ -55,6 +55,8 @@ interface MemRepository {
 
     fun addMemoryToLocal(memory: Memory): Flow<ResponseState<Unit>>
 
+    fun addAllMemoriesToLocal(memoryList: List<Memory>)
+
     // Transfer
-    fun transferMemoriesToLocal(): Flow<ResponseState<Unit>>
+    fun transferMemoriesToLocal(memoryList: List<Memory>)
 }

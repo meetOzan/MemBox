@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.compose.viewbinding)
     implementation(libs.androidx.fragment)
     implementation(project(mapOf("path" to ":core:common")))
+    implementation(project(":core:model"))
 
     // Test
     testImplementation(libs.test.junit)

@@ -89,6 +89,10 @@ fun AddMemoryScreen(
         )
     )
 
+    LaunchedEffect(key1 = Unit){
+        onAction(AddMemoryAction.ChangeDate(getCurrentDate()))
+    }
+
     // Context
     val context = LocalContext.current
 
@@ -345,7 +349,7 @@ fun AddMemoryScreen(
                                 title = uiState.title,
                                 image = uiState.imagesUrl,
                                 content = uiState.description,
-                                date = getCurrentDate(),
+                                date = uiState.date,
                                 mood = uiState.mood,
                                 moodName = uiState.emojiName
                             ),
