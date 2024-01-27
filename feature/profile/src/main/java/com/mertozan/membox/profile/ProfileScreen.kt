@@ -4,6 +4,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,20 +14,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,14 +46,17 @@ import com.mertozan.membox.presentation.components.CustomText
 import com.mertozan.membox.presentation.theme.ui.Blue
 import com.mertozan.membox.presentation.theme.ui.DarkWhite60
 import com.mertozan.membox.presentation.theme.ui.Pink
+import com.mertozan.membox.presentation.theme.ui.TransparentBlue
+import com.mertozan.membox.presentation.theme.ui.TransparentGray
 import com.mertozan.membox.localization.R as localR
 import com.mertozan.membox.presentation.R.drawable as presDraw
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     profileUiState: ProfileUiState,
-    onAction: ProfileAction.() -> Unit = {},
+    onAction: ProfileAction.() -> Unit,
+    onNavigate: () -> Unit,
 ) {
 
     Surface(
@@ -90,6 +101,7 @@ fun ProfileScreen(
                         )
                         IconButton(
                             onClick = {
+                                onAction(ProfileAction.ChangeSettingsState)
                             },
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
@@ -238,6 +250,109 @@ fun ProfileScreen(
         }
     }
 
+    if (profileUiState.isSettingsOpen) {
+        AlertDialog(
+            onDismissRequest = {
+                onAction(ProfileAction.ChangeSettingsState)
+            },
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .clip(MaterialTheme.shapes.large),
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = MaterialTheme.shapes.large,
+                color = DarkWhite60
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    CustomText(
+                        text = stringResource(localR.string.settings),
+                        fontSize = 24,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp, top = 8.dp)
+                            .clip(shape = ShapeDefaults.Medium)
+                            .background(TransparentGray)
+                            .fillMaxWidth()
+                            .clickable {
+
+                            },
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = null,
+                            modifier = Modifier.padding(start = 16.dp),
+                            colorFilter = ColorFilter.tint(Blue)
+                        )
+                        CustomText(
+                            text = stringResource(localR.string.edit_profile),
+                            fontSize = 20,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp, end = 16.dp),
+                            color = Color.Black
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .padding(vertical = 16.dp, horizontal = 16.dp)
+                            .clip(shape = ShapeDefaults.Medium)
+                            .background(TransparentGray)
+                            .fillMaxWidth()
+                            .clickable {
+                                onAction(ProfileAction.ChangeSettingsState)
+                                onAction(ProfileAction.SignOut)
+                                onNavigate()
+                                if (profileUiState.isSignedOut) {
+                                    onAction(ProfileAction.DeleteAllMemoriesFromLocal)
+                                }
+                            },
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            imageVector = Icons.Filled.Logout, contentDescription = null,
+                            modifier = Modifier.padding(start = 16.dp),
+                            colorFilter = ColorFilter.tint(Blue)
+                        )
+                        CustomText(
+                            text = stringResource(localR.string.sign_out),
+                            fontSize = 20,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp, end = 16.dp),
+                            color = Color.Black
+                        )
+                    }
+                    TextButton(
+                        onClick = { onAction(ProfileAction.ChangeSettingsState) },
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = Color.Transparent
+                        ),
+                        modifier = Modifier
+                            .padding(top = 24.dp)
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .background(
+                                TransparentBlue
+                            )
+                    ) {
+                        CustomText(
+                            text = stringResource(localR.string.close),
+                            fontSize = 16,
+                            color = Color.Black
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+
     if (profileUiState.isDialogOpen) {
         CustomAlertDialog(
             title = stringResource(localR.string.are_you_sure),
@@ -259,7 +374,6 @@ fun ProfileScreen(
         )
     }
 }
-
 
 @Composable
 fun StaticsRow(
@@ -299,6 +413,23 @@ fun ProfilePreview() {
         profileUiState = ProfileUiState(
             profileName = "Mert",
             profileMemoryStreak = "5",
-        )
+            moodValueMap = mapOf(
+                "😍" to 0.1f,
+                "😭" to 0.1f,
+                "😡" to 0.1f,
+                "😊" to 0.1f,
+                "😢" to 0.1f,
+            ),
+            memoryList = listOf(),
+            isLoading = false,
+            isError = false,
+            isSuccess = true,
+            errorMessage = "",
+            isDialogOpen = false,
+            isSettingsOpen = false,
+            isSignedOut = false
+        ),
+        onAction = {},
+        onNavigate = {}
     )
 }

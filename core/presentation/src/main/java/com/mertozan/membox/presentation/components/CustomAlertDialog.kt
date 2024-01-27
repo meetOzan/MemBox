@@ -1,6 +1,7 @@
 package com.mertozan.membox.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mertozan.membox.presentation.R
 import com.mertozan.membox.presentation.theme.ui.DarkBlue
-import com.mertozan.membox.presentation.theme.ui.DarkPink
 import com.mertozan.membox.presentation.theme.ui.DarkWhite60
 import com.mertozan.membox.presentation.theme.ui.TransparentBlue
 
@@ -57,7 +57,6 @@ fun CustomAlertDialog(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 20.dp)
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -67,6 +66,7 @@ fun CustomAlertDialog(
                     contentDescription = null,
                     modifier = Modifier
                         .height(100.dp)
+                        .padding(top = 16.dp)
                         .clip(CircleShape)
                         .fillMaxWidth(0.5f)
                         .fillMaxHeight(0.2f)
@@ -83,7 +83,7 @@ fun CustomAlertDialog(
                     color = DarkBlue,
                     fontSize = 24,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 24.dp),
+                    modifier = Modifier.padding(top = 24.dp, start = 16.dp, end = 16.dp),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 CustomText(
@@ -99,18 +99,20 @@ fun CustomAlertDialog(
                     horizontalArrangement = Arrangement.SpaceAround,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 16.dp)
+                        .background(TransparentBlue)
                 ) {
                     TextButton(onClick = { onPositiveAction() }) {
                         CustomText(
                             text = positiveButtonName,
-                            color = DarkPink,
+                            color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
                     }
                     TextButton(onClick = { onNegativeAction() }) {
                         CustomText(
                             text = negativeButtonName,
-                            color = DarkPink,
+                            color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
                     }

@@ -74,7 +74,15 @@ fun MemNavGraph(
         addMemoryScreen(
             onHomeNavigate = { navController.navigate(HomeScreen.route) }
         )
-        profileScreen()
+        profileScreen(
+            onLoginNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    popUpTo(ProfileScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
         detailScreen()
     }
 }
@@ -166,7 +174,9 @@ fun NavGraphBuilder.addMemoryScreen(
     }
 }
 
-fun NavGraphBuilder.profileScreen() {
+fun NavGraphBuilder.profileScreen(
+    onLoginNavigate: () -> Unit
+) {
     composable(route = ProfileScreen.route) {
 
         val profileViewModel = hiltViewModel<ProfileViewModel>()
@@ -177,7 +187,7 @@ fun NavGraphBuilder.profileScreen() {
             profileViewModel.onAction(ProfileAction.GetLocalMemories)
         }
 
-        ProfileScreen(profileUiState, profileViewModel::onAction)
+        ProfileScreen(profileUiState, profileViewModel::onAction, onLoginNavigate)
     }
 }
 

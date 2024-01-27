@@ -23,6 +23,7 @@ val DarkWhite80 = Color(0xFFDAD7D7)
 val DarkWhite70 = Color(0xFFEBEAEA)
 val DarkWhite60 = Color(0xFFF0F0F0)
 val DarkYellow = Color(0xFFE6B422)
+val TransparentGray = Color(0x4DB3B2B2)
 
 // Mood Colors
 val HappyColor = Color(0xFF8C1ABD)

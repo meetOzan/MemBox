@@ -47,4 +47,7 @@
     <string name="memory_title">Memory Title</string>
     <string name="read_more">Read more</string>
     <string name="images_of_your_memory">Images of your memory</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="close">Close</string>
 </resources>

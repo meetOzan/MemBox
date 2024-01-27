@@ -8,6 +8,7 @@ import com.mertozan.membox.domain.DeleteLocalMemoriesUseCase
 import com.mertozan.membox.domain.GetAllMemoriesUseCase
 import com.mertozan.membox.domain.GetLocalMemoriesUseCase
 import com.mertozan.membox.domain.GetLocalMoodsUseCase
+import com.mertozan.membox.domain.SignOutUseCase
 import com.mertozan.membox.model.Memory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ class ProfileViewModel @Inject constructor(
     private val deleteAllMemoriesUseCase: DeleteAllMemoriesUseCase,
     private val getLocalMemoriesUseCase: GetLocalMemoriesUseCase,
     private val getLocalMoodsUseCase: GetLocalMoodsUseCase,
+    private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     private val _profileUiState = MutableStateFlow(ProfileUiState.initial())
@@ -34,7 +36,9 @@ class ProfileViewModel @Inject constructor(
             is ProfileAction.DeleteAllMemoriesNetwork -> deleteAllMemories()
             is ProfileAction.DeleteAllMemoriesFromLocal -> deleteAllMemoriesFromLocal()
             is ProfileAction.ChangeDialogState -> changeDialogState()
+            is ProfileAction.ChangeSettingsState -> changeSettingsState()
             is ProfileAction.GetLocalMemories -> getLocalMemories()
+            ProfileAction.SignOut -> signOut()
         }
     }
 
@@ -224,12 +228,53 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
+    private fun changeSettingsState() {
+        _profileUiState.value = _profileUiState.value.copy(
+            isSettingsOpen = !_profileUiState.value.isSettingsOpen
+        )
+    }
+
+    private fun signOut() {
+        viewModelScope.launch {
+            signOutUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isSuccess = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_profileUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = true,
+                            isSuccess = false,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            isSignedOut = true,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 data class ProfileUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val isError: Boolean = false,
+    val isSignedOut : Boolean = false,
     val errorMessage: String = "",
     val profileName: String = "",
     val profileMemoryStreak: String = "",
@@ -242,6 +287,7 @@ data class ProfileUiState(
     ),
     val memoryList: List<Memory> = listOf(),
     val isDialogOpen: Boolean = false,
+    val isSettingsOpen: Boolean = false,
 ) {
     companion object {
         fun initial() = ProfileUiState(isLoading = true)
