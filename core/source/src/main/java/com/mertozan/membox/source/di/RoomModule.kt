@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.mertozan.membox.core.consts.Constants.DATABASE_NAME
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,6 +38,4 @@ object RoomModule {
     fun provideMemoryDao(memDatabase: MemDatabase): MemoryDao {
         return memDatabase.memoryDao()
     }
-
-    private const val DATABASE_NAME = "mem_database.db"
 }

@@ -22,7 +22,9 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            firebaseSource.signInWithEmailAndPassword(user, onNavigate)
+            firebaseSource.signInWithEmailAndPassword(user) {
+                onNavigate()
+            }
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -35,7 +37,9 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            firebaseSource.signUpUserWithEmailAndPassword(user, onNavigate)
+            firebaseSource.signUpUserWithEmailAndPassword(user){
+                onNavigate()
+            }
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))

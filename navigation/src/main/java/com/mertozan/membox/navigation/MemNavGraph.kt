@@ -54,7 +54,13 @@ fun MemNavGraph(
             }
         )
         loginScreen(
-            onHomeNavigate = { navController.navigate(HomeScreen.route) }
+            onHomeNavigate = {
+                navController.navigate(HomeScreen.route) {
+                    popUpTo(LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
         )
         homeScreen(
             onAddMemoryNavigate = { navController.navigate(AddMemoryScreen.route) },
@@ -119,7 +125,9 @@ fun NavGraphBuilder.homeScreen(
     onProfileNavigate: () -> Unit,
     onDetailNavigate: (String) -> Unit
 ) {
-    composable(route = HomeScreen.route) {
+    composable(
+        route = HomeScreen.route,
+    ) {
 
         val homeViewModel = hiltViewModel<HomeViewModel>()
         val homeUiState =
@@ -132,10 +140,11 @@ fun NavGraphBuilder.homeScreen(
         LaunchedEffect(homeUiState.networkMemoryList.isNotEmpty()) {
             homeViewModel.onAction(HomeAction.DeleteLocalMemories)
             homeViewModel.onAction(HomeAction.TransferMemoriesToLocal(homeUiState.networkMemoryList))
+            homeViewModel.onAction(HomeAction.GetLocalMemories)
         }
 
         HomeScreen(
-            homeUiState.networkMemoryList,
+            homeUiState.memoryList,
             homeUiState,
             onDetailNavigate,
             onAddMemoryNavigate,

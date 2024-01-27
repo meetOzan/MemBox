@@ -114,7 +114,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun deleteAllMemories(){
+    private fun deleteAllMemories() {
         viewModelScope.launch {
             deleteAllMemoriesUseCase().collect { responseState ->
                 when (responseState) {
@@ -148,7 +148,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun deleteLocalMemories(){
+    private fun deleteLocalMemories() {
         viewModelScope.launch {
             deleteLocalMemoriesUseCase().collect { responseState ->
                 when (responseState) {
@@ -189,7 +189,7 @@ data class HomeUiState(
     val isSuccess: Boolean = false,
     val isError: Boolean = false,
     val memoryList: List<Memory> = emptyList(),
-    val networkMemoryList : List<Memory> = emptyList(),
+    val networkMemoryList: List<Memory> = emptyList(),
     val errorMessage: String = "",
 ) {
     companion object {

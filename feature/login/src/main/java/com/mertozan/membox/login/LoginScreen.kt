@@ -37,7 +37,9 @@ fun LoginScreen(
                                 email = editTextEmail.text.toString(),
                                 password = editTextPassword.text.toString()
                             ),
-                            onNavigate = onHomeScreenNavigate,
+                            onNavigate = {
+                                onHomeScreenNavigate()
+                            },
                         )
                     )
                 }
@@ -48,7 +50,9 @@ fun LoginScreen(
                                 email = editTextEmail.text.toString(),
                                 password = editTextPassword.text.toString()
                             ),
-                            onNavigate = onHomeScreenNavigate,
+                            onNavigate = {
+                                onHomeScreenNavigate()
+                            },
                         )
                     )
                 }
