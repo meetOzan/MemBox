@@ -1,11 +1,10 @@
 package com.mertozan.membox.repository
 
 import com.mertozan.membox.core.ResponseState
-import com.mertozan.membox.core.mapper.mapModel
-import com.mertozan.membox.source.local.LocalSource
-import com.mertozan.membox.source.local.entity.UserEntity
-import com.mertozan.membox.source.network.FirebaseSource
-import com.mertozan.membox.source.network.dto.User
+import com.mertozan.membox.domain.repository.UserRepository
+import com.mertozan.membox.domain.source.FirebaseSource
+import com.mertozan.membox.domain.source.LocalSource
+import com.mertozan.membox.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -77,31 +76,14 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addUserToLocal(user: User) {
-        localSource.addUserToLocal(user.mapModel {
-            UserEntity(
-                userId = 1,
-                userName = it.name,
-                userSurname = it.surname,
-                userEmail = it.email,
-                userPassword = it.password,
-            )
-        })
+        localSource.addUserToLocal(user)
     }
 
     override fun getLocalUser(): Flow<ResponseState<User?>> {
         return flow {
             emit(ResponseState.Loading)
             localSource.getUser()
-            emit(ResponseState.Success(localSource.getUser().mapModel { userEntity ->
-                userEntity?.let {
-                    User(
-                        name = it.userName,
-                        surname = it.userSurname,
-                        email = it.userEmail,
-                        password = it.userPassword,
-                    )
-                }
-            }))
+            emit(ResponseState.Success(localSource.getUser()))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
@@ -118,15 +100,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUser(userEntity: User) {
-        localSource.updateUser(userEntity.mapModel {
-            UserEntity(
-                userId = 1,
-                userName = it.name,
-                userSurname = it.surname,
-                userEmail = it.email,
-                userPassword = it.password,
-            )
-        })
+        localSource.updateUser(userEntity)
     }
 
     override fun transferUserToLocal(user: User): Flow<ResponseState<Unit>> {

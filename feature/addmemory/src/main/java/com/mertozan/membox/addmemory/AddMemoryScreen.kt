@@ -57,7 +57,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mertozan.membox.addmemory.components.AddPhotoBox
 import com.mertozan.membox.addmemory.components.MoodIconButton
-import com.mertozan.membox.core.list.moodList
+import com.mertozan.membox.core.consts.Constants.moodList
 import com.mertozan.membox.model.Memory
 import com.mertozan.membox.presentation.components.CustomText
 import com.mertozan.membox.presentation.components.CustomTextField

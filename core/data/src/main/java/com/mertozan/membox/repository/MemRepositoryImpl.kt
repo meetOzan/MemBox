@@ -3,12 +3,10 @@ package com.mertozan.membox.repository
 import android.content.Context
 import android.net.Uri
 import com.mertozan.membox.core.ResponseState
-import com.mertozan.membox.core.mapper.mapList
-import com.mertozan.membox.core.mapper.mapModel
+import com.mertozan.membox.domain.repository.MemRepository
+import com.mertozan.membox.domain.source.FirebaseSource
+import com.mertozan.membox.domain.source.LocalSource
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.local.LocalSource
-import com.mertozan.membox.source.local.entity.MemoryEntity
-import com.mertozan.membox.source.network.FirebaseSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -116,16 +114,7 @@ class MemRepositoryImpl @Inject constructor(
     override fun deleteMemoryFromLocal(memory: Memory): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            localSource.deleteMemoryFromLocal(memory.mapModel {
-                MemoryEntity(
-                    memoryTitle = it.title,
-                    memoryContent = it.content,
-                    memoryDate = it.date,
-                    memoryImage = it.image,
-                    memoryMoodImage = it.mood,
-                    memoryMoodName = it.moodName
-                )
-            })
+            localSource.deleteMemoryFromLocal(memory)
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -145,16 +134,7 @@ class MemRepositoryImpl @Inject constructor(
     override fun updateMemory(memory: Memory): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            localSource.updateMemory(memory.mapModel {
-                MemoryEntity(
-                    memoryTitle = it.title,
-                    memoryContent = it.content,
-                    memoryDate = it.date,
-                    memoryImage = it.image,
-                    memoryMoodImage = it.mood,
-                    memoryMoodName = it.moodName
-                )
-            })
+            localSource.updateMemory(memory)
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -169,18 +149,7 @@ class MemRepositoryImpl @Inject constructor(
         return flow {
             emit(ResponseState.Loading)
             localSource.getAllMemories()
-            emit(ResponseState.Success(localSource.getAllMemories().mapList { memoryEntity ->
-                Memory(
-                    memoryEntity.memoryId.toString(),
-                    memoryEntity.memoryTitle,
-                    memoryEntity.memoryContent,
-                    memoryEntity.memoryDate,
-                    memoryEntity.memoryImage,
-                    memoryEntity.memoryMoodImage,
-                    memoryEntity.memoryMoodName
-
-                )
-            }))
+            emit(ResponseState.Success(localSource.getAllMemories()))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
@@ -202,17 +171,8 @@ class MemRepositoryImpl @Inject constructor(
             localSource.getMemoryByTitle(title)
             emit(
                 ResponseState.Success(
-                    localSource.getMemoryByTitle(title).mapModel { memoryEntity ->
-                        Memory(
-                            memoryEntity.memoryId.toString(),
-                            memoryEntity.memoryTitle,
-                            memoryEntity.memoryContent,
-                            memoryEntity.memoryDate,
-                            memoryEntity.memoryImage,
-                            memoryEntity.memoryMoodImage,
-                            memoryEntity.memoryMoodName
-                        )
-                    })
+                    localSource.getMemoryByTitle(title)
+                )
             )
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -224,18 +184,7 @@ class MemRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            localSource.addMemoryToLocal(
-                memory.mapModel {
-                    MemoryEntity(
-                        memoryTitle = it.title,
-                        memoryContent = it.content,
-                        memoryDate = it.date,
-                        memoryImage = it.image,
-                        memoryMoodImage = it.mood,
-                        memoryMoodName = it.moodName
-                    )
-                }
-            )
+            localSource.addMemoryToLocal(memory)
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
@@ -243,16 +192,7 @@ class MemRepositoryImpl @Inject constructor(
     }
 
     override fun addAllMemoriesToLocal(memoryList: List<Memory>) {
-        localSource.addAllMemoriesToLocal(memoryList.mapList { memory ->
-            MemoryEntity(
-                memoryTitle = memory.title,
-                memoryContent = memory.content,
-                memoryDate = memory.date,
-                memoryImage = memory.image,
-                memoryMoodImage = memory.mood,
-                memoryMoodName = memory.moodName
-            )
-        })
+        localSource.addAllMemoriesToLocal(memoryList)
     }
 
     // Transfer

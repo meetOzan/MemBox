@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
-import com.mertozan.membox.domain.AddMemoryUseCase
-import com.mertozan.membox.domain.AddToLocalUseCase
-import com.mertozan.membox.domain.UploadImageFirestoreUseCase
-import com.mertozan.membox.domain.UploadImageStorageUseCase
+import com.mertozan.membox.domain.usecase.AddMemoryUseCase
+import com.mertozan.membox.domain.usecase.AddToLocalUseCase
+import com.mertozan.membox.domain.usecase.UploadImageFirestoreUseCase
+import com.mertozan.membox.domain.usecase.UploadImageStorageUseCase
 import com.mertozan.membox.model.Memory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

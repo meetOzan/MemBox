@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.mertozan.membox.login.databinding.LoginScreenBinding
-import com.mertozan.membox.source.network.dto.User
+import com.mertozan.membox.model.User
 
 @Composable
 fun LoginScreen(

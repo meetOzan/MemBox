@@ -9,8 +9,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.mertozan.membox.core.mapper.uriToBitmap
+import com.mertozan.membox.domain.source.FirebaseSource
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.network.dto.User
+import com.mertozan.membox.model.User
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 import javax.inject.Inject

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.core.consts.Constants.ARGS_NAME
-import com.mertozan.membox.domain.GetMemoryByNameUseCase
-import com.mertozan.membox.domain.GetSingleMemoryUseCase
+import com.mertozan.membox.domain.usecase.GetMemoryByNameUseCase
+import com.mertozan.membox.domain.usecase.GetSingleMemoryUseCase
 import com.mertozan.membox.model.Memory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getMemoryByNameUseCase: GetMemoryByNameUseCase,
     private val getSingleMemoryUseCase: GetSingleMemoryUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

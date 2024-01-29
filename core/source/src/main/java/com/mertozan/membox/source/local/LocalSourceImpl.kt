@@ -1,6 +1,11 @@
 package com.mertozan.membox.source.local
 
-import com.mertozan.membox.core.resource.ResourceProvider
+import com.mertozan.membox.core.mapper.mapList
+import com.mertozan.membox.core.mapper.mapModel
+import com.mertozan.membox.domain.infrastructure.ResourceProvider
+import com.mertozan.membox.domain.source.LocalSource
+import com.mertozan.membox.model.Memory
+import com.mertozan.membox.model.User
 import com.mertozan.membox.source.local.dao.MemoryDao
 import com.mertozan.membox.source.local.dao.UserDao
 import com.mertozan.membox.source.local.entity.MemoryEntity
@@ -14,7 +19,17 @@ class LocalSourceImpl @Inject constructor(
     private val resourceProvider: ResourceProvider,
 ) : LocalSource {
 
-    override fun getAllMemories(): List<MemoryEntity> = memoryDao.getAllMemories()
+    override fun getAllMemories(): List<Memory> = memoryDao.getAllMemories().mapList {
+        Memory(
+            id = it.memoryId.toString(),
+            title = it.memoryTitle,
+            content = it.memoryContent,
+            date = it.memoryDate,
+            image = it.memoryImage,
+            mood = it.memoryMoodImage,
+            moodName = it.memoryMoodName,
+        )
+    }
 
     override fun getMemoryCount(): Int = memoryDao.getMemoryCount()
 
@@ -38,51 +53,137 @@ class LocalSourceImpl @Inject constructor(
         return moodMap
     }
 
-    override fun getMemoryByTitle(title: String): MemoryEntity {
-        return memoryDao.getMemoryByTitle(title)
+    override fun getMemoryByTitle(title: String): Memory {
+        return memoryDao.getMemoryByTitle(title).mapModel {
+            Memory(
+                id = it.memoryId.toString(),
+                title = it.memoryTitle,
+                content = it.memoryContent,
+                date = it.memoryDate,
+                image = it.memoryImage,
+                mood = it.memoryMoodImage,
+                moodName = it.memoryMoodName,
+            )
+        }
     }
 
-    override fun addMemoryToLocal(memoryEntity: MemoryEntity) {
-        memoryDao.addMemoryToLocal(memoryEntity)
+    override fun addMemoryToLocal(memoryEntity: Memory) {
+        memoryDao.addMemoryToLocal(memoryEntity.mapModel {
+            MemoryEntity(
+                memoryTitle = it.title,
+                memoryContent = it.content,
+                memoryDate = it.date,
+                memoryImage = it.image,
+                memoryMoodImage = it.mood,
+                memoryMoodName = it.moodName,
+            )
+        })
     }
 
-    override fun addAllMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
-        memoryDao.addAllMemoriesToLocal(memoryEntityList)
+    override fun addAllMemoriesToLocal(memoryEntityList: List<Memory>) {
+        memoryDao.addAllMemoriesToLocal(memoryEntityList.mapList {
+            MemoryEntity(
+                memoryTitle = it.title,
+                memoryContent = it.content,
+                memoryDate = it.date,
+                memoryImage = it.image,
+                memoryMoodImage = it.mood,
+                memoryMoodName = it.moodName,
+            )
+        })
     }
 
-    override fun deleteMemoryFromLocal(memoryEntity: MemoryEntity) {
-        memoryDao.deleteMemoryFromLocal(memoryEntity)
+    override fun deleteMemoryFromLocal(memoryEntity: Memory) {
+        memoryDao.deleteMemoryFromLocal(memoryEntity.mapModel {
+            MemoryEntity(
+                memoryTitle = it.title,
+                memoryContent = it.content,
+                memoryDate = it.date,
+                memoryImage = it.image,
+                memoryMoodImage = it.mood,
+                memoryMoodName = it.moodName,
+            )
+        })
     }
 
     override fun deleteAllMemories() {
         memoryDao.deleteAllMemories()
     }
 
-    override fun updateMemory(memoryEntity: MemoryEntity) {
-        memoryDao.updateMemory(memoryEntity)
+    override fun updateMemory(memoryEntity: Memory) {
+        memoryDao.updateMemory(memoryEntity.mapModel {
+            MemoryEntity(
+                memoryTitle = it.title,
+                memoryContent = it.content,
+                memoryDate = it.date,
+                memoryImage = it.image,
+                memoryMoodImage = it.mood,
+                memoryMoodName = it.moodName,
+            )
+        })
     }
 
-    override fun addUserToLocal(userEntity: UserEntity) {
-        userDao.addUserToLocal(userEntity)
+    override fun addUserToLocal(userEntity: User) {
+        userDao.addUserToLocal(userEntity.mapModel {
+            UserEntity(
+                userId = 1,
+                userName = it.name,
+                userSurname = it.surname,
+                userEmail = it.email,
+                userPassword = it.password,
+            )
+        })
     }
 
     override fun deleteUserFromLocal() {
         userDao.deleteAllUsers()
     }
 
-    override fun getUser(): UserEntity = userDao.getSingleUser()
-
-
-    override fun updateUser(userEntity: UserEntity) {
-        userDao.updateUser(userEntity)
+    override fun getUser(): User = userDao.getSingleUser().mapModel {
+        User(
+            name = it.userName,
+            surname = it.userSurname,
+            email = it.userEmail,
+            password = it.userPassword,
+        )
     }
 
-    override fun transferMemoriesToLocal(memoryEntityList: List<MemoryEntity>) {
-        memoryDao.addAllMemoriesToLocal(memoryEntityList)
+
+    override fun updateUser(userEntity: User) {
+        userDao.updateUser(userEntity.mapModel {
+            UserEntity(
+                userId = 1,
+                userName = it.name,
+                userSurname = it.surname,
+                userEmail = it.email,
+                userPassword = it.password,
+            )
+        })
     }
 
-    override fun transferUserToLocal(userEntity: UserEntity) {
-        userDao.addUserToLocal(userEntity)
+    override fun transferMemoriesToLocal(memoryEntityList: List<Memory>) {
+        memoryDao.addAllMemoriesToLocal(memoryEntityList.mapList {
+            MemoryEntity(
+                memoryTitle = it.title,
+                memoryContent = it.content,
+                memoryDate = it.date,
+                memoryImage = it.image,
+                memoryMoodImage = it.mood,
+                memoryMoodName = it.moodName,
+            )
+        })
+    }
+
+    override fun transferUserToLocal(userEntity: User) {
+        userDao.addUserToLocal(userEntity.mapModel {
+            UserEntity(
+                userId = 1,
+                userName = it.name,
+                userSurname = it.surname,
+                userEmail = it.email,
+                userPassword = it.password,
+            )
+        })
     }
 
 }

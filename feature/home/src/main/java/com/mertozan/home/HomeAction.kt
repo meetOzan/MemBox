@@ -1,7 +1,7 @@
 package com.mertozan.home
 
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.network.dto.User
+import com.mertozan.membox.model.User
 
 sealed class HomeAction {
     data object GetAllMemories : HomeAction()

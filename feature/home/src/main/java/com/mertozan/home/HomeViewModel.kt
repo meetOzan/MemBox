@@ -3,17 +3,17 @@ package com.mertozan.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
-import com.mertozan.membox.domain.DeleteAllMemoriesUseCase
-import com.mertozan.membox.domain.DeleteLocalMemoriesUseCase
-import com.mertozan.membox.domain.DeleteLocalUserUseCase
-import com.mertozan.membox.domain.GetAllMemoriesUseCase
-import com.mertozan.membox.domain.GetLocalMemoriesUseCase
-import com.mertozan.membox.domain.GetLocalUserUserCase
-import com.mertozan.membox.domain.GetUserNetworkUseCase
-import com.mertozan.membox.domain.TransferToLocalUseCase
-import com.mertozan.membox.domain.TransferUserUseCase
+import com.mertozan.membox.domain.usecase.DeleteAllMemoriesUseCase
+import com.mertozan.membox.domain.usecase.DeleteLocalMemoriesUseCase
+import com.mertozan.membox.domain.usecase.DeleteLocalUserUseCase
+import com.mertozan.membox.domain.usecase.GetAllMemoriesUseCase
+import com.mertozan.membox.domain.usecase.GetLocalMemoriesUseCase
+import com.mertozan.membox.domain.usecase.GetLocalUserUserCase
+import com.mertozan.membox.domain.usecase.GetUserNetworkUseCase
+import com.mertozan.membox.domain.usecase.TransferToLocalUseCase
+import com.mertozan.membox.domain.usecase.TransferUserUseCase
 import com.mertozan.membox.model.Memory
-import com.mertozan.membox.source.network.dto.User
+import com.mertozan.membox.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -56,7 +56,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun deleteLocalUser(){
+    private fun deleteLocalUser() {
         viewModelScope.launch {
             deleteLocalUserUseCase().collect { responseState ->
                 when (responseState) {
@@ -119,7 +119,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getUserNetwork(){
+    private fun getUserNetwork() {
         viewModelScope.launch {
             getUserUseCase().collect { responseState ->
                 when (responseState) {

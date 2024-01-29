@@ -1,8 +1,6 @@
 package com.mertozan.membox.di
 
-import com.mertozan.membox.repository.MemRepository
 import com.mertozan.membox.repository.MemRepositoryImpl
-import com.mertozan.membox.repository.UserRepository
 import com.mertozan.membox.repository.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -16,10 +14,10 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindMemRepository(memRepositoryImpl: MemRepositoryImpl): MemRepository
+    abstract fun bindMemRepository(memRepositoryImpl: MemRepositoryImpl): com.mertozan.membox.domain.repository.MemRepository
 
     @Binds
     @Singleton
-    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): com.mertozan.membox.domain.repository.UserRepository
 
 }

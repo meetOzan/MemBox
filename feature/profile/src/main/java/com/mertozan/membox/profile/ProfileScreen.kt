@@ -38,7 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mertozan.membox.core.list.moodList
+import com.mertozan.membox.core.consts.Constants.moodList
 import com.mertozan.membox.presentation.components.CustomAlertDialog
 import com.mertozan.membox.presentation.components.CustomText
 import com.mertozan.membox.presentation.theme.ui.Blue
