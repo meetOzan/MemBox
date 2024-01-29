@@ -116,9 +116,6 @@ fun NavGraphBuilder.loginScreen(
             loginViewModel.onAction(LoginAction.IsUserSignedIn)
         }
 
-        LaunchedEffect(loginUiState.currentUser != "") {
-            loginViewModel.onAction(LoginAction.TransferMemoriesToLocal)
-        }
 
         LoginScreen(
             onHomeScreenNavigate = onHomeNavigate,
@@ -143,6 +140,13 @@ fun NavGraphBuilder.homeScreen(
 
         LaunchedEffect(true) {
             homeViewModel.onAction(HomeAction.GetAllMemories)
+            homeViewModel.onAction(HomeAction.GetUserNetwork)
+        }
+
+        LaunchedEffect(key1 = homeUiState.networkUser.name.isNotEmpty()) {
+            homeViewModel.onAction(HomeAction.DeleteLocalUser)
+            homeViewModel.onAction(HomeAction.TransferUserToLocal(homeUiState.networkUser))
+            homeViewModel.onAction(HomeAction.GetLocalUser)
         }
 
         LaunchedEffect(homeUiState.networkMemoryList.isNotEmpty()) {
@@ -185,6 +189,7 @@ fun NavGraphBuilder.profileScreen(
         LaunchedEffect(Unit) {
             profileViewModel.onAction(ProfileAction.GetMoods)
             profileViewModel.onAction(ProfileAction.GetLocalMemories)
+            profileViewModel.onAction(ProfileAction.GetLocalUser)
         }
 
         ProfileScreen(profileUiState, profileViewModel::onAction, onLoginNavigate)

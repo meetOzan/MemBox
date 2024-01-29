@@ -37,7 +37,7 @@ class UserRepositoryImpl @Inject constructor(
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            firebaseSource.signUpUserWithEmailAndPassword(user){
+            firebaseSource.signUpUserWithEmailAndPassword(user) {
                 onNavigate()
             }
             emit(ResponseState.Success(Unit))
@@ -66,10 +66,20 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getUserNetwork(): Flow<ResponseState<User>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.getUserNetwork()
+            emit(ResponseState.Success(firebaseSource.getUserNetwork()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
     override suspend fun addUserToLocal(user: User) {
         localSource.addUserToLocal(user.mapModel {
             UserEntity(
-                userId = it.id,
+                userId = 1,
                 userName = it.name,
                 userSurname = it.surname,
                 userEmail = it.email,
@@ -78,40 +88,39 @@ class UserRepositoryImpl @Inject constructor(
         })
     }
 
-    override fun getLocalUser(): Flow<ResponseState<User>> {
+    override fun getLocalUser(): Flow<ResponseState<User?>> {
         return flow {
             emit(ResponseState.Loading)
             localSource.getUser()
-            emit(ResponseState.Success(localSource.getUser().mapModel {
-                User(
-                    id = it.userId,
-                    name = it.userName,
-                    surname = it.userSurname,
-                    email = it.userEmail,
-                    password = it.userPassword,
-                )
+            emit(ResponseState.Success(localSource.getUser().mapModel { userEntity ->
+                userEntity?.let {
+                    User(
+                        name = it.userName,
+                        surname = it.userSurname,
+                        email = it.userEmail,
+                        password = it.userPassword,
+                    )
+                }
             }))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
     }
 
-    override suspend fun deleteUserFromLocal(userEntity: User) {
-        localSource.deleteUserFromLocal(userEntity.mapModel {
-            UserEntity(
-                userId = it.id,
-                userName = it.name,
-                userSurname = it.surname,
-                userEmail = it.email,
-                userPassword = it.password,
-            )
-        })
+    override fun deleteUserFromLocal(): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            localSource.deleteUserFromLocal()
+            emit(ResponseState.Success(localSource.deleteAllMemories()))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
     }
 
     override suspend fun updateUser(userEntity: User) {
         localSource.updateUser(userEntity.mapModel {
             UserEntity(
-                userId = it.id,
+                userId = 1,
                 userName = it.name,
                 userSurname = it.surname,
                 userEmail = it.email,
@@ -123,15 +132,7 @@ class UserRepositoryImpl @Inject constructor(
     override fun transferUserToLocal(user: User): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            localSource.transferUserToLocal(user.mapModel {
-                UserEntity(
-                    userId = it.id,
-                    userName = it.name,
-                    userSurname = it.surname,
-                    userEmail = it.email,
-                    userPassword = it.password,
-                )
-            })
+            addUserToLocal(user)
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))

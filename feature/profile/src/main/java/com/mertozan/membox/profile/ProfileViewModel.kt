@@ -5,9 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.domain.DeleteAllMemoriesUseCase
 import com.mertozan.membox.domain.DeleteLocalMemoriesUseCase
-import com.mertozan.membox.domain.GetAllMemoriesUseCase
+import com.mertozan.membox.domain.DeleteLocalUserUseCase
 import com.mertozan.membox.domain.GetLocalMemoriesUseCase
 import com.mertozan.membox.domain.GetLocalMoodsUseCase
+import com.mertozan.membox.domain.GetLocalUserUserCase
 import com.mertozan.membox.domain.SignOutUseCase
 import com.mertozan.membox.model.Memory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +19,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getAllMemoriesUseCase: GetAllMemoriesUseCase,
     private val deleteLocalMemoriesUseCase: DeleteLocalMemoriesUseCase,
     private val deleteAllMemoriesUseCase: DeleteAllMemoriesUseCase,
+    private val deleteLocalUserUseCase: DeleteLocalUserUseCase,
     private val getLocalMemoriesUseCase: GetLocalMemoriesUseCase,
     private val getLocalMoodsUseCase: GetLocalMoodsUseCase,
+    private val getLocalUserUseCase: GetLocalUserUserCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
@@ -31,20 +33,21 @@ class ProfileViewModel @Inject constructor(
 
     fun onAction(action: ProfileAction) {
         when (action) {
-            is ProfileAction.GetAllMemories -> getAllMemories()
             is ProfileAction.GetMoods -> getMoods()
             is ProfileAction.DeleteAllMemoriesNetwork -> deleteAllMemories()
             is ProfileAction.DeleteAllMemoriesFromLocal -> deleteAllMemoriesFromLocal()
             is ProfileAction.ChangeDialogState -> changeDialogState()
             is ProfileAction.ChangeSettingsState -> changeSettingsState()
             is ProfileAction.GetLocalMemories -> getLocalMemories()
-            ProfileAction.SignOut -> signOut()
+            is ProfileAction.SignOut -> signOut()
+            is ProfileAction.DeleteUser -> deleteLocalUser()
+            is ProfileAction.GetLocalUser -> getLocalUser()
         }
     }
 
-    private fun getAllMemories() {
+    private fun getLocalUser() {
         viewModelScope.launch {
-            getAllMemoriesUseCase().collect { responseState ->
+            getLocalUserUseCase().collect { responseState ->
                 when (responseState) {
                     is ResponseState.Error -> {
                         _profileUiState.value = _profileUiState.value.copy(
@@ -69,14 +72,41 @@ class ProfileViewModel @Inject constructor(
                             isLoading = false,
                             isError = false,
                             isSuccess = true,
-                            profileMemoryStreak = responseState.data.forEach {
-                                var streak = 0
-                                if (it.date.toInt() == it.date.toInt() - 1) {
-                                    streak++
-                                }
-                                streak.toString()
-                            }.toString(),
-                            memoryList = responseState.data
+                            profileName = responseState.data?.name ?: "",
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteLocalUser() {
+        viewModelScope.launch {
+            deleteLocalUserUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isSuccess = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_profileUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = true,
+                            isSuccess = false,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _profileUiState.value = _profileUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            isSuccess = true,
                         )
                     }
                 }
@@ -274,10 +304,9 @@ data class ProfileUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val isError: Boolean = false,
-    val isSignedOut : Boolean = false,
+    val isSignedOut: Boolean = false,
     val errorMessage: String = "",
     val profileName: String = "",
-    val profileMemoryStreak: String = "",
     val moodValueMap: Map<String, Float> = mapOf(
         "Happy" to 0.1f,
         "Sad" to 0.1f,

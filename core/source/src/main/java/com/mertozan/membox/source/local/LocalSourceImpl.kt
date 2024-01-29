@@ -66,8 +66,8 @@ class LocalSourceImpl @Inject constructor(
         userDao.addUserToLocal(userEntity)
     }
 
-    override fun deleteUserFromLocal(userEntity: UserEntity) {
-        userDao.deleteUserFromLocal(userEntity)
+    override fun deleteUserFromLocal() {
+        userDao.deleteAllUsers()
     }
 
     override fun getUser(): UserEntity = userDao.getSingleUser()

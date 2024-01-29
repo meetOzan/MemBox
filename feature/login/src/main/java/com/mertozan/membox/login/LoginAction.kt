@@ -10,6 +10,4 @@ sealed class LoginAction {
         LoginAction()
 
     data object IsUserSignedIn : LoginAction()
-    data object TransferMemoriesToLocal : LoginAction()
-    data object GetAllNetworkMemories : LoginAction()
 }

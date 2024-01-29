@@ -5,10 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
 import com.mertozan.membox.domain.DeleteAllMemoriesUseCase
 import com.mertozan.membox.domain.DeleteLocalMemoriesUseCase
+import com.mertozan.membox.domain.DeleteLocalUserUseCase
 import com.mertozan.membox.domain.GetAllMemoriesUseCase
 import com.mertozan.membox.domain.GetLocalMemoriesUseCase
+import com.mertozan.membox.domain.GetLocalUserUserCase
+import com.mertozan.membox.domain.GetUserNetworkUseCase
 import com.mertozan.membox.domain.TransferToLocalUseCase
+import com.mertozan.membox.domain.TransferUserUseCase
 import com.mertozan.membox.model.Memory
+import com.mertozan.membox.source.network.dto.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +26,11 @@ class HomeViewModel @Inject constructor(
     private val getLocalMemoriesUseCase: GetLocalMemoriesUseCase,
     private val transferMemoriesToLocalUseCase: TransferToLocalUseCase,
     private val deleteAllMemoriesUseCase: DeleteAllMemoriesUseCase,
-    private val deleteLocalMemoriesUseCase: DeleteLocalMemoriesUseCase
+    private val deleteLocalMemoriesUseCase: DeleteLocalMemoriesUseCase,
+    private val transferUserUseCase: TransferUserUseCase,
+    private val getUserUseCase: GetUserNetworkUseCase,
+    private val getLocalUserUseCase: GetLocalUserUserCase,
+    private val deleteLocalUserUseCase: DeleteLocalUserUseCase
 ) : ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiState.initial())
@@ -34,6 +43,10 @@ class HomeViewModel @Inject constructor(
             is HomeAction.TransferMemoriesToLocal -> transferMemoriesToLocal(action.memoryList)
             HomeAction.DeleteAllMemories -> deleteAllMemories()
             HomeAction.DeleteLocalMemories -> deleteLocalMemories()
+            HomeAction.GetLocalUser -> getLocalUser()
+            HomeAction.GetUserNetwork -> getUserNetwork()
+            is HomeAction.TransferUserToLocal -> transferUserToLocal(action.user)
+            HomeAction.DeleteLocalUser -> deleteLocalUser()
         }
     }
 
@@ -43,15 +56,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
-    private fun getALlMemories() {
+    private fun deleteLocalUser(){
         viewModelScope.launch {
-            getAllMemoriesUseCase().collect { responseState ->
+            deleteLocalUserUseCase().collect { responseState ->
                 when (responseState) {
                     is ResponseState.Error -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
-                            isSuccess = false,
                             isError = true,
                             errorMessage = responseState.message
                         )
@@ -61,7 +72,6 @@ class HomeViewModel @Inject constructor(
                     ResponseState.Loading -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = true,
-                            isSuccess = false,
                             isError = false
                         )
                     }
@@ -70,8 +80,133 @@ class HomeViewModel @Inject constructor(
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
                             isError = false,
-                            isSuccess = true,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getALlMemories() {
+        viewModelScope.launch {
+            getAllMemoriesUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_homeUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = true,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
                             networkMemoryList = responseState.data
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getUserNetwork(){
+        viewModelScope.launch {
+            getUserUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_homeUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = true,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            networkUser = responseState.data
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getLocalUser() {
+        viewModelScope.launch {
+            getLocalUserUseCase().collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_homeUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = true,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = false,
+                            isUserExist = responseState.data?.equals(User()) != true
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun transferUserToLocal(user: User) {
+        viewModelScope.launch {
+            transferUserUseCase(user).collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Error -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = responseState.message
+                        )
+                        throw RuntimeException(_homeUiState.value.errorMessage)
+                    }
+
+                    ResponseState.Loading -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = true,
+                            isError = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _homeUiState.value = _homeUiState.value.copy(
+                            isLoading = false,
+                            isError = false
                         )
                     }
                 }
@@ -86,7 +221,6 @@ class HomeViewModel @Inject constructor(
                     is ResponseState.Error -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
-                            isSuccess = false,
                             isError = true,
                             errorMessage = responseState.message
                         )
@@ -96,7 +230,6 @@ class HomeViewModel @Inject constructor(
                     ResponseState.Loading -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = true,
-                            isSuccess = false,
                             isError = false
                         )
                     }
@@ -105,7 +238,6 @@ class HomeViewModel @Inject constructor(
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
                             isError = false,
-                            isSuccess = true,
                             memoryList = responseState.data
                         )
                     }
@@ -121,7 +253,6 @@ class HomeViewModel @Inject constructor(
                     is ResponseState.Error -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
-                            isSuccess = false,
                             isError = true,
                             errorMessage = responseState.message
                         )
@@ -131,7 +262,6 @@ class HomeViewModel @Inject constructor(
                     ResponseState.Loading -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = true,
-                            isSuccess = false,
                             isError = false
                         )
                     }
@@ -140,7 +270,6 @@ class HomeViewModel @Inject constructor(
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
                             isError = false,
-                            isSuccess = true,
                         )
                     }
                 }
@@ -155,7 +284,6 @@ class HomeViewModel @Inject constructor(
                     is ResponseState.Error -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
-                            isSuccess = false,
                             isError = true,
                             errorMessage = responseState.message
                         )
@@ -165,7 +293,6 @@ class HomeViewModel @Inject constructor(
                     ResponseState.Loading -> {
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = true,
-                            isSuccess = false,
                             isError = false
                         )
                     }
@@ -174,7 +301,6 @@ class HomeViewModel @Inject constructor(
                         _homeUiState.value = _homeUiState.value.copy(
                             isLoading = false,
                             isError = false,
-                            isSuccess = true,
                         )
                     }
                 }
@@ -186,10 +312,11 @@ class HomeViewModel @Inject constructor(
 
 data class HomeUiState(
     val isLoading: Boolean = false,
-    val isSuccess: Boolean = false,
     val isError: Boolean = false,
     val memoryList: List<Memory> = emptyList(),
     val networkMemoryList: List<Memory> = emptyList(),
+    val isUserExist: Boolean = false,
+    val networkUser: User = User(),
     val errorMessage: String = "",
 ) {
     companion object {

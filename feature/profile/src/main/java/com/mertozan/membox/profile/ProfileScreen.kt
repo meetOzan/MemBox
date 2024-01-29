@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -24,7 +23,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
@@ -44,6 +42,7 @@ import com.mertozan.membox.core.list.moodList
 import com.mertozan.membox.presentation.components.CustomAlertDialog
 import com.mertozan.membox.presentation.components.CustomText
 import com.mertozan.membox.presentation.theme.ui.Blue
+import com.mertozan.membox.presentation.theme.ui.DarkPink
 import com.mertozan.membox.presentation.theme.ui.DarkWhite60
 import com.mertozan.membox.presentation.theme.ui.Pink
 import com.mertozan.membox.presentation.theme.ui.TransparentBlue
@@ -60,11 +59,11 @@ fun ProfileScreen(
 ) {
 
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
     ) {
-
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
         ) {
             when {
@@ -72,46 +71,43 @@ fun ProfileScreen(
                     color = Pink,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .fillMaxSize()
                 )
 
                 profileUiState.isError -> CustomText(
                     text = profileUiState.errorMessage,
                     fontSize = 16,
                     color = Color.Red,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
 
                 profileUiState.isSuccess -> {
-                    Row(
+                    Card(
                         modifier = Modifier
-                            .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 8.dp)
+                            .padding(bottom = 8.dp)
                             .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = (-10).dp,
+                            disabledElevation = 0.dp
+                        ),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Blue
+                        ),
+                        shape = RoundedCornerShape(0.dp, 0.dp, 12.dp, 12.dp)
                     ) {
                         CustomText(
                             text = stringResource(
                                 localR.string.welcome,
                                 profileUiState.profileName
-                            ), fontSize = 28,
-                            fontWeight = FontWeight.Bold
-                        )
-                        IconButton(
-                            onClick = {
-                                onAction(ProfileAction.ChangeSettingsState)
-                            },
+                            ),
+                            fontSize = 28,
                             modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                        ) {
-                            Image(
-                                imageVector = Icons.Filled.Settings,
-                                contentDescription = stringResource(localR.string.settings),
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
                     }
                     Column(
                         modifier = Modifier
@@ -119,8 +115,7 @@ fun ProfileScreen(
                             .clip(shape = ShapeDefaults.Medium)
                             .background(
                                 DarkWhite60
-                            )
-                            .fillMaxSize(),
+                            ),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -130,7 +125,7 @@ fun ProfileScreen(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             CustomText(
-                                text = stringResource(localR.string.statics_of_memories),
+                                text = stringResource(localR.string.statistics_of_memories),
                                 fontSize = 24,
                                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
                                 color = Pink,
@@ -141,11 +136,29 @@ fun ProfileScreen(
                                 staticsValue = profileUiState.memoryList.size.toString(),
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                             )
-                            StaticsRow(
-                                staticsName = stringResource(localR.string.memory_streak),
-                                staticsValue = profileUiState.profileMemoryStreak,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                            )
+                            ElevatedButton(
+                                onClick = {
+                                    onAction(ProfileAction.ChangeDialogState)
+                                },
+                                modifier = Modifier
+                                    .padding(top = 32.dp, start = 16.dp, end = 16.dp)
+                                    .fillMaxWidth(),
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = Color.White
+                                ),
+                                elevation = ButtonDefaults.elevatedButtonElevation(
+                                    defaultElevation = 5.dp,
+                                    pressedElevation = 8.dp,
+                                    disabledElevation = 0.dp
+                                )
+                            ) {
+                                CustomText(
+                                    text = stringResource(localR.string.settings),
+                                    fontSize = 16,
+                                    fontWeight = FontWeight.Bold,
+                                    color = DarkPink
+                                )
+                            }
                             ElevatedButton(
                                 onClick = {
                                     onAction(ProfileAction.ChangeDialogState)
@@ -154,7 +167,7 @@ fun ProfileScreen(
                                     .padding(16.dp)
                                     .fillMaxWidth(),
                                 colors = ButtonDefaults.elevatedButtonColors(
-                                    containerColor = Pink
+                                    containerColor = Color.White
                                 ),
                                 elevation = ButtonDefaults.elevatedButtonElevation(
                                     defaultElevation = 5.dp,
@@ -165,7 +178,8 @@ fun ProfileScreen(
                                 CustomText(
                                     text = stringResource(localR.string.delete_all_memories),
                                     fontSize = 16,
-                                    color = Color.White
+                                    color = DarkPink,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
@@ -311,6 +325,7 @@ fun ProfileScreen(
                                 onNavigate()
                                 if (profileUiState.isSignedOut) {
                                     onAction(ProfileAction.DeleteAllMemoriesFromLocal)
+                                    onAction(ProfileAction.DeleteUser)
                                 }
                             },
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -412,7 +427,6 @@ fun ProfilePreview() {
     ProfileScreen(
         profileUiState = ProfileUiState(
             profileName = "Mert",
-            profileMemoryStreak = "5",
             moodValueMap = mapOf(
                 "😍" to 0.1f,
                 "😭" to 0.1f,

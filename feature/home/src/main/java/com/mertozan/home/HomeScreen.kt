@@ -123,7 +123,7 @@ fun HomeScreen(
                             throw RuntimeException(uiState.errorMessage)
                         }
 
-                        uiState.isSuccess -> {
+                        else -> {
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize(),
@@ -158,7 +158,7 @@ fun HomeScreen(
                                 }
                                 if (memoryList.isEmpty()) {
                                     CustomPlaceHolder(
-                                        text = "No memories yet :(",
+                                        text = stringResource(locR.string.no_memories_yet),
                                         icon = Icons.Filled.CloudOff,
                                         imageColor = Pink,
                                     )

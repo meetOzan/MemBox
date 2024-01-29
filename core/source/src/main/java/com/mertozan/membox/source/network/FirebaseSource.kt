@@ -7,6 +7,7 @@ import com.mertozan.membox.source.network.dto.User
 
 interface FirebaseSource {
 
+    // User
     fun signUpUserWithEmailAndPassword(user: User, onNavigate: () -> Unit)
 
     fun signInWithEmailAndPassword(user: User, onNavigate: () -> Unit)
@@ -15,6 +16,9 @@ interface FirebaseSource {
 
     fun isUserSignedIn(): Boolean
 
+    suspend fun getUserNetwork(): User
+
+    // Memory
     fun addMemory(memory: Memory, onNavigate: () -> Unit)
 
     fun getAllMemories(): List<Memory>

@@ -14,6 +14,9 @@ import com.mertozan.membox.source.network.dto.User
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseSourceImpl @Inject constructor(
     private val auth: FirebaseAuth,
@@ -69,6 +72,31 @@ class FirebaseSourceImpl @Inject constructor(
 
     override fun isUserSignedIn(): Boolean {
         return auth.currentUser != null
+    }
+
+    override suspend fun getUserNetwork(): User {
+        return suspendCoroutine { continuation ->
+            val currentUser = auth.currentUser
+            var user: User
+            firestore.collection("users").document(currentUser?.uid.toString()).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        user = document?.data?.let { data ->
+                            User(
+                                email = data["email"].toString(),
+                                password = data["password"].toString(),
+                                name = data["name"].toString(),
+                                surname = data["surname"].toString()
+                            )
+                        } ?: User()
+                    } else {
+                        continuation.resumeWithException(RuntimeException("User could not be fetched."))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(user)
+                }
+        }
     }
 
     override fun addMemory(memory: Memory, onNavigate: () -> Unit) {
@@ -217,7 +245,7 @@ class FirebaseSourceImpl @Inject constructor(
 
     override fun getMoodsFromMemories(): Map<String, Float> {
         val currentUser = auth.currentUser
-        val moodMap = mutableMapOf<String, Float>(
+        val moodMap = mutableMapOf(
             "Love" to 0.1f,
             "Happy" to 0.1f,
             "Sad" to 0.1f,

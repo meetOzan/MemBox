@@ -20,7 +20,7 @@
     <string name="coil_image">coil_image</string>
     <string name="logout">Logout</string>
     <string name="welcome">Welcome %1$s</string>
-    <string name="statics_of_memories">Statics of Memories</string>
+    <string name="statistics_of_memories">Statistics of Memories</string>
     <string name="total_memory">Total Memory</string>
     <string name="memory_streak">Memory Streak</string>
     <string name="delete_all_memories">Delete all memories</string>
@@ -50,4 +50,5 @@
     <string name="sign_out">Sign Out</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="close">Close</string>
+    <string name="no_memories_yet">No memories yet</string>
 </resources>

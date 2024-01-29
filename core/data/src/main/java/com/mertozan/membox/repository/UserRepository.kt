@@ -21,12 +21,14 @@ interface UserRepository {
 
     fun isUserSignedIn(): Flow<ResponseState<Boolean>>
 
+    fun getUserNetwork(): Flow<ResponseState<User>>
+
     // Local
     suspend fun addUserToLocal(user: User)
 
-    fun getLocalUser(): Flow<ResponseState<User>>
+    fun getLocalUser(): Flow<ResponseState<User?>>
 
-    suspend fun deleteUserFromLocal(userEntity: User)
+    fun deleteUserFromLocal(): Flow<ResponseState<Unit>>
 
     suspend fun updateUser(userEntity: User)
 

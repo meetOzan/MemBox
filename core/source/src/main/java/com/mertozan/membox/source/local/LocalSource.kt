@@ -23,11 +23,11 @@ interface LocalSource {
     fun updateMemory(memoryEntity: MemoryEntity)
 
     // User
-    fun getUser(): UserEntity
+    fun getUser(): UserEntity?
 
     fun addUserToLocal(userEntity: UserEntity)
 
-    fun deleteUserFromLocal(userEntity: UserEntity)
+    fun deleteUserFromLocal()
 
     fun updateUser(userEntity: UserEntity)
 

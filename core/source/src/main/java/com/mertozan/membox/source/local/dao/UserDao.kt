@@ -16,6 +16,9 @@ interface UserDao {
     @Delete
     fun deleteUserFromLocal(user: UserEntity)
 
+    @Query("DELETE FROM user_entity")
+    fun deleteAllUsers()
+
     @Query("SELECT * FROM user_entity")
     fun getSingleUser(): UserEntity
 

@@ -99,7 +99,6 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
-
 [bundles]
 material = ["androidx-material-icons", "androidx-material","material"]
 compose = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "compose-viewbinding", "androidx-activity-compose"]

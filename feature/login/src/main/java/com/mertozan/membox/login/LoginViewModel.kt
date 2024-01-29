@@ -9,6 +9,7 @@ import com.mertozan.membox.domain.IsUserSigned
 import com.mertozan.membox.domain.SignInUseCase
 import com.mertozan.membox.domain.SignUpUseCase
 import com.mertozan.membox.domain.TransferToLocalUseCase
+import com.mertozan.membox.domain.TransferUserUseCase
 import com.mertozan.membox.model.Memory
 import com.mertozan.membox.source.network.dto.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +24,6 @@ class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signUpUseCase: SignUpUseCase,
     private val isUserSignedUseCase: IsUserSigned,
-    private val getAllNetworkMemoriesUseCase: GetAllNetworkMemoriesUseCase,
-    private val transferMemoriesToLocalUseCase: TransferToLocalUseCase,
     private val firebaseAuth: FirebaseAuth,
 ) : ViewModel() {
 
@@ -36,25 +35,6 @@ class LoginViewModel @Inject constructor(
             is LoginAction.SignIn -> signInUser(action.user, action.onNavigate)
             is LoginAction.SignUp -> signUpUser(action.user, action.onNavigate)
             is LoginAction.IsUserSignedIn -> isUserSigned()
-            is LoginAction.GetAllNetworkMemories -> getAllNetworkMemories()
-            is LoginAction.TransferMemoriesToLocal -> transferMemoriesToLocal()
-        }
-    }
-
-    private fun getAllNetworkMemories() {
-        viewModelScope.launch {
-            getAllNetworkMemoriesUseCase().apply {
-                _loginScreenUiState.value = _loginScreenUiState.value.copy(
-                    memoryList = this
-                )
-            }
-        }
-    }
-
-    private fun transferMemoriesToLocal() {
-        viewModelScope.launch {
-            getAllNetworkMemories()
-            transferMemoriesToLocalUseCase(getAllNetworkMemoriesUseCase())
         }
     }
 
@@ -79,8 +59,7 @@ class LoginViewModel @Inject constructor(
 
                     is ResponseState.Success -> {
                         _loginScreenUiState.value = _loginScreenUiState.value.copy(
-                            isLoading = false,
-                            isSuccess = true,
+                            isLoading = false
                         )
                     }
                 }
@@ -153,7 +132,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val isSigned: Boolean = false,
-    val isSuccess: Boolean = false,
     val errorMessage: String = "",
     val memoryList: List<Memory> = listOf(),
     val currentUser: String = "",
