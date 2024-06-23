@@ -1,5 +1,9 @@
 package com.mertozan.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.membox.core.ResponseState
@@ -18,9 +22,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
+@RequiresApi(Build.VERSION_CODES.O)
 class HomeViewModel @Inject constructor(
     private val getAllMemoriesUseCase: GetAllMemoriesUseCase,
     private val getLocalMemoriesUseCase: GetLocalMemoriesUseCase,
@@ -47,6 +54,10 @@ class HomeViewModel @Inject constructor(
             HomeAction.GetUserNetwork -> getUserNetwork()
             is HomeAction.TransferUserToLocal -> transferUserToLocal(action.user)
             HomeAction.DeleteLocalUser -> deleteLocalUser()
+            is HomeAction.ChangeNotificationStatus -> changeNotificationStatus(action.newStatus)
+            HomeAction.GetCurrentDate -> getCurrentDate()
+            is HomeAction.ChangePopupMenuVisibility -> changePopupMenuVisibility(action.popUpVisibility)
+            is HomeAction.ChangePopupMenuOffset -> changePopupMenuVisibility(action.offset)
         }
     }
 
@@ -246,6 +257,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun getCurrentDate(): String {
+        val currentDate = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        return currentDate.format(formatter).toString()
+    }
+
     private fun deleteAllMemories() {
         viewModelScope.launch {
             deleteAllMemoriesUseCase().collect { responseState ->
@@ -308,7 +325,32 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun changeNotificationStatus(newStatus: Boolean) {
+        viewModelScope.launch {
+            _homeUiState.value = _homeUiState.value.copy(
+                isMemoryAdded = newStatus
+            )
+        }
+    }
+
+    private fun changePopupMenuVisibility(newStatus: Boolean) {
+        viewModelScope.launch {
+            _homeUiState.value = _homeUiState.value.copy(
+                isPopupMenuVisible = newStatus
+            )
+        }
+    }
+
+    private fun changePopupMenuVisibility(offset: DpOffset) {
+        viewModelScope.launch {
+            _homeUiState.value = _homeUiState.value.copy(
+                buttonOffset = offset
+            )
+        }
+    }
+
 }
+
 
 data class HomeUiState(
     val isLoading: Boolean = false,
@@ -316,8 +358,11 @@ data class HomeUiState(
     val memoryList: List<Memory> = emptyList(),
     val networkMemoryList: List<Memory> = emptyList(),
     val isUserExist: Boolean = false,
+    val isMemoryAdded: Boolean = true,
     val networkUser: User = User(),
     val errorMessage: String = "",
+    val isPopupMenuVisible: Boolean = false,
+    val buttonOffset: DpOffset = DpOffset(0.dp, 0.dp)
 ) {
     companion object {
         fun initial() = HomeUiState(isLoading = true)

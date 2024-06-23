@@ -44,7 +44,6 @@ fun CustomAlertDialog(
     onPositiveAction: () -> Unit = {},
     onNegativeAction: () -> Unit = {},
 ) {
-
     AlertDialog(
         onDismissRequest = {
             onDismissClick()

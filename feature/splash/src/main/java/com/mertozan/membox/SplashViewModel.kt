@@ -62,6 +62,6 @@ data class SplashUiState(
     val errorMessage: String = ""
 ) {
     companion object {
-        fun initial() = SplashUiState()
+        fun initial() = SplashUiState().copy(isLoading = true)
     }
 }

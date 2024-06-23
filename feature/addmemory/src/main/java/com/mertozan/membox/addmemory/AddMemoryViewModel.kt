@@ -32,13 +32,6 @@ class AddMemoryViewModel @Inject constructor(
         when (action) {
             is AddMemoryAction.AddMemory -> addMemory(action.memory, action.onNavigate)
             is AddMemoryAction.AddMemoryToLocal -> addMemoryToLocal(action.memory)
-            is AddMemoryAction.UploadImageFirestore -> uploadImageToFirestore(
-                imagesUrl = action.imagesUrl,
-                imageName = action.imageName,
-                onSuccess = action.onSuccess,
-                onFailure = action.onFailure,
-            )
-
             is AddMemoryAction.ChangeDescription -> changeDescription(action.newDescription)
             is AddMemoryAction.ChangeTitle -> changeTitle(action.newTitle)
             is AddMemoryAction.ChangeMood -> changeMood(
@@ -46,7 +39,6 @@ class AddMemoryViewModel @Inject constructor(
                 action.newEmojiName,
                 action.newEmojiColor
             )
-
             is AddMemoryAction.ChangeDate -> changeDate(action.newDate)
             is AddMemoryAction.UploadImageStorage -> uploadImage(
                 uri = action.uri,
@@ -54,7 +46,6 @@ class AddMemoryViewModel @Inject constructor(
                 onSuccess = action.onSuccess,
                 onFailure = action.onFailure,
             )
-
             is AddMemoryAction.SetImageUri -> setImageUri(action.uri, action.url)
         }
     }

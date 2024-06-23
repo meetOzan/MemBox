@@ -158,6 +158,7 @@ fun NavGraphBuilder.homeScreen(
         HomeScreen(
             homeUiState.memoryList,
             homeUiState,
+            homeViewModel::onAction,
             onDetailNavigate,
             onAddMemoryNavigate,
             onProfileNavigate,

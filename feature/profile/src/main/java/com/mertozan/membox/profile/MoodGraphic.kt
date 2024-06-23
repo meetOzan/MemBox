@@ -31,6 +31,7 @@ fun MoodGraphic(
     love: Float,
     angryCry: Float,
 ) {
+
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)

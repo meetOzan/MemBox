@@ -20,10 +20,4 @@ sealed class AddMemoryAction {
         AddMemoryAction()
     data class ChangeDate(val newDate: String) : AddMemoryAction()
     data class SetImageUri(val uri: Uri, val url: String) : AddMemoryAction()
-    data class UploadImageFirestore(
-        val imagesUrl: List<String>,
-        val imageName: String,
-        val onSuccess: () -> Unit,
-        val onFailure: (String) -> Unit,
-    ) : AddMemoryAction()
 }
