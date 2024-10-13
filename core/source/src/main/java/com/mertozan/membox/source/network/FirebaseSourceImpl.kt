@@ -37,8 +37,7 @@ class FirebaseSourceImpl @Inject constructor(
                         "id" to currentUser?.uid.toString(),
                         "email" to user.email,
                         "password" to user.password,
-                        "name" to user.name,
-                        "surname" to user.surname
+                        "name" to user.username,
                     )
                     firestore.collection("users").document(currentUser?.uid.toString())
                         .set(userMap).addOnCompleteListener {
@@ -87,8 +86,7 @@ class FirebaseSourceImpl @Inject constructor(
                             User(
                                 email = data["email"].toString(),
                                 password = data["password"].toString(),
-                                name = data["name"].toString(),
-                                surname = data["surname"].toString()
+                                username = data["name"].toString()
                             )
                         } ?: User()
                     } else {

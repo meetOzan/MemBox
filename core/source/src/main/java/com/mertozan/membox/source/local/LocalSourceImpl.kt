@@ -127,8 +127,7 @@ class LocalSourceImpl @Inject constructor(
         userDao.addUserToLocal(userEntity.mapModel {
             UserEntity(
                 userId = 1,
-                userName = it.name,
-                userSurname = it.surname,
+                username = it.username,
                 userEmail = it.email,
                 userPassword = it.password,
             )
@@ -141,8 +140,7 @@ class LocalSourceImpl @Inject constructor(
 
     override fun getUser(): User = userDao.getSingleUser().mapModel {
         User(
-            name = it.userName,
-            surname = it.userSurname,
+            username = it.username,
             email = it.userEmail,
             password = it.userPassword,
         )
@@ -153,8 +151,7 @@ class LocalSourceImpl @Inject constructor(
         userDao.updateUser(userEntity.mapModel {
             UserEntity(
                 userId = 1,
-                userName = it.name,
-                userSurname = it.surname,
+                username = it.username,
                 userEmail = it.email,
                 userPassword = it.password,
             )
@@ -178,8 +175,7 @@ class LocalSourceImpl @Inject constructor(
         userDao.addUserToLocal(userEntity.mapModel {
             UserEntity(
                 userId = 1,
-                userName = it.name,
-                userSurname = it.surname,
+                username = it.username,
                 userEmail = it.email,
                 userPassword = it.password,
             )

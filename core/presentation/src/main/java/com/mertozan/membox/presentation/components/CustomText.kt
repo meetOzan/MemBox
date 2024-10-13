@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.mertozan.membox.presentation.theme.poppinsFamily
+import com.mertozan.membox.presentation.theme.ui.poppinsFamily
 import com.mertozan.membox.presentation.theme.ui.LightBlack
 
 @Composable

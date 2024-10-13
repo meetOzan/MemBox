@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.sdkMin.get().toInt()
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -56,10 +56,14 @@ dependencies {
     androidTestImplementation(libs.bundles.androidTestImplementation)
     debugImplementation(libs.bundles.debugTestImplementation)
 
+    // Mockito
+    testImplementation(libs.bundles.mockito)
+
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 
     // Hilt
     implementation(libs.dagger.hilt.android)

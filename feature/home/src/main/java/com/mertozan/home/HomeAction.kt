@@ -1,6 +1,5 @@
 package com.mertozan.home
 
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.DpOffset
 import com.mertozan.membox.model.Memory
 import com.mertozan.membox.model.User

@@ -1,4 +1,4 @@
-package com.mertozan.membox.presentation.theme
+package com.mertozan.membox.presentation.theme.ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -13,6 +13,12 @@ val poppinsFamily = FontFamily(
     Font(localizationFont.poppins_regular, FontWeight.Normal),
     Font(localizationFont.poppins_medium, FontWeight.Medium),
     Font(localizationFont.poppins_italic, FontWeight.Normal),
+)
+
+val robotoFamily = FontFamily(
+    Font(localizationFont.roboto_bold, FontWeight.Bold),
+    Font(localizationFont.roboto_regular, FontWeight.Normal),
+    Font(localizationFont.roboto_medium, FontWeight.Normal)
 )
 
 // Set of Material typography styles to start with

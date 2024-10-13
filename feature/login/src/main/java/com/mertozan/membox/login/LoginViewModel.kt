@@ -29,15 +29,25 @@ class LoginViewModel @Inject constructor(
 
     fun onAction(action: LoginAction) {
         when (action) {
-            is LoginAction.SignIn -> signInUser(action.user, action.onNavigate)
-            is LoginAction.SignUp -> signUpUser(action.user, action.onNavigate)
+            is LoginAction.SignIn -> signInUser(action.onNavigate)
+            is LoginAction.SignUp -> signUpUser(action.onNavigate)
             is LoginAction.IsUserSignedIn -> isUserSigned()
+            is LoginAction.EmailChanged -> emailChanged(action.email)
+            is LoginAction.PasswordChanged -> passwordChanged(action.password)
+            is LoginAction.UsernameChanged -> usernameChanged(action.username)
+            LoginAction.IsPasswordVisible -> onPasswordVisibilityChanged()
         }
     }
 
-    private fun signInUser(user: User, onNavigate: () -> Unit) {
+    private fun signInUser(onNavigate: () -> Unit) {
         viewModelScope.launch {
-            signInUseCase(user, onNavigate).collect { responseState ->
+            signInUseCase(
+                User(
+                    email = _loginScreenUiState.value.email,
+                    password = _loginScreenUiState.value.password
+                ),
+                onNavigate
+            ).collect { responseState ->
                 when (responseState) {
                     is ResponseState.Error -> {
                         _loginScreenUiState.value = _loginScreenUiState.value.copy(
@@ -64,9 +74,15 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun signUpUser(user: User, onNavigate: () -> Unit) {
+    private fun signUpUser(onNavigate: () -> Unit) {
         viewModelScope.launch {
-            signUpUseCase(user, onNavigate).collect { responseState ->
+            signUpUseCase(
+                User(
+                    username = _loginScreenUiState.value.username,
+                    email = _loginScreenUiState.value.email,
+                    password = _loginScreenUiState.value.password
+                ), onNavigate
+            ).collect { responseState ->
                 when (responseState) {
                     is ResponseState.Error -> {
                         _loginScreenUiState.value = _loginScreenUiState.value.copy(
@@ -123,6 +139,31 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
+    private fun emailChanged(email: String) {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            email = email
+        )
+    }
+
+    private fun passwordChanged(password: String) {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            password = password
+        )
+    }
+
+    private fun usernameChanged(username: String) {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            username = username
+        )
+    }
+
+
+    private fun onPasswordVisibilityChanged() {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            isPasswordVisible = !_loginScreenUiState.value.isPasswordVisible
+        )
+    }
 }
 
 data class LoginUiState(
@@ -132,6 +173,10 @@ data class LoginUiState(
     val errorMessage: String = "",
     val memoryList: List<Memory> = listOf(),
     val currentUser: String = "",
+    val email: String = "",
+    val password: String = "",
+    val username: String = "",
+    var isPasswordVisible: Boolean = false,
 ) {
     companion object {
         fun initial() = LoginUiState(isLoading = true)

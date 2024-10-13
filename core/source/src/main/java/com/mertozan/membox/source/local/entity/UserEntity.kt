@@ -12,15 +12,11 @@ data class UserEntity(
     val userId: Int,
 
     @ColumnInfo("user_name")
-    val userName: String,
-
-    @ColumnInfo("user_surname")
-    val userSurname: String,
+    val username: String,
 
     @ColumnInfo("user_email")
     val userEmail: String,
 
     @ColumnInfo("user_password")
-    val userPassword: String,
-
+    val userPassword: String
 )

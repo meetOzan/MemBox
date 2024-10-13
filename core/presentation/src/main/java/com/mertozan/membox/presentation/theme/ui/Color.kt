@@ -33,3 +33,11 @@ val SadColor = Color(0xFF2196F3)
 val AngryColor = Color(0xFFFF5722)
 val AngryCryColor = Color(0xFF4CAF50)
 
+val LightGray = Color(0xFFF4F4F4)
+val TextLightGray = Color(0xFF61677D)
+val MainBlue = Color(0xFF0393D3)
+val Black = Color(0xFF000000)
+val TextGray = Color(0xFF666666)
+val MainPink = Color(0xFFF7CFCE)
+val SecondaryPink = Color(0xFFFC9390)
+

@@ -72,7 +72,7 @@ class ProfileViewModel @Inject constructor(
                             isLoading = false,
                             isError = false,
                             isSuccess = true,
-                            profileName = responseState.data?.name ?: "",
+                            profileName = responseState.data?.username ?: "",
                         )
                     }
                 }

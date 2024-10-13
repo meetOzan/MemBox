@@ -42,12 +42,17 @@ androidxNavigation = "2.7.4"
 navigationViewModel = "2.7.0"
 coil-ktx = "2.5.0"
 room-version = "2.6.1"
+mockito-core = "3.11.2"
+mockito-kotlin = "4.0.0"
+mockito-inline = "3.11.2"
+mockito-webserver = "4.9.0"
+material3Android = "1.3.0"
+
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-espresso-core-3_5_1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-lifecyle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
@@ -60,7 +65,6 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeRef" }
-junit-4_13_2 = { module = "junit:junit", version.ref = "junit-junit" }
 test-junit = { group = "junit", name = "junit", version.ref = "junit" }
 test-junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
 test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
@@ -86,6 +90,12 @@ androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = 
 annotation-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
 room-kapt = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
 com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "org-jetbrains-kotlin-jvm" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockito-inline" }
+mockito-webserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockito-webserver" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -104,3 +114,4 @@ material = ["androidx-material-icons", "androidx-material","material"]
 compose = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "compose-viewbinding", "androidx-activity-compose"]
 androidTestImplementation = ["test-junit-ext", "test-espresso"]
 debugTestImplementation = ["ui-tooling", "ui-test-manifest"]
+mockito = ["mockito-core", "mockito-kotlin", "kotlin-test", "mockito-inline", "mockito-webserver"]
