@@ -24,13 +24,11 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -114,7 +112,7 @@ fun LoginScreen(
             userScrollEnabled = false
         ) { page ->
             when (page) {
-                0 -> {
+                1 -> {
                     Column(
                         modifier = Modifier
                             .fillMaxHeight(),
@@ -365,7 +363,7 @@ fun LoginScreen(
                     }
                 }
 
-                1 -> {
+                0 -> {
                     Column(
                         modifier = Modifier
                             .fillMaxHeight(),
@@ -385,6 +383,94 @@ fun LoginScreen(
                                         .padding(top = 16.dp)
                                         .fillMaxWidth()
                                 )
+                            }
+                            item {
+                                Row(
+                                    Modifier.fillMaxWidth().padding(top = 20.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                                ) {
+                                    ElevatedButton(
+                                        onClick = { /*TODO*/ },
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = LightGray
+                                        )
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = presentationR.facebook_icon),
+                                            contentDescription = stringResource(localizationR.facebook_login),
+                                            modifier = Modifier
+                                                .size(32.dp)
+                                                .align(Alignment.CenterVertically),
+                                        )
+                                        Spacer(
+                                            modifier = Modifier
+                                                .width(8.dp)
+                                                .padding(vertical = 8.dp)
+                                        )
+                                        CustomText(
+                                            text = stringResource(localizationR.facebook),
+                                            fontSize = 16,
+                                            modifier = Modifier
+                                                .padding(top = 2.dp)
+                                                .align(Alignment.CenterVertically),
+                                            color = TextLightGray
+                                        )
+                                    }
+                                    ElevatedButton(
+                                        onClick = { /*TODO*/ },
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = LightGray
+                                        )
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = presentationR.google_logo),
+                                            contentDescription = stringResource(localizationR.google_login),
+                                            modifier = Modifier
+                                                .size(30.dp)
+                                                .align(Alignment.CenterVertically)
+                                        )
+                                        Spacer(
+                                            modifier = Modifier
+                                                .width(8.dp)
+                                                .padding(8.dp)
+                                        )
+                                        CustomText(
+                                            text = stringResource(localizationR.google),
+                                            fontSize = 16,
+                                            modifier = Modifier
+                                                .padding(top = 4.dp)
+                                                .align(Alignment.CenterVertically),
+                                            color = TextLightGray
+                                        )
+                                    }
+                                }
+                            }
+                            item {
+                                Row(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 24.dp),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Divider(
+                                        modifier = Modifier.weight(1f),
+                                        color = Color.Black
+                                    )
+                                    CustomText(
+                                        text = stringResource(localizationR.or),
+                                        fontSize = 14,
+                                        modifier = Modifier.padding(horizontal = 8.dp)
+                                    )
+                                    Divider(
+                                        modifier = Modifier.weight(1f),
+                                        color = Color.Black
+                                    )
+                                }
                             }
                             items(signInFieldList.size) { index ->
                                 Column(
