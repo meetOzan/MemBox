@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signUpUseCase: SignUpUseCase,
     private val isUserSignedUseCase: IsUserSigned,
-    private val firebaseAuth: FirebaseAuth,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     private val _loginScreenUiState = MutableStateFlow(LoginUiState.initial())

@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -79,6 +78,11 @@ dependencies {
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.bundles.androidTestImplementation)
     debugImplementation(libs.bundles.debugTestImplementation)
+
+    // Credentials Auth.
+    implementation(libs.google.services.auth)
+    implementation(libs.credintals)
+    implementation(libs.googleid)
 
     // Firebase Auth
     implementation(libs.firebase.auth)

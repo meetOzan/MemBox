@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -63,6 +62,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.viewbinding)
     implementation(libs.androidx.fragment)
+    implementation(libs.googleid)
 
     // Test
     testImplementation(libs.test.junit)
@@ -72,6 +72,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.crashlytics)
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)

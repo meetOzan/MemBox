@@ -22,7 +22,7 @@ import kotlin.coroutines.suspendCoroutine
 class FirebaseSourceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
-    private val storage: FirebaseStorage,
+    private val storage: FirebaseStorage
 ) : FirebaseSource {
 
     override fun signUpUserWithEmailAndPassword(

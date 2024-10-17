@@ -1,7 +1,5 @@
 package com.mertozan.membox.login
 
-import com.mertozan.membox.model.User
-
 sealed class LoginAction {
     data class SignIn(val onNavigate: () -> Unit) :
         LoginAction()
