@@ -21,6 +21,12 @@ val robotoFamily = FontFamily(
     Font(localizationFont.roboto_medium, FontWeight.Normal)
 )
 
+val goldmanFamily = FontFamily(
+    Font(localizationFont.goldman_bold, FontWeight.Bold),
+    Font(localizationFont.goldman_regular, FontWeight.Normal),
+
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

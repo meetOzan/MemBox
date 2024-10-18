@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MemBox</string>
-    <string name="membox">MemBox</string>
+    <string name="membox">Membox</string>
     <string name="you_don_t_have_an_account">You don\'t have an account?</string>
     <string name="you_have_an_account">Do you have an account?</string>
     <string name="email">Email</string>
