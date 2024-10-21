@@ -39,3 +39,7 @@ object MemoryDetailScreen : Destination {
 object ProfileScreen : Destination {
     override val route = "profile_screen"
 }
+
+object OnboardingScreen : Destination {
+    override val route = "onboarding_screen"
+}

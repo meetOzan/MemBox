@@ -1,22 +1,23 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
-    namespace = "com.mertozan.membox.navigation"
+    namespace = "com.mertozan.membox"
     compileSdk = libs.versions.sdkCompile.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.sdkMin.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeVer.get()
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,6 +27,10 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+        viewBinding = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -33,27 +38,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
-        compose = true
-        viewBinding = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeVer.get()
-    }
 }
 
 dependencies {
 
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
-    implementation(project(":core:source"))
-    implementation(project(":feature:login"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:addmemory"))
-    implementation(project(":feature:detail"))
-    implementation(project(":feature:profile"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:onboarding"))
+    implementation(project(":core:presentation"))
+    implementation(project(":core:localization"))
 
     // Core
     implementation(libs.androidx.core)
@@ -76,7 +66,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose.viewmodel)
 
-    // Hilt
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.compiler)
+    // DotsIndicator 3rd party library
+    implementation(libs.dotsindicator)
 }

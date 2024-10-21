@@ -100,4 +100,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // DotsIndicator
+    implementation(libs.dotsindicator)
 }

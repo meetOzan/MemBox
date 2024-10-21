@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.mertozan.membox.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,6 +17,7 @@ import com.mertozan.home.HomeAction
 import com.mertozan.home.HomeScreen
 import com.mertozan.home.HomeUiState
 import com.mertozan.home.HomeViewModel
+import com.mertozan.membox.OnboardingScreen
 import com.mertozan.membox.SplashAction
 import com.mertozan.membox.SplashScreen
 import com.mertozan.membox.SplashViewModel
@@ -57,6 +61,22 @@ fun MemNavGraph(
             onHomeNavigate = {
                 navController.navigate(HomeScreen.route) {
                     popUpTo(LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+            onOnboardingNavigate = {
+                navController.navigate(HomeScreen.route) {
+                    popUpTo(LoginScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+        )
+        onboardingScreen(
+            onHomeNavigate = {
+                navController.navigate(HomeScreen.route) {
+                    popUpTo(OnboardingScreen.route) {
                         inclusive = true
                     }
                 }
@@ -106,6 +126,7 @@ fun NavGraphBuilder.splashScreen(
 
 fun NavGraphBuilder.loginScreen(
     onHomeNavigate: () -> Unit,
+    onOnboardingNavigate: () -> Unit
 ) {
     composable(route = LoginScreen.route) {
 
@@ -119,11 +140,13 @@ fun NavGraphBuilder.loginScreen(
         LoginScreen(
             loginViewModel::onAction,
             loginUiState,
-            onHomeNavigate
+            onHomeNavigate,
+            onOnboardingNavigate
         )
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.homeScreen(
     onAddMemoryNavigate: () -> Unit,
     onProfileNavigate: () -> Unit,
@@ -210,6 +233,19 @@ fun NavGraphBuilder.detailScreen() {
         }
 
         DetailScreen(detailUiState)
+    }
+}
+
+fun NavGraphBuilder.onboardingScreen(
+    onHomeNavigate: () -> Unit
+){
+    composable(
+        route = OnboardingScreen.route
+    ){
+
+        OnboardingScreen(
+            onHomeScreenNavigate = onHomeNavigate
+        )
     }
 }
 

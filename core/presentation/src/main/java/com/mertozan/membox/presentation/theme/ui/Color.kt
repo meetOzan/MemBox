@@ -40,4 +40,8 @@ val Black = Color(0xFF000000)
 val TextGray = Color(0xFF666666)
 val MainPink = Color(0xFFF7CFCE)
 val SecondaryPink = Color(0xFFFC9390)
+val IndicatorGray = Color(0xFF969691)
+val OnboardingBlack = Color(0xFF0B0B07)
+val ButtonBlue = Color(0xFF56C5F7)
+
 

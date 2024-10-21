@@ -31,7 +31,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +59,7 @@ fun LoginScreen(
     loginAction: (LoginAction) -> Unit,
     uiState: LoginUiState,
     onHomeScreenNavigate: () -> Unit,
+    onOnboardingScreenNavigate: () -> Unit
 ) {
 
     val signInFieldList = listOf(
@@ -126,7 +126,7 @@ fun LoginScreen(
                         loginFieldList = signInFieldList,
                         loginAction = loginAction,
                         uiState = uiState,
-                        onHomeScreenNavigate = onHomeScreenNavigate,
+                        onHomeScreenNavigate = onOnboardingScreenNavigate,
                         pagerState = pagerState
                     )
                 }
@@ -369,9 +369,9 @@ fun SignUpScreen(
         modifier = Modifier
             .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        horizontalAlignment = Alignment.CenterHorizontally,
 
+    ) {
         LazyColumn {
             item {
                 CustomText(
@@ -491,8 +491,14 @@ fun SignUpScreen(
                         CustomTextField(
                             textTitle = loginFieldList[index].value,
                             onValueChange = {
+                                if (index == 0)
                                 loginAction(
                                     LoginAction.EmailChanged(
+                                        it
+                                    )
+                                )
+                                else loginAction(
+                                    LoginAction.UsernameChanged(
                                         it
                                     )
                                 )
@@ -576,6 +582,7 @@ private fun PreviewOfLogin() {
     LoginScreen(
         loginAction = {},
         uiState = LoginUiState(),
-        onHomeScreenNavigate = {}
+        onHomeScreenNavigate = {},
+        onOnboardingScreenNavigate = {}
     )
 }
