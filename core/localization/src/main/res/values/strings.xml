@@ -77,5 +77,8 @@
     <string name="onboarding_2_description">Get daily suggestions from AI based on the memories you enter daily</string>
     <string name="onboarding_3_title">Statistics of Memories </string>
     <string name="onboarding_3_description">See statistics of your saved memories and share them with your friends</string>
+    <string name="login_error">Login Error</string>
+    <string name="ok">OK</string>
+    <string name="dismiss">Dismiss</string>
 
 </resources>

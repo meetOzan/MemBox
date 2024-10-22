@@ -50,7 +50,7 @@ fun LoginAuthButton(
         )
         CustomText(
             text = stringResource(buttonText),
-            fontSize = 16,
+            fontSize = 14,
             fontWeight = FontWeight.Medium,
             modifier = Modifier
                 .padding(top = 4.dp)

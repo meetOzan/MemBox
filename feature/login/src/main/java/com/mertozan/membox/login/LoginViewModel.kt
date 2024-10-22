@@ -32,8 +32,10 @@ class LoginViewModel @Inject constructor(
             is LoginAction.SignIn -> signInUser(action.onNavigate)
             is LoginAction.SignUp -> signUpUser(action.onNavigate)
             is LoginAction.IsUserSignedIn -> isUserSigned()
-            is LoginAction.EmailChanged -> emailChanged(action.email)
-            is LoginAction.PasswordChanged -> passwordChanged(action.password)
+            is LoginAction.LoginEmailChanged -> loginEmailChanged(action.email)
+            is LoginAction.LoginPasswordChanged -> loginPasswordChanged(action.password)
+            is LoginAction.RegisterEmailChanged -> registerEmailChanged(action.email)
+            is LoginAction.RegisterPasswordChanged -> registerPasswordChanged(action.password)
             is LoginAction.UsernameChanged -> usernameChanged(action.username)
             LoginAction.IsPasswordVisible -> onPasswordVisibilityChanged()
         }
@@ -43,8 +45,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase(
                 User(
-                    email = _loginScreenUiState.value.email,
-                    password = _loginScreenUiState.value.password
+                    email = _loginScreenUiState.value.signInEmail,
+                    password = _loginScreenUiState.value.signInPassword
                 ),
                 onNavigate
             ).collect { responseState ->
@@ -79,8 +81,8 @@ class LoginViewModel @Inject constructor(
             signUpUseCase(
                 User(
                     username = _loginScreenUiState.value.username,
-                    email = _loginScreenUiState.value.email,
-                    password = _loginScreenUiState.value.password
+                    email = _loginScreenUiState.value.signUpEmail,
+                    password = _loginScreenUiState.value.signUpPassword
                 ), onNavigate
             ).collect { responseState ->
                 when (responseState) {
@@ -140,15 +142,27 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun emailChanged(email: String) {
+    private fun loginEmailChanged(email: String) {
         _loginScreenUiState.value = _loginScreenUiState.value.copy(
-            email = email
+            signInEmail = email
         )
     }
 
-    private fun passwordChanged(password: String) {
+    private fun loginPasswordChanged(password: String) {
         _loginScreenUiState.value = _loginScreenUiState.value.copy(
-            password = password
+            signInPassword = password
+        )
+    }
+
+    private fun registerEmailChanged(email: String) {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            signUpEmail = email
+        )
+    }
+
+    private fun registerPasswordChanged(password: String) {
+        _loginScreenUiState.value = _loginScreenUiState.value.copy(
+            signUpPassword = password
         )
     }
 
@@ -173,8 +187,10 @@ data class LoginUiState(
     val errorMessage: String = "",
     val memoryList: List<Memory> = listOf(),
     val currentUser: String = "",
-    val email: String = "",
-    val password: String = "",
+    val signInEmail: String = "",
+    val signUpEmail: String = "",
+    val signInPassword: String = "",
+    val signUpPassword: String = "",
     val username: String = "",
     var isPasswordVisible: Boolean = false,
 ) {

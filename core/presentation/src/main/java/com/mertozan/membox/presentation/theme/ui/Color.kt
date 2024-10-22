@@ -43,5 +43,7 @@ val SecondaryPink = Color(0xFFFC9390)
 val IndicatorGray = Color(0xFF969691)
 val OnboardingBlack = Color(0xFF0B0B07)
 val ButtonBlue = Color(0xFF56C5F7)
+val ErrorRed = Color(0xFFEA0303)
+val DarkGray = Color(0xFF303030)
 
 

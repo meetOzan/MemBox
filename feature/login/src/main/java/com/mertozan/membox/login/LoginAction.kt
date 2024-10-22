@@ -8,8 +8,10 @@ sealed class LoginAction {
         LoginAction()
 
     data object IsUserSignedIn : LoginAction()
-    data class EmailChanged(val email: String) : LoginAction()
-    data class PasswordChanged(val password: String) : LoginAction()
+    data class LoginEmailChanged(val email: String) : LoginAction()
+    data class LoginPasswordChanged(val password: String) : LoginAction()
+    data class RegisterEmailChanged(val email: String) : LoginAction()
+    data class RegisterPasswordChanged(val password: String) : LoginAction()
     data class UsernameChanged(val username: String) : LoginAction()
     data object IsPasswordVisible : LoginAction()
 }

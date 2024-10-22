@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +41,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mertozan.membox.localization.R
+import com.mertozan.membox.presentation.components.CustomAlertDialog
 import com.mertozan.membox.presentation.components.CustomText
 import com.mertozan.membox.presentation.components.CustomTextField
 import com.mertozan.membox.presentation.components.LoginAuthButton
 import com.mertozan.membox.presentation.theme.ui.Black
+import com.mertozan.membox.presentation.theme.ui.IndicatorGray
 import com.mertozan.membox.presentation.theme.ui.MainBlue
 import com.mertozan.membox.presentation.theme.ui.MainPink
 import com.mertozan.membox.presentation.theme.ui.SecondaryPink
@@ -65,11 +70,22 @@ fun LoginScreen(
     val signInFieldList = listOf(
         LoginFieldClass(
             text = stringResource(id = localizationR.email),
-            value = uiState.email
+            value = uiState.signInEmail
         ),
         LoginFieldClass(
             text = stringResource(id = localizationR.password),
-            value = uiState.password
+            value = uiState.signInPassword
+        )
+    )
+
+    val signUpFieldList = listOf(
+        LoginFieldClass(
+            text = stringResource(id = localizationR.email),
+            value = uiState.signUpEmail
+        ),
+        LoginFieldClass(
+            text = stringResource(id = localizationR.password),
+            value = uiState.signUpPassword
         ),
         LoginFieldClass(
             text = stringResource(id = localizationR.username),
@@ -78,6 +94,16 @@ fun LoginScreen(
     )
 
     val pagerState = rememberPagerState(pageCount = { 2 })
+
+    if (uiState.isError) {
+        CustomAlertDialog(
+            title = localizationR.login_error,
+            body = uiState.errorMessage.toInt(),
+            positiveButtonName = localizationR.ok,
+            negativeButtonName = localizationR.dismiss,
+            drawable = presentationR.error_dialog,
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -123,10 +149,10 @@ fun LoginScreen(
 
                 1 -> {
                     SignUpScreen(
-                        loginFieldList = signInFieldList,
+                        loginFieldList = signUpFieldList,
                         loginAction = loginAction,
                         uiState = uiState,
-                        onHomeScreenNavigate = onOnboardingScreenNavigate,
+                        onNavigate = onOnboardingScreenNavigate,
                         pagerState = pagerState
                     )
                 }
@@ -164,7 +190,7 @@ fun SignInScreen(
                         .fillMaxWidth()
                 )
             }
-            items(loginFieldList.size - 1) { index ->
+            items(loginFieldList.size) { index ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -184,7 +210,7 @@ fun SignInScreen(
                             textTitle = loginFieldList[index].value,
                             onValueChange = {
                                 loginAction(
-                                    LoginAction.EmailChanged(
+                                    LoginAction.LoginEmailChanged(
                                         it
                                     )
                                 )
@@ -200,7 +226,7 @@ fun SignInScreen(
                             textTitle = loginFieldList[index].value,
                             onValueChange = {
                                 loginAction(
-                                    LoginAction.PasswordChanged(
+                                    LoginAction.LoginPasswordChanged(
                                         it
                                     )
                                 )
@@ -285,16 +311,17 @@ fun SignInScreen(
                 ) {
                     Divider(
                         modifier = Modifier.weight(1f),
-                        color = Color.Black
+                        color = IndicatorGray
                     )
                     CustomText(
                         text = stringResource(localizationR.or),
                         fontSize = 14,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        color = IndicatorGray
                     )
                     Divider(
                         modifier = Modifier.weight(1f),
-                        color = Color.Black
+                        color = IndicatorGray
                     )
                 }
             }
@@ -321,35 +348,40 @@ fun SignInScreen(
                     )
                 }
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(top = 16.dp),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            CustomText(
-                text = stringResource(id = localizationR.you_don_t_have_an_account),
-                fontSize = 14,
-                modifier = Modifier
-                    .padding(top = 16.dp, end = 2.dp),
-                color = Black
-            )
-            CustomText(
-                text = stringResource(id = localizationR.sign_up),
-                fontSize = 14,
-                modifier = Modifier
-                    .padding(top = 16.dp, start = 2.dp)
-                    .clickable {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(1)
-                        }
-                    },
-                textAlign = TextAlign.Center,
-                color = MainBlue
-            )
+            item {
+                Column {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(top = 16.dp),
+                        verticalAlignment = Alignment.Bottom,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CustomText(
+                            text = stringResource(id = localizationR.you_don_t_have_an_account),
+                            fontSize = 14,
+                            modifier = Modifier
+                                .padding(top = 16.dp, end = 2.dp),
+                            color = Black
+                        )
+                        CustomText(
+                            text = stringResource(id = localizationR.sign_up),
+                            fontSize = 14,
+                            modifier = Modifier
+                                .padding(top = 16.dp, start = 2.dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(1)
+                                    }
+                                },
+                            textAlign = TextAlign.Center,
+                            color = MainBlue
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -359,7 +391,7 @@ fun SignUpScreen(
     loginFieldList: List<LoginFieldClass>,
     loginAction: (LoginAction) -> Unit,
     uiState: LoginUiState,
-    onHomeScreenNavigate: () -> Unit,
+    onNavigate: () -> Unit,
     pagerState: PagerState
 ) {
 
@@ -367,12 +399,14 @@ fun SignUpScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxHeight(),
+            .fillMaxHeight()
+            .imePadding(),
         verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally,
-
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier.weight(1f)
+        ) {
             item {
                 CustomText(
                     text = stringResource(localizationR.sign_up),
@@ -420,16 +454,17 @@ fun SignUpScreen(
                 ) {
                     Divider(
                         modifier = Modifier.weight(1f),
-                        color = Color.Black
+                        color = IndicatorGray
                     )
                     CustomText(
                         text = stringResource(localizationR.or),
                         fontSize = 14,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        color = IndicatorGray
                     )
                     Divider(
                         modifier = Modifier.weight(1f),
-                        color = Color.Black
+                        color = IndicatorGray
                     )
                 }
             }
@@ -453,7 +488,7 @@ fun SignUpScreen(
                             textTitle = loginFieldList[index].value,
                             onValueChange = {
                                 loginAction(
-                                    LoginAction.PasswordChanged(
+                                    LoginAction.RegisterPasswordChanged(
                                         it
                                     )
                                 )
@@ -492,11 +527,11 @@ fun SignUpScreen(
                             textTitle = loginFieldList[index].value,
                             onValueChange = {
                                 if (index == 0)
-                                loginAction(
-                                    LoginAction.EmailChanged(
-                                        it
+                                    loginAction(
+                                        LoginAction.RegisterEmailChanged(
+                                            it
+                                        )
                                     )
-                                )
                                 else loginAction(
                                     LoginAction.UsernameChanged(
                                         it
@@ -512,60 +547,64 @@ fun SignUpScreen(
                     }
                 }
             }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            ElevatedButton(
-                onClick = {
-                    loginAction(
-                        LoginAction.SignUp(
-                            onNavigate = {
-                                onHomeScreenNavigate()
-                            },
-                        )
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MainPink
-                ),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                CustomText(
-                    text = stringResource(localizationR.register),
-                    fontSize = 16,
-                    color = Black,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
-            }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                CustomText(
-                    text = stringResource(id = localizationR.you_have_an_account),
-                    fontSize = 14,
-                    modifier = Modifier,
-                    textAlign = TextAlign.Center,
-                    color = Black
-                )
-                CustomText(
-                    text = stringResource(id = localizationR.sign_in),
-                    fontSize = 14,
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     modifier = Modifier
-                        .clickable {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(0)
-                            }
+                        .fillMaxWidth()
+                ) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    ElevatedButton(
+                        onClick = {
+                            loginAction(
+                                LoginAction.SignUp(
+                                    onNavigate = {
+                                        (onNavigate())
+                                    },
+                                )
+                            )
                         },
-                    textAlign = TextAlign.Center,
-                    color = SecondaryPink
-                )
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MainPink
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        CustomText(
+                            text = stringResource(localizationR.register),
+                            fontSize = 16,
+                            color = Black,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        CustomText(
+                            text = stringResource(id = localizationR.you_have_an_account),
+                            fontSize = 14,
+                            modifier = Modifier,
+                            textAlign = TextAlign.Center,
+                            color = Black
+                        )
+                        CustomText(
+                            text = stringResource(id = localizationR.sign_in),
+                            fontSize = 14,
+                            modifier = Modifier
+                                .clickable {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(0)
+                                    }
+                                },
+                            textAlign = TextAlign.Center,
+                            color = SecondaryPink
+                        )
+                    }
+                }
             }
         }
     }

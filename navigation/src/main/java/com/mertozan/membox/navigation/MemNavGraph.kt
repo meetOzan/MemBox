@@ -66,7 +66,7 @@ fun MemNavGraph(
                 }
             },
             onOnboardingNavigate = {
-                navController.navigate(HomeScreen.route) {
+                navController.navigate(OnboardingScreen.route) {
                     popUpTo(LoginScreen.route) {
                         inclusive = true
                     }
