@@ -370,10 +370,10 @@ fun ProfileScreen(
 
     if (profileUiState.isDialogOpen) {
         CustomAlertDialog(
-            title = stringResource(localR.string.are_you_sure),
-            body = stringResource(localR.string.are_you_wanted_to_delete_all_this_memories),
-            positiveButtonName = stringResource(localR.string.yes),
-            negativeButtonName = stringResource(localR.string.no),
+            title = localR.string.are_you_sure,
+            body = localR.string.are_you_wanted_to_delete_all_this_memories,
+            positiveButtonName = localR.string.yes,
+            negativeButtonName = localR.string.no,
             drawable = presDraw.shocked,
             onDismissClick = {
                 onAction(ProfileAction.ChangeDialogState)

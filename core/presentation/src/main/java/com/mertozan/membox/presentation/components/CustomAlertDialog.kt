@@ -20,25 +20,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mertozan.membox.presentation.R
 import com.mertozan.membox.presentation.theme.ui.DarkBlue
+import com.mertozan.membox.presentation.theme.ui.DarkGray
 import com.mertozan.membox.presentation.theme.ui.DarkWhite60
-import com.mertozan.membox.presentation.theme.ui.TransparentBlue
+import com.mertozan.membox.presentation.theme.ui.ErrorRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomAlertDialog(
-    title: String,
-    body: String,
-    positiveButtonName: String,
-    negativeButtonName: String,
+    title: Int,
+    body: Int,
+    positiveButtonName: Int,
+    negativeButtonName: Int,
     drawable: Int,
     onDismissClick: () -> Unit = {},
     onPositiveAction: () -> Unit = {},
@@ -69,25 +70,18 @@ fun CustomAlertDialog(
                         .clip(CircleShape)
                         .fillMaxWidth(0.5f)
                         .fillMaxHeight(0.2f)
-                        .drawWithContent {
-                            drawCircle(
-                                color = TransparentBlue.copy(alpha = 0.2f),
-                                radius = size.minDimension / 2f
-                            )
-                            drawContent()
-                        }
                 )
                 CustomText(
-                    text = title,
-                    color = DarkBlue,
+                    text = stringResource(id = title),
+                    color = Color.Black,
                     fontSize = 24,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 24.dp, start = 16.dp, end = 16.dp),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 CustomText(
-                    text = body,
-                    color = Color.Black,
+                    text = stringResource(id = body),
+                    color = DarkGray,
                     fontSize = 20,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Normal,
@@ -97,20 +91,19 @@ fun CustomAlertDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                        .background(TransparentBlue)
+                        .fillMaxWidth(0.9f)
+                        .padding(vertical = 16.dp)
                 ) {
                     TextButton(onClick = { onPositiveAction() }) {
                         CustomText(
-                            text = positiveButtonName,
+                            text = stringResource(positiveButtonName),
                             color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
                     }
                     TextButton(onClick = { onNegativeAction() }) {
                         CustomText(
-                            text = negativeButtonName,
+                            text = stringResource(negativeButtonName),
                             color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
@@ -125,10 +118,10 @@ fun CustomAlertDialog(
 @Composable
 fun AlertDialogPrev() {
     CustomAlertDialog(
-        title = "Title",
-        body = "Body",
-        positiveButtonName = "Positive",
-        negativeButtonName = "Negative",
+        title = 0,
+        body = 0,
+        positiveButtonName = 0,
+        negativeButtonName = 0,
         drawable = R.drawable.angry_cry
     )
 }
