@@ -26,9 +26,11 @@ import com.mertozan.membox.addmemory.AddMemoryViewModel
 import com.mertozan.membox.detail.DetailAction
 import com.mertozan.membox.detail.DetailScreen
 import com.mertozan.membox.detail.DetailViewModel
-import com.mertozan.membox.login.LoginAction
+import com.mertozan.membox.login.viewmodel.LoginAction
 import com.mertozan.membox.login.LoginScreen
-import com.mertozan.membox.login.LoginViewModel
+import com.mertozan.membox.login.RegisterScreen
+import com.mertozan.membox.login.WelcomeScreen
+import com.mertozan.membox.login.viewmodel.LoginViewModel
 import com.mertozan.membox.profile.ProfileAction
 import com.mertozan.membox.profile.ProfileScreen
 import com.mertozan.membox.profile.ProfileViewModel
@@ -42,8 +44,8 @@ fun MemNavGraph(
         navController = navController, startDestination = SplashScreen.route
     ) {
         splashScreen(
-            onLoginNavigate = {
-                navController.navigate(LoginScreen.route) {
+            onWelcomeScreen = {
+                navController.navigate(WelcomeScreen.route) {
                     popUpTo(SplashScreen.route) {
                         inclusive = true
                     }
@@ -57,21 +59,31 @@ fun MemNavGraph(
                 }
             }
         )
+        welcomeScreen(
+            onSignInNavigate = {
+                navController.navigate(LoginScreen.route)
+            },
+            onSignUpNavigate = {
+                navController.navigate(RegisterScreen.route)
+            }
+        )
         loginScreen(
             onHomeNavigate = {
                 navController.navigate(HomeScreen.route) {
-                    popUpTo(LoginScreen.route) {
+                    popUpTo(WelcomeScreen.route) {
                         inclusive = true
                     }
                 }
-            },
+            }
+        )
+        registerScreen(
             onOnboardingNavigate = {
                 navController.navigate(OnboardingScreen.route) {
-                    popUpTo(LoginScreen.route) {
+                    popUpTo(WelcomeScreen.route) {
                         inclusive = true
                     }
                 }
-            },
+            }
         )
         onboardingScreen(
             onHomeNavigate = {
@@ -108,7 +120,7 @@ fun MemNavGraph(
 }
 
 fun NavGraphBuilder.splashScreen(
-    onLoginNavigate: () -> Unit,
+    onWelcomeScreen: () -> Unit,
     onHomeNavigate: () -> Unit,
 ) {
     composable(route = SplashScreen.route) {
@@ -120,13 +132,12 @@ fun NavGraphBuilder.splashScreen(
             loginViewModel.onAction(SplashAction.NavigateToApp)
         }
 
-        SplashScreen(onLoginNavigate, onHomeNavigate, splashUiState)
+        SplashScreen(onWelcomeScreen, onHomeNavigate, splashUiState)
     }
 }
 
 fun NavGraphBuilder.loginScreen(
-    onHomeNavigate: () -> Unit,
-    onOnboardingNavigate: () -> Unit
+    onHomeNavigate: () -> Unit
 ) {
     composable(route = LoginScreen.route) {
 
@@ -140,7 +151,27 @@ fun NavGraphBuilder.loginScreen(
         LoginScreen(
             loginViewModel::onAction,
             loginUiState,
-            onHomeNavigate,
+            onHomeNavigate
+        )
+    }
+}
+
+fun NavGraphBuilder.registerScreen(
+    onOnboardingNavigate: () -> Unit
+){
+    composable(
+        route = RegisterScreen.route
+    ){
+        val loginViewModel = hiltViewModel<LoginViewModel>()
+        val loginUiState = loginViewModel.loginScreenUiState.collectAsState().value
+
+        LaunchedEffect(key1 = true) {
+            loginViewModel.onAction(LoginAction.IsUserSignedIn)
+        }
+
+        RegisterScreen(
+            loginUiState,
+            loginViewModel::onAction,
             onOnboardingNavigate
         )
     }
@@ -245,6 +276,21 @@ fun NavGraphBuilder.onboardingScreen(
 
         OnboardingScreen(
             onHomeScreenNavigate = onHomeNavigate
+        )
+    }
+}
+
+fun NavGraphBuilder.welcomeScreen(
+    onSignInNavigate: () -> Unit,
+    onSignUpNavigate: () -> Unit
+){
+    composable(
+        route = WelcomeScreen.route
+    ){
+
+        WelcomeScreen(
+            onSignInNavigate = onSignInNavigate,
+            onSignUpNavigate = onSignUpNavigate
         )
     }
 }

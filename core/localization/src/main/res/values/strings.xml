@@ -20,6 +20,7 @@
     <string name="coil_image">coil_image</string>
     <string name="logout">Logout</string>
     <string name="welcome">Welcome %1$s</string>
+    <string name="welcome_title">Welcome</string>
     <string name="statistics_of_memories">Statistics of Memories</string>
     <string name="total_memory">Total Memory</string>
     <string name="memory_streak">Memory Streak</string>
@@ -80,5 +81,7 @@
     <string name="login_error">Login Error</string>
     <string name="ok">OK</string>
     <string name="dismiss">Dismiss</string>
+    <string name="please_select_log_in_way">For saving your memories, please select log in way</string>
+    <string name="create_account">Create Account</string>
 
 </resources>

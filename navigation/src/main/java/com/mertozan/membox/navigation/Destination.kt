@@ -43,3 +43,11 @@ object ProfileScreen : Destination {
 object OnboardingScreen : Destination {
     override val route = "onboarding_screen"
 }
+
+object WelcomeScreen : Destination {
+    override val route = "welcome_screen"
+}
+
+object RegisterScreen : Destination {
+    override val route = "register_screen"
+}

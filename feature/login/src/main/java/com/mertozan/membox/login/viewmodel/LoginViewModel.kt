@@ -1,4 +1,4 @@
-package com.mertozan.membox.login
+package com.mertozan.membox.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

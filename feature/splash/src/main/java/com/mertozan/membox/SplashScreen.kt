@@ -22,14 +22,14 @@ import com.mertozan.membox.presentation.R.drawable as localDrawable
 
 @Composable
 fun SplashScreen(
-    onLoginNavigate: () -> Unit,
+    onWelcomeNavigate: () -> Unit,
     onHomeNavigate: () -> Unit,
     splashUiState: SplashUiState,
 ) {
 
     LaunchedEffect(!splashUiState.isLoading) {
         if (splashUiState.isSigned) onHomeNavigate()
-        else onLoginNavigate()
+        else onWelcomeNavigate()
     }
 
     Surface(
@@ -60,7 +60,7 @@ fun SplashScreen(
 @Composable
 fun PrevSplash() {
     SplashScreen(
-        onLoginNavigate = {},
+        onWelcomeNavigate = {},
         onHomeNavigate = {},
         splashUiState = SplashUiState(isLoading = false, isSigned = false)
     )
