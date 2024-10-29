@@ -83,5 +83,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="please_select_log_in_way">For saving your memories, please select log in way</string>
     <string name="create_account">Create Account</string>
+    <string name="search">Search</string>
+    <string name="detail">Detail</string>
 
 </resources>

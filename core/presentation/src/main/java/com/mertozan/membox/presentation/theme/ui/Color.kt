@@ -45,5 +45,8 @@ val OnboardingBlack = Color(0xFF0B0B07)
 val ButtonBlue = Color(0xFF56C5F7)
 val ErrorRed = Color(0xFFEA0303)
 val DarkGray = Color(0xFF303030)
+val LightWhite = Color(0xFFFBFBFB)
+val LightGray200 = Color(0xFFD9D9D9)
+
 
 

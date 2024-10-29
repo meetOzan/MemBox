@@ -348,9 +348,7 @@ class HomeViewModel @Inject constructor(
             )
         }
     }
-
 }
-
 
 data class HomeUiState(
     val isLoading: Boolean = false,
